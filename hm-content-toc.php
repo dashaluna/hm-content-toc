@@ -18,7 +18,7 @@ require_once( __DIR__ . '/includes/class-content-toc.php' );
 /**
  * Instantiate TOC class, i.e. TOC logic is hooked into WP
  *
- * @return TOC TOC object
+ * @return TOC True single instance of the class
  */
 function get_toc() {
 	return TOC::get_instance();
