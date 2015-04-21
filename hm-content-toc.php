@@ -21,7 +21,7 @@ require_once( __DIR__ . '/includes/class-content-toc.php' );
  * @return TOC TOC object
  */
 function get_toc() {
-	return new TOC();
+	return TOC::get_instance();
 }
 
 // Activate the plugin

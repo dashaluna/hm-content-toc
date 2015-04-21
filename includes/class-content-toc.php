@@ -15,13 +15,30 @@ class TOC {
 	 * 1) Setup default header elements
 	 * 2) Register shortcode
 	 */
-	public function __construct() {
+	protected function __construct() {
 
 		// Set up default header elements
 		$this->headers = apply_filters( 'hm_content_toc_default_headers', 'h2, h3, h4, h5, h6' );
 
 		// Register shortcode
 		add_shortcode( 'hm_content_toc', array( $this, 'shortcode' ) );
+	}
+
+	/**
+	 * Make class a singleton, as we don't need more than
+	 * one instance of it
+	 *
+	 * @return TOC True single instance of the class
+	 */
+	public static function get_instance() {
+
+		static $instance = null;
+
+		if ( is_null( $instance ) ) {
+			$instance = new static;
+		}
+
+		return $instance;
 	}
 
 	/**
