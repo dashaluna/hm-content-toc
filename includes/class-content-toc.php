@@ -2,6 +2,10 @@
 /**
  * Main class of the plugin with logic to generate content TOC links
  * and anchors in the content just before the matched headers.
+ *
+ * Features:
+ * 1) 'hm_content_toc' shortcode
+ * 2) Integration with Shortcake UI plugin: https://github.com/fusioneng/Shortcake
  */
 namespace HM\Content_TOC;
 
@@ -23,8 +27,10 @@ class TOC {
 		// Register shortcode
 		add_shortcode( 'hm_content_toc', array( $this, 'shortcode' ) );
 
-		// Setup shortcake UI integration
-		require_once( __DIR__ . '/shortcake-integration.php' );
+		// Shortcake UI plugin integration (Source: https://github.com/fusioneng/Shortcake)
+		if ( function_exists( 'shortcode_ui_register_for_shortcode' ) ) {
+			add_action( 'init', array( $this, 'register_shortcake_ui' ) );
+		}
 	}
 
 	/**
@@ -222,6 +228,46 @@ class TOC {
 		$headers_arr = array_map( 'preg_quote', $headers_arr );
 
 		return $headers_arr;
+	}
+
+	/**
+	 * Add shortcake UI integration for 'hm_content_toc' shortcode
+	 */
+	function register_shortcake_ui() {
+
+		shortcode_ui_register_for_shortcode(
+			'hm_content_toc',
+			array(
+				'label'         => __( 'HM Content TOC', 'hm-content-toc' ),
+				'listItemImage' => 'dashicons-menu',
+				// Available shortcode attributes and default values
+				'attrs'         => array(
+
+					// Title field
+					array(
+						'label'       => __( 'Title', 'hm-content-toc' ),
+						'attr'        => 'title',
+						'type'        => 'text',
+						'description' => __( 'Title that appears before the Content TOC. Optional.', 'hm-content-toc' )
+					),
+
+					// Headers field
+					array(
+						'label'       => __( 'Header Elements', 'hm-content-toc' ),
+						'attr'        => 'headers',
+						'type'        => 'text',
+						'placeholder' => $this->headers,
+						'description' => sprintf(
+							__( 'Comma separated list of HTML elements that are considered for building Content TOC. For example, default elements are: %1$s NOTE: DO NOT use %2$s to wrap an element, i.e. for example it should be simply %3$s and not %4$s. If no elements are specified, the default ones will be used instead: %1$s', 'hm-content-toc' ),
+							$this->headers,
+							'<>',
+							'h2',
+							'<h2>'
+						)
+					),
+				)
+			)
+		);
 	}
 
 }
