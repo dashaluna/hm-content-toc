@@ -133,8 +133,8 @@ class TOC {
 	 */
 	public function generate_content_toc( $headers ) {
 
-		// Sanitize header list & get array
-		$headers = $this->sanitize_headers( $headers );
+		// Prepare headers for regex & get them in array
+		$headers = $this->prepare_headers( $headers );
 
 		// Get current post's content
 		$content = get_the_content();
@@ -190,17 +190,18 @@ class TOC {
 	}
 
 	/**
-	 * Sanitize specified header elements string:
+	 * Prepare specified header elements string to be used in regex:
 	 * 1) Split on commas
 	 * 2) Trim each element to first space, so everything after first space is disregarded
 	 * 3) Remove empty elements
 	 * 4) Keep unique values only
+	 * 5) Escape regex special chars in headers with preg_quote
 	 *
 	 * @param $headers Comma separated list of header elements to match for TOC generation
 	 *
 	 * @return array   Header elements to be matched in content to generate TOC
 	 */
-	private function sanitize_headers( $headers ) {
+	protected function prepare_headers( $headers ) {
 
 		// 1) Split string by commas
 		$headers_arr = explode( ',', $headers );
@@ -214,8 +215,11 @@ class TOC {
 		// 3) Remove empty elements
 		$headers_arr = array_filter( $headers_arr, 'strlen' );
 
-		// 3) Unique values
+		// 4) Unique values
 		$headers_arr = array_unique( $headers_arr );
+
+		// 5) Escape regex special chars
+		$headers_arr = array_map( 'preg_quote', $headers_arr );
 
 		return $headers_arr;
 	}
