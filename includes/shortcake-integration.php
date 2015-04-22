@@ -44,7 +44,7 @@ function register_shortcake_ui() {
 				array(
 					'label'       => __( 'Header Elements', 'hm-content-toc' ),
 					'attr'        => 'headers',
-					'type'        => 'textarea',
+					'type'        => 'text',
 					'placeholder' => get_toc()->get_default_headers(),
 					'description' => sprintf(
 						__( 'Comma separated list of HTML elements that are considered for building Content TOC. For example, default elements are: %s', 'hm-content-toc' ),
