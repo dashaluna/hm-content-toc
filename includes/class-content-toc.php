@@ -22,6 +22,9 @@ class TOC {
 
 		// Register shortcode
 		add_shortcode( 'hm_content_toc', array( $this, 'shortcode' ) );
+
+		// Setup shortcake UI integration
+		require_once( __DIR__ . '/shortcake-integration.php' );
 	}
 
 	/**
@@ -39,6 +42,15 @@ class TOC {
 		}
 
 		return $instance;
+	}
+
+	/**
+	 * Return a default header list - a comma separated string of header elements
+	 *
+	 * @return string Default header list
+	 */
+	public function get_default_headers() {
+		return $this->headers;
 	}
 
 	/**
