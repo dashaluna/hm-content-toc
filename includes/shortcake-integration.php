@@ -47,8 +47,11 @@ function register_shortcake_ui() {
 					'type'        => 'text',
 					'placeholder' => get_toc()->get_default_headers(),
 					'description' => sprintf(
-						__( 'Comma separated list of HTML elements that are considered for building Content TOC. For example, default elements are: %s', 'hm-content-toc' ),
-						get_toc()->get_default_headers()
+						__( 'Comma separated list of HTML elements that are considered for building Content TOC. For example, default elements are: %1$s NOTE: DO NOT use %2$s to wrap an element, i.e. for example it should be simply %3$s and not %4$s. If no elements are specified, the default ones will be used instead: %1$s', 'hm-content-toc' ),
+						get_toc()->get_default_headers(),
+						'<>',
+						'h2',
+						'<h2>'
 					)
 				),
 			)
