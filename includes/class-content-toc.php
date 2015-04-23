@@ -286,8 +286,8 @@ class TOC {
 				echo apply_filters(
 					'hm_content_toc_shortcake_admin_notice',
 					sprintf(
-						esc_html_e( 'HM Content TOC plugin supports integration with Shortcake UI plugin. Read about Shortcake UI plugin from WordPress plugin directory: %s', 'hm-content-toc' ),
-						'<a href="' . $shortcake_url . '">' . $shortcake_url . '</a>'
+						esc_html__( 'HM Content TOC plugin supports integration with Shortcake UI plugin. Read about Shortcake UI plugin from WordPress plugin directory: %s', 'hm-content-toc' ),
+						'<a href="' . $shortcake_url . '" target="_blank">' . $shortcake_url . '</a>'
 					),
 					$shortcake_url
 				);
