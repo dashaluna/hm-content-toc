@@ -2,6 +2,10 @@
 /**
  * Main class of the plugin with logic to generate content TOC links
  * and anchors in the content just before the matched headers.
+ *
+ * Features:
+ * 1) 'hm_content_toc' shortcode
+ * 2) Integration with Shortcake UI plugin: https://github.com/fusioneng/Shortcake
  */
 namespace HM\Content_TOC;
 
@@ -22,6 +26,15 @@ class TOC {
 
 		// Register shortcode
 		add_shortcode( 'hm_content_toc', array( $this, 'shortcode' ) );
+
+		// Shortcake UI plugin integration (Source: https://github.com/fusioneng/Shortcake)
+		if ( function_exists( 'shortcode_ui_register_for_shortcode' ) ) {
+			add_action( 'init', array( $this, 'register_shortcake_ui' ) );
+		}
+		// Display admin notice about Shortcake UI plugin
+		else {
+			add_action( 'admin_notices', array( $this, 'promote_shortcake_ui' ) );
+		}
 	}
 
 	/**
@@ -39,6 +52,15 @@ class TOC {
 		}
 
 		return $instance;
+	}
+
+	/**
+	 * Return a default header list - a comma separated string of header elements
+	 *
+	 * @return string Default header list
+	 */
+	public function get_default_headers() {
+		return $this->headers;
 	}
 
 	/**
@@ -210,6 +232,69 @@ class TOC {
 		$headers_arr = array_map( 'preg_quote', $headers_arr );
 
 		return $headers_arr;
+	}
+
+	/**
+	 * Add shortcake UI integration for 'hm_content_toc' shortcode
+	 */
+	function register_shortcake_ui() {
+
+		shortcode_ui_register_for_shortcode(
+			'hm_content_toc',
+			array(
+				'label'         => __( 'HM Content TOC', 'hm-content-toc' ),
+				'listItemImage' => 'dashicons-menu',
+				// Available shortcode attributes and default values
+				'attrs'         => array(
+
+					// Title field
+					array(
+						'label'       => __( 'Title', 'hm-content-toc' ),
+						'attr'        => 'title',
+						'type'        => 'text',
+						'description' => __( 'Title that appears before the Content TOC. Optional.', 'hm-content-toc' )
+					),
+
+					// Headers field
+					array(
+						'label'       => __( 'Header Elements', 'hm-content-toc' ),
+						'attr'        => 'headers',
+						'type'        => 'text',
+						'placeholder' => $this->headers,
+						'description' => sprintf(
+							__( 'Comma separated list of HTML elements that are considered for building Content TOC. For example, default elements are: %1$s NOTE: DO NOT use %2$s to wrap an element, i.e. for example it should be simply %3$s and not %4$s. If no elements are specified, the default ones will be used instead: %1$s', 'hm-content-toc' ),
+							$this->headers,
+							'<>',
+							'h2',
+							'<h2>'
+						)
+					),
+				)
+			)
+		);
+	}
+
+	/**
+	 * Add admin notice to promote Shortcake UI plugin if it isn't active
+	 */
+	public function promote_shortcake_ui() {
+		?>
+		<div class="notice">
+			<p>
+				<?php
+				$shortcake_url = 'https://wordpress.org/plugins/shortcode-ui/';
+				echo apply_filters(
+					'hm_content_toc_shortcake_admin_notice',
+					sprintf(
+						esc_html__( 'HM Content TOC plugin supports integration with Shortcake UI plugin. Read about Shortcake UI plugin from WordPress plugin directory: %s', 'hm-content-toc' ),
+						'<a href="' . $shortcake_url . '" target="_blank">' . $shortcake_url . '</a>'
+					),
+					$shortcake_url
+				);
+				?>
+			</p>
+		</div>
+		<?php
 	}
 
 }
