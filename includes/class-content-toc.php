@@ -280,7 +280,7 @@ class TOC {
 	public function promote_shortcake_ui() {
 
 		// Allow to disable admin notice
-		$is_display = apply_filters( 'hm_content_toc_display_shortcake_admin_notice', true );
+		$is_display = apply_filters( 'hm_content_toc_display_shortcake_admin_notice', false );
 		if ( ! $is_display ) {
 			return;
 		}
