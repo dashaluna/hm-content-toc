@@ -9,6 +9,11 @@
  */
 namespace HM\Content_TOC;
 
+// Abort - if this file is accessed directly and not via WP
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class TOC {
 
 	// Comma separated list of header elements to generate TOC for
