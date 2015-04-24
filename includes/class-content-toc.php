@@ -283,18 +283,21 @@ class TOC {
 	 * Add admin notice to promote Shortcake UI plugin if it isn't active
 	 */
 	public function promote_shortcake_ui() {
+
+		// Allow to disable admin notice
+		$is_display = apply_filters( 'hm_content_toc_display_shortcake_admin_notice', false );
+		if ( ! $is_display ) {
+			return;
+		}
+
 		?>
 		<div class="notice">
 			<p>
 				<?php
 				$shortcake_url = 'https://wordpress.org/plugins/shortcode-ui/';
-				echo apply_filters(
-					'hm_content_toc_shortcake_admin_notice',
-					sprintf(
-						esc_html__( 'HM Content TOC plugin supports integration with Shortcake UI plugin. Read about Shortcake UI plugin from WordPress plugin directory: %s', 'hm-content-toc' ),
-						'<a href="' . $shortcake_url . '" target="_blank">' . $shortcake_url . '</a>'
-					),
-					$shortcake_url
+				printf(
+					esc_html__( 'HM Content TOC plugin supports integration with Shortcake UI plugin. Read about Shortcake UI plugin from WordPress plugin directory: %s', 'hm-content-toc' ),
+					'<a href="' . $shortcake_url . '" target="_blank">' . $shortcake_url . '</a>'
 				);
 				?>
 			</p>
