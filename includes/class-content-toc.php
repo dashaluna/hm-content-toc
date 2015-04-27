@@ -16,6 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class TOC {
 
+	// TOC ID counter (in case of multiple TOCs on the same page)
+	protected $id_counter = 0;
+
 	// Comma separated list of header elements to generate TOC for
 	protected $headers;
 
@@ -93,6 +96,9 @@ class TOC {
 
 		if ( $items ) {
 
+			// Increment TOC ID counter
+			$this->id_counter += 1;
+
 			// Title HTML
 			if ( $atts['title'] ) {
 
@@ -126,8 +132,9 @@ class TOC {
 
 			$toc_html .= apply_filters(
 				'hm_content_toc_list',
-				'<ul id="content-toc">' . $toc_list . '</ul>',
-				$toc_list
+				'<ul id="hm-content-toc-' . esc_attr( $this->id_counter ) . '" class="hm-content-toc">' . $toc_list . '</ul>',
+				$toc_list,
+				$this->id_counter
 			);
 		}
 
