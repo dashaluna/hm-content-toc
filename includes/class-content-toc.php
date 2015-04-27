@@ -32,6 +32,9 @@ class TOC {
 		// Register shortcode
 		add_shortcode( 'hm_content_toc', array( $this, 'shortcode' ) );
 
+		// Register widget
+		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
+
 		// Shortcake UI plugin integration (Source: https://github.com/fusioneng/Shortcake)
 		if ( function_exists( 'shortcode_ui_register_for_shortcode' ) ) {
 			add_action( 'init', array( $this, 'register_shortcake_ui' ) );
@@ -216,7 +219,7 @@ class TOC {
 	 *
 	 * @return array   Header elements to be matched in content to generate TOC
 	 */
-	protected function prepare_headers( $headers ) {
+	public function prepare_headers( $headers ) {
 
 		// 1) Split string by commas
 		$headers_arr = explode( ',', $headers );
@@ -237,6 +240,14 @@ class TOC {
 		$headers_arr = array_map( 'preg_quote', $headers_arr );
 
 		return $headers_arr;
+	}
+
+	/**
+	 * Include widget file and register it with WP
+	 */
+	public function register_widgets() {
+		require_once( __DIR__ . '/class-widget.php' );
+		register_widget( __NAMESPACE__ . '\\Widget' );
 	}
 
 	/**
