@@ -114,7 +114,8 @@ class TOC {
 				$toc_list .= apply_filters(
 					'hm_content_toc_single_item',
 					sprintf(
-						'<li><a href="#heading-%d">%s</a></li>',
+						'<li class="hm-toc-item-%s"><a href="#heading-%d">%s</a></li>',
+						esc_attr( $item[2] ),
 						esc_attr( $key_current ),
 						esc_html( $item[1] )
 					),
