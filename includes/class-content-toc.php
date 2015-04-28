@@ -92,8 +92,10 @@ class TOC {
 
 		if ( $items ) {
 
-			// Increment TOC ID counter
-			$this->id_counter += 1;
+			// Stop - don't process any subsequent TOCs, only the 1st one
+			if ( ++$this->id_counter > 1 ) {
+				return;
+			}
 
 			// Title HTML
 			if ( $atts['title'] ) {
