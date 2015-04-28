@@ -239,7 +239,7 @@ class TOC {
 	/**
 	 * Add shortcake UI integration for 'hm_content_toc' shortcode
 	 */
-	function register_shortcake_ui() {
+	public function register_shortcake_ui() {
 
 		shortcode_ui_register_for_shortcode(
 			'hm_content_toc',
