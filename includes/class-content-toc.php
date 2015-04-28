@@ -113,7 +113,7 @@ class TOC {
 						'<li class="hm-toc-item-%s"><a href="#heading-%d">%s</a></li>',
 						esc_attr( $item[2] ),
 						esc_attr( $key_current ),
-						esc_html( $item[1] )
+						esc_html( strip_tags( $item[1] ) )
 					),
 					$key_current,
 					$item[1],
