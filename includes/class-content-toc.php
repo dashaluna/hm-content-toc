@@ -39,10 +39,6 @@ class TOC {
 		if ( function_exists( 'shortcode_ui_register_for_shortcode' ) ) {
 			add_action( 'init', array( $this, 'register_shortcake_ui' ) );
 		}
-		// Display admin notice about Shortcake UI plugin
-		else {
-			add_action( 'admin_notices', array( $this, 'promote_shortcake_ui' ) );
-		}
 	}
 
 	/**
@@ -120,7 +116,8 @@ class TOC {
 				$toc_list .= apply_filters(
 					'hm_content_toc_single_item',
 					sprintf(
-						'<li><a href="#heading-%d">%s</a></li>',
+						'<li class="hm-toc-item-%s"><a href="#heading-%d">%s</a></li>',
+						esc_attr( $item[2] ),
 						esc_attr( $key_current ),
 						esc_html( $item[1] )
 					),
@@ -284,29 +281,6 @@ class TOC {
 				)
 			)
 		);
-	}
-
-	/**
-	 * Add admin notice to promote Shortcake UI plugin if it isn't active
-	 */
-	public function promote_shortcake_ui() {
-		?>
-		<div class="notice">
-			<p>
-				<?php
-				$shortcake_url = 'https://wordpress.org/plugins/shortcode-ui/';
-				echo apply_filters(
-					'hm_content_toc_shortcake_admin_notice',
-					sprintf(
-						esc_html__( 'HM Content TOC plugin supports integration with Shortcake UI plugin. Read about Shortcake UI plugin from WordPress plugin directory: %s', 'hm-content-toc' ),
-						'<a href="' . $shortcake_url . '" target="_blank">' . $shortcake_url . '</a>'
-					),
-					$shortcake_url
-				);
-				?>
-			</p>
-		</div>
-		<?php
 	}
 
 }
