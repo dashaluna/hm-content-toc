@@ -109,23 +109,26 @@ class TOC {
 
 			// TOC list items HTML
 			$toc_list = '';
-			foreach ( $items as $key => $item ) {
+			foreach ( $items as $key => $item_match_arr ) {
 
 				// Counter of items, starting at 1
 				$key_current = $key + 1;
+
+				// Stripped item text
+				$item_text = strip_tags( $item_match_arr[1] );
 
 				// Add filter to allow custom TOC item markup
 				$toc_list .= apply_filters(
 					'hm_content_toc_single_item',
 					sprintf(
 						'<li class="hm-toc-item-%s"><a href="#heading-%d">%s</a></li>',
-						esc_attr( $item[2] ),
+						esc_attr( $item_match_arr[2] ),
 						esc_attr( $key_current ),
-						esc_html( $item[1] )
+						esc_html( $item_text )
 					),
 					$key_current,
-					$item[1],
-					$item
+					$item_text,
+					$item_match_arr
 				);
 			}
 
