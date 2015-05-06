@@ -97,12 +97,13 @@ class TOC {
 				return;
 			}
 
+			$toc_html .= '<div class="hm-content-toc-wrapper" id="hm-content-toc-' . esc_attr( $this->id_counter ) . '">';
+
 			// Title HTML
 			if ( $atts['title'] ) {
-
 				$toc_html .= apply_filters(
 					'hm_content_toc_title',
-					'<h3 id="content-toc-title">' . esc_html( $atts['title'] ) . '</h3>',
+					'<h3 class="content-toc-title">' . esc_html( $atts['title'] ) . '</h3>',
 					$atts['title']
 				);
 			}
@@ -134,10 +135,12 @@ class TOC {
 
 			$toc_html .= apply_filters(
 				'hm_content_toc_list',
-				'<ul id="hm-content-toc-' . esc_attr( $this->id_counter ) . '" class="hm-content-toc">' . $toc_list . '</ul>',
+				'<ul class="hm-content-toc">' . $toc_list . '</ul>',
 				$toc_list,
 				$this->id_counter
 			);
+
+			$toc_html .= '</div>';
 		}
 
 		return $toc_html;
