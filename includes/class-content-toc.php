@@ -103,7 +103,7 @@ class TOC {
 			if ( $atts['title'] ) {
 				$toc_html .= apply_filters(
 					'hm_content_toc_title',
-					'<h3 class="content-toc-title">' . esc_html( $atts['title'] ) . '</h3>',
+					'<h3 class="hm-content-toc-title">' . esc_html( $atts['title'] ) . '</h3>',
 					$atts['title']
 				);
 			}
