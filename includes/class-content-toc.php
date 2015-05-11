@@ -37,14 +37,15 @@ class TOC {
 
 		// Set up default HTML settings
 		$this->settings = array(
-			'wrapper_tag'   => 'div',
-			'wrapper_class' => 'hm-content-toc-wrapper',
-			'list_tag'      => 'ul',
-			'list_class'    => 'hm-content-toc-list',
-			'list_item_tag' => 'li',
-			'title_tag'     => 'h3',
-			'title_class'   => 'hm-content-toc-title',
-			'title'         => ''
+			'wrapper_tag'     => 'div',
+			'wrapper_class'   => 'hm-content-toc-wrapper',
+			'list_tag'        => 'ul',
+			'list_class'      => 'hm-content-toc-list',
+			'list_item_tag'   => 'li',
+			'list_item_class' => 'hm-content-toc-item',
+			'title_tag'       => 'h3',
+			'title_class'     => 'hm-content-toc-title',
+			'title'           => ''
 		);
 
 		$this->settings = apply_filters( 'hm_content_toc_settings', $this->settings );
@@ -141,7 +142,7 @@ class TOC {
 					sprintf(
 						'<%1$s%2$s><a href="#heading-%3$d">%4$s</a></%1$s>',
 						esc_attr( $this->settings['list_item_tag'] ),
-						$this->tag_class( $this->settings['list_item_tag'], $item_match_arr[2] ),
+						$this->tag_class( $this->settings['list_item_class'], $item_match_arr[2] ),
 						esc_attr( $key_current ),
 						esc_html( $item_text )
 					),
@@ -166,7 +167,7 @@ class TOC {
 			$toc_html = $title_html . $list_html;
 			if ( $this->settings['wrapper_tag'] ) {
 
-				$toc_html = sprintf( '<%1$s2$%s>%3$s</%1$s>',
+				$toc_html = sprintf( '<%1$s%2$s>%3$s</%1$s>',
 					esc_attr( $this->settings['wrapper_tag'] ),
 					$this->tag_class( $this->settings['wrapper_class'] ),
 					$title_html . $list_html
@@ -188,7 +189,7 @@ class TOC {
 	 * @return string        String ' class="{$class}-{$suffix}"' escaped and ready to use in HTML
 	 *                       If $class is empty/not specified, return original value
 	 */
-	protected function tag_class( string $class, $suffix = '' ) {
+	protected function tag_class( $class, $suffix = '' ) {
 
 		if ( $class ) {
 
