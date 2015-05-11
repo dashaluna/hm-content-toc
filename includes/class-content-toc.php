@@ -45,7 +45,8 @@ class TOC {
 			'list_item_class' => 'hm-content-toc-item',
 			'title_tag'       => 'h3',
 			'title_class'     => 'hm-content-toc-title',
-			'title'           => ''
+			'title'           => '',
+			'anchor_class'    => 'hm-content-toc-anchor'
 		);
 
 		$this->settings = apply_filters( 'hm_content_toc_settings', $this->settings );
@@ -256,11 +257,16 @@ class TOC {
 
 				// Add anchor just before the matched header element
 				// Add filter to allow for custom anchor markup
+				// TODO: Do I still need a filter here?
 				$content = preg_replace(
 					'/' . preg_quote( $match_set[0], '/' ) . '/',
 					apply_filters(
 						'hm_content_toc_anchor',
-						'<a name="heading-' . esc_attr( $key_current ) . '" class="toc-anchor"></a>',
+						sprintf(
+							'<a name="heading-%s"%s></a>',
+							esc_attr( $key_current ),
+							$this->tag_class( $this->settings['anchor_class'] )
+						),
 						$key_current,
 						$match_set
 					) . $match_set[0],
