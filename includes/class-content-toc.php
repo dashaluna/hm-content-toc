@@ -22,6 +22,9 @@ class TOC {
 	// Comma separated list of header elements to generate TOC for
 	protected $headers;
 
+	// Array of HTML settings for markup
+	protected $settings;
+
 	/**
 	 * Create Content_TOC:
 	 * 1) Setup default header elements
@@ -31,6 +34,20 @@ class TOC {
 
 		// Set up default header elements
 		$this->headers = apply_filters( 'hm_content_toc_default_headers', 'h2, h3, h4, h5, h6' );
+
+		// Set up default HTML settings
+		$this->settings = array(
+			'wrapper_tag'   => 'div',
+			'wrapper_class' => 'hm-content-toc-wrapper',
+			'list_tag'      => 'ul',
+			'list_class'    => 'hm-content-toc-list',
+			'list_item_tag' => 'li',
+			'title_tag'     => 'h3',
+			'title_class'   => 'hm-content-toc-title',
+			'title'         => ''
+		);
+
+		$this->settings = apply_filters( 'hm_content_toc_settings', $this->settings );
 
 		// Register shortcode
 		add_shortcode( 'hm_content_toc', array( $this, 'shortcode' ) );
@@ -83,7 +100,7 @@ class TOC {
 
 		$atts = shortcode_atts( array(
 			'headers' => $this->headers,
-			'title'   => ''
+			'title'   => $this->settings['title']
 			), $atts, 'hm_content_toc' );
 
 		// Generate TOC from the content
@@ -97,19 +114,19 @@ class TOC {
 				return;
 			}
 
-			$toc_html .= '<div class="hm-content-toc-wrapper" id="hm-content-toc-' . esc_attr( $this->id_counter ) . '">';
+			// TOC Title HTML
+			$title_html = '';
+			if ( $atts['title'] && $this->settings['title_tag'] ) {
 
-			// Title HTML
-			if ( $atts['title'] ) {
-				$toc_html .= apply_filters(
-					'hm_content_toc_title',
-					'<h3 class="hm-content-toc-title">' . esc_html( $atts['title'] ) . '</h3>',
-					$atts['title']
-				);
+				$title_html = sprintf( '<%1$s%2$s>%3$s</%1$s>',
+					esc_attr( $this->settings['title_tag'] ),
+					$this->tag_class( $this->settings['title_class'] ),
+					esc_html( $atts['title'] )
+					);
 			}
 
-			// TOC list items HTML
-			$toc_list = '';
+			// TOC items HTML
+			$items_html = '';
 			foreach ( $items as $key => $item_match_arr ) {
 
 				// Counter of items, starting at 1
@@ -119,11 +136,12 @@ class TOC {
 				$item_text = strip_tags( $item_match_arr[1] );
 
 				// Add filter to allow custom TOC item markup
-				$toc_list .= apply_filters(
+				$items_html .= apply_filters(
 					'hm_content_toc_single_item',
 					sprintf(
-						'<li class="hm-toc-item-%s"><a href="#heading-%d">%s</a></li>',
-						esc_attr( $item_match_arr[2] ),
+						'<%1$s%2$s><a href="#heading-%3$d">%4$s</a></%1$s>',
+						esc_attr( $this->settings['list_item_tag'] ),
+						$this->tag_class( $this->settings['list_item_tag'], $item_match_arr[2] ),
 						esc_attr( $key_current ),
 						esc_html( $item_text )
 					),
@@ -133,17 +151,56 @@ class TOC {
 				);
 			}
 
-			$toc_html .= apply_filters(
-				'hm_content_toc_list',
-				'<ul class="hm-content-toc">' . $toc_list . '</ul>',
-				$toc_list,
-				$this->id_counter
-			);
+			// TOC list HTML
+			$list_html = $items_html;
+			if ( $this->settings['list_tag'] ) {
 
-			$toc_html .= '</div>';
+				$list_html = sprintf( '<%1$s%2$s>%3$s</%1$s>',
+					esc_attr( $this->settings['list_tag'] ),
+					$this->tag_class( $this->settings['list_class'] ),
+					$items_html
+				);
+			}
+
+			// TOC overall HTML
+			$toc_html = $title_html . $list_html;
+			if ( $this->settings['wrapper_tag'] ) {
+
+				$toc_html = sprintf( '<%1$s2$%s>%3$s</%1$s>',
+					esc_attr( $this->settings['wrapper_tag'] ),
+					$this->tag_class( $this->settings['wrapper_class'] ),
+					$title_html . $list_html
+				);
+			}
+
 		}
 
 		return $toc_html;
+	}
+
+	/**
+	 * Create string ' class=""' with specified class and suffix,
+	 * escaped and ready to use in HTML
+	 *
+	 * @param string $class  The class string
+	 * @param string $suffix Suffix, additional class string
+	 *
+	 * @return string        String ' class="{$class}-{$suffix}"' escaped and ready to use in HTML
+	 *                       If $class is empty/not specified, return original value
+	 */
+	protected function tag_class( string $class, $suffix = '' ) {
+
+		if ( $class ) {
+
+			// Append suffix
+			if ( $suffix ) {
+				$class .= '-' . $suffix;
+			}
+
+			$class = sprintf( ' class="%s"', esc_attr( $class ) );
+		}
+
+		return $class;
 	}
 
 	/**
