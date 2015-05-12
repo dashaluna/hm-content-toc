@@ -256,20 +256,14 @@ class TOC {
 				$key_current = $key + 1;
 
 				// Add anchor just before the matched header element
-				// Add filter to allow for custom anchor markup
-				// TODO: Do I still need a filter here?
 				$content = preg_replace(
 					'/' . preg_quote( $match_set[0], '/' ) . '/',
-					apply_filters(
-						'hm_content_toc_anchor',
-						sprintf(
-							'<a name="heading-%s"%s></a>',
-							esc_attr( $key_current ),
-							$this->tag_class( $this->settings['anchor_class'] )
-						),
-						$key_current,
-						$match_set
-					) . $match_set[0],
+					sprintf(
+						'<a name="heading-%s"%s></a>%s',
+						esc_attr( $key_current ),
+						$this->tag_class( $this->settings['anchor_class'] ),
+						$match_set[0]
+					),
 					$content
 				);
 			}
