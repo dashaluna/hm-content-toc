@@ -222,7 +222,7 @@ class TOC {
 		// Prepare headers for regex & get them in array
 		$headers = $this->prepare_headers( $headers );
 
-		// Get current post's content
+		// Get current post's content (raw, no 'the_content' filter run yet)
 		$content = get_the_content();
 
 		if ( empty( $content ) || empty( $headers ) ) {
@@ -254,6 +254,10 @@ class TOC {
 
 				// Counter of matched headers, starting at 1
 				$key_current = $key + 1;
+
+				// Run the header HTML matched snippet through `the_content` filter
+				// So any conversion of chars are consistent with $content used here
+				$match_set[0] = apply_filters( 'the_content', $match_set[0] );
 
 				// Add anchor just before the matched header element
 				$content = preg_replace(
