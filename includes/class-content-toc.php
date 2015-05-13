@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class TOC {
 
-	// TOC ID counter (in case of multiple TOCs on the same page)
-	protected $id_counter = 0;
+	// TOC shortcode counter (in case of multiple TOCs on the same page)
+	protected $id_counter;
 
 	// Comma separated list of header elements to generate TOC for
 	protected $headers;
@@ -31,6 +31,9 @@ class TOC {
 	 * 2) Register shortcode
 	 */
 	protected function __construct() {
+
+		// TOC shortcode counter
+		$this->id_counter = 0;
 
 		// Set up default header elements
 		$this->headers = apply_filters( 'hm_content_toc_default_headers', 'h2, h3, h4, h5, h6' );
@@ -109,72 +112,73 @@ class TOC {
 		$items    = $this->generate_content_toc( $atts['headers'] );
 		$toc_html = '';
 
-		if ( $items ) {
+		// Stop if:
+		// 1) no matches for specified headers in the content
+		// 2) subsequent TOC is being processed (not 1st one). Only process the first TOC shortcode
+		if (
+			! $items
+			|| ++$this->id_counter > 1
+		) {
+			return;
+		}
 
-			// Stop - don't process any subsequent TOCs, only the 1st one
-			if ( ++$this->id_counter > 1 ) {
-				return;
-			}
+		// TOC Title HTML
+		$title_html = '';
+		if ( $atts['title'] && $this->settings['title_tag'] ) {
 
-			// TOC Title HTML
-			$title_html = '';
-			if ( $atts['title'] && $this->settings['title_tag'] ) {
-
-				$title_html = sprintf( '<%1$s%2$s>%3$s</%1$s>',
-					esc_attr( $this->settings['title_tag'] ),
-					$this->tag_class( $this->settings['title_class'] ),
-					esc_html( $atts['title'] )
-					);
-			}
-
-			// TOC items HTML
-			$items_html = '';
-			foreach ( $items as $key => $item_match_arr ) {
-
-				// Counter of items, starting at 1
-				$key_current = $key + 1;
-
-				// Stripped item text
-				$item_text = strip_tags( $item_match_arr[1] );
-
-				// Add filter to allow custom TOC item markup
-				$items_html .= apply_filters(
-					'hm_content_toc_single_item',
-					sprintf(
-						'<%1$s%2$s><a href="#heading-%3$d">%4$s</a></%1$s>',
-						esc_attr( $this->settings['list_item_tag'] ),
-						$this->tag_class( $this->settings['list_item_class'], $item_match_arr[2] ),
-						esc_attr( $key_current ),
-						esc_html( $item_text )
-					),
-					$key_current,
-					$item_text,
-					$item_match_arr
+			$title_html = sprintf( '<%1$s%2$s>%3$s</%1$s>',
+				esc_attr( $this->settings['title_tag'] ),
+				$this->tag_class( $this->settings['title_class'] ),
+				esc_html( $atts['title'] )
 				);
-			}
+		}
 
-			// TOC list HTML
-			$list_html = $items_html;
-			if ( $this->settings['list_tag'] ) {
+		// TOC items HTML
+		$items_html = '';
+		foreach ( $items as $key => $item_match_arr ) {
 
-				$list_html = sprintf( '<%1$s%2$s>%3$s</%1$s>',
-					esc_attr( $this->settings['list_tag'] ),
-					$this->tag_class( $this->settings['list_class'] ),
-					$items_html
-				);
-			}
+			// Counter of items, starting at 1
+			$key_current = $key + 1;
 
-			// TOC overall HTML
-			$toc_html = $title_html . $list_html;
-			if ( $this->settings['wrapper_tag'] ) {
+			// Stripped item text
+			$item_text = strip_tags( $item_match_arr[1] );
 
-				$toc_html = sprintf( '<%1$s%2$s>%3$s</%1$s>',
-					esc_attr( $this->settings['wrapper_tag'] ),
-					$this->tag_class( $this->settings['wrapper_class'] ),
-					$title_html . $list_html
-				);
-			}
+			// Add filter to allow custom TOC item markup
+			$items_html .= apply_filters(
+				'hm_content_toc_single_item',
+				sprintf(
+					'<%1$s%2$s><a href="#heading-%3$d">%4$s</a></%1$s>',
+					esc_attr( $this->settings['list_item_tag'] ),
+					$this->tag_class( $this->settings['list_item_class'], $item_match_arr[2] ),
+					esc_attr( $key_current ),
+					esc_html( $item_text )
+				),
+				$key_current,
+				$item_text,
+				$item_match_arr
+			);
+		}
 
+		// TOC list HTML
+		$list_html = $items_html;
+		if ( $this->settings['list_tag'] ) {
+
+			$list_html = sprintf( '<%1$s%2$s>%3$s</%1$s>',
+				esc_attr( $this->settings['list_tag'] ),
+				$this->tag_class( $this->settings['list_class'] ),
+				$items_html
+			);
+		}
+
+		// TOC overall HTML
+		$toc_html = $title_html . $list_html;
+		if ( $this->settings['wrapper_tag'] ) {
+
+			$toc_html = sprintf( '<%1$s%2$s>%3$s</%1$s>',
+				esc_attr( $this->settings['wrapper_tag'] ),
+				$this->tag_class( $this->settings['wrapper_class'] ),
+				$title_html . $list_html
+			);
 		}
 
 		return $toc_html;
