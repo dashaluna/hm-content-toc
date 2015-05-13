@@ -256,15 +256,18 @@ class TOC {
 				$key_current = $key + 1;
 
 				// Add anchor just before the matched header element
+				// Replace limit is 1 - ie only the 1st match
+				// Ignore headers preceded by `</a>` - ie headers where anchor has already been inserted
 				$content = preg_replace(
-					'/' . preg_quote( $match_set[0], '/' ) . '/',
+					'/(?<!<\/a>)' . preg_quote( $match_set[0], '/' ) . '/',
 					sprintf(
 						'<a name="heading-%s"%s></a>%s',
 						esc_attr( $key_current ),
 						$this->tag_class( $this->settings['anchor_class'] ),
 						$match_set[0]
 					),
-					$content
+					$content,
+					1
 				);
 			}
 
