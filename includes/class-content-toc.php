@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class TOC {
 
-	// TOC ID counter (in case of multiple TOCs on the same page)
-	protected $id_counter = 0;
+	// TOC shortcode counter (in case of multiple TOCs on the same page)
+	protected $id_counter;
 
 	// Comma separated list of header elements to generate TOC for
 	protected $headers;
@@ -31,6 +31,9 @@ class TOC {
 	 * 2) Register shortcode
 	 */
 	protected function __construct() {
+
+		// TOC shortcode counter
+		$this->id_counter = 0;
 
 		// Set up default header elements
 		$this->headers = apply_filters( 'hm_content_toc_default_headers', 'h2, h3, h4, h5, h6' );
