@@ -115,7 +115,9 @@ class TOC {
 			return '';
 		}
 
-		add_filter( 'the_content', function( $content ) use ( $atts ) {
+		add_filter( 'the_content', $func = function( $content ) use ( $atts, &$func ) {
+
+			remove_filter( 'the_content', $func, 12 );
 
 			return TOC::get_instance()->filter_content( $content, $atts );
 
