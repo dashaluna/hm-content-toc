@@ -98,17 +98,17 @@ class TOC {
 	 * 1) headers - comma separated list of header elements
 	 * 2) title   - title before the TOC list
 	 *
-	 * @param $atts         Shortcode attributes
-	 * @param null $content Shortcode content
+	 * @param $shortcode_atts Shortcode attributes
+	 * @param $post_content   Shortcode content
 	 *
-	 * @return string       HTML markup of the TOC
+	 * @return string         HTML markup of the TOC
 	 */
-	public function shortcode( $atts, $content = null ) {
+	public function shortcode( $shortcode_atts, $shortcode_content = null ) {
 
-		$atts = shortcode_atts( array(
+		$shortcode_atts = shortcode_atts( array(
 			'headers' => $this->headers,
 			'title'   => $this->settings['title']
-		), $atts, 'hm_content_toc' );
+		), $shortcode_atts, 'hm_content_toc' );
 
 		// Stop - if subsequent TOC is being processed (not 1st one). Only process the first TOC shortcode
 		if (  ++$this->id_counter > 1 ) {
@@ -116,11 +116,11 @@ class TOC {
 		}
 
 		// TODO: Theo, could you explain a bit more what's going on here :)
-		add_filter( 'the_content', $func = function( $content ) use ( $atts, &$func ) {
+		add_filter( 'the_content', $func = function( $post_content ) use ( $shortcode_atts, &$func ) {
 
 			remove_filter( 'the_content', $func, 12 );
 
-			return TOC::get_instance()->filter_content( $content, $atts );
+			return TOC::get_instance()->filter_content( $post_content, $shortcode_atts );
 
 		}, 12 );
 
@@ -157,30 +157,31 @@ class TOC {
 	 *
 	 * Replaces content TOC placeholder with content TOC HTML and inserts anchor tags at headings
 	 *
-	 * @param string $content  The content HTML string, comming from `the_content` filter
-	 * @param array  $atts     The shortcode attributes, coming from `hm_content_toc` shortcode
+	 * @param string $post_content   The content HTML string, comming from `the_content` filter
+	 * @param array  $shortcode_atts The shortcode attributes, coming from `hm_content_toc` shortcode
+	 *
 	 * @return string
 	 */
-	public function filter_content( $content, $atts ) {
+	public function filter_content( $post_content, $shortcode_atts ) {
 
 		// Reset the counter
 		// TODO - Theo, could you explain a little bit more why? Is it due to it being singleton class?
 		$this->id_counter = 0;
 
 		// Generate TOC from the content
-		$items    = $this->get_content_toc_headers( $atts['headers'], $content );
+		$items    = $this->get_content_toc_headers( $shortcode_atts['headers'], $post_content );
 		$toc_html = '';
 
 		// No matches for specified headers in the content
 		if ( ! $items ) {
-			return str_replace( $this->placeholder, $toc_html, $content );
+			return str_replace( $this->placeholder, $toc_html, $post_content );
 		}
 
 		// TOC Title HTML
-		$title_html = $this->get_toc_title_html( $atts );
+		$title_html = $this->get_toc_title_html( $shortcode_atts );
 
 		// TOC items HTML
-		$items_html = $this->get_toc_items_html( $items, $atts );
+		$items_html = $this->get_toc_items_html( $items, $shortcode_atts );
 
 		// TOC list HTML
 		$list_html = $items_html;
@@ -204,32 +205,32 @@ class TOC {
 			);
 		}
 
-		$content = str_replace( $this->placeholder, $toc_html, $content );
+		$post_content = str_replace( $this->placeholder, $toc_html, $post_content );
 
-		$content = $this->insert_anchors( $content, $items );
+		$post_content = $this->insert_anchors( $post_content, $items );
 
-		return $content;
+		return $post_content;
 	}
 
 	/**
 	 * Find and return an array of HTML headers for a given set of accepted header types
 	 * and a given string of HTML content
 	 *
-	 * @param array  $headers    Comma separated list of header elements
-	 * @param string $content    A HTML content string
+	 * @param array  $headers      Comma separated list of header elements
+	 * @param string $post_content A HTML content string
 	 *
-	 * @return array   Regex matches of specified header elements
-	 *                 from the current content
+	 * @return array               Regex matches of specified header elements
+	 *                             from the current content
 	 */
-	public function get_content_toc_headers( $headers, $content ) {
+	public function get_content_toc_headers( $headers, $post_content ) {
 
 		// Prepare headers for regex & get them in array
 		$headers = $this->prepare_headers( $headers );
 
 		// Get current post's content
-		$content = get_the_content();
+		$post_content = get_the_content();
 
-		if ( empty( $content ) || empty( $headers ) ) {
+		if ( empty( $post_content ) || empty( $headers ) ) {
 			return array();
 		}
 
@@ -238,7 +239,7 @@ class TOC {
 		$regex = "/<(?:$header_elements).*?>(.*?)<\/($header_elements)>/i";
 
 		// Find/match header elements in the content
-		preg_match_all( $regex, $content, $matches, PREG_SET_ORDER );
+		preg_match_all( $regex, $post_content, $matches, PREG_SET_ORDER );
 
 		// Stop if headers haven't been found/matched in content
 		if ( ! $matches ) {
@@ -286,32 +287,32 @@ class TOC {
 	/**
 	 * Gets the HTML for the content TOC title
 	 *
-	 * @param $atts   Array of shortcode attributes
+	 * @param $shortcode_atts Array of shortcode attributes
 	 *
-	 * @return string Output HTML for shortcode title
+	 * @return string         Output HTML for shortcode title
 	 */
-	protected function get_toc_title_html( $atts ) {
+	protected function get_toc_title_html( $shortcode_atts ) {
 
-		if ( ! $atts['title'] || ! $this->settings['title_tag'] ) {
+		if ( ! $shortcode_atts['title'] || ! $this->settings['title_tag'] ) {
 			return '';
 		}
 
 		return sprintf( '<%1$s%2$s>%3$s</%1$s>',
 			esc_attr( $this->settings['title_tag'] ),
 			$this->tag_class( $this->settings['title_class'] ),
-			esc_html( $atts['title'] )
+			esc_html( $shortcode_atts['title'] )
 		);
 	}
 
 	/**
 	 * Gets the HTML for the content TOC items
 	 *
-	 * @param array $items Array of specified headers that were matched in the content
-	 * @param array $atts  Array of shortcode attributes
+	 * @param array $items          Array of specified headers that were matched in the content
+	 * @param array $shortcode_atts Array of shortcode attributes
 	 *
-	 * @return string      Output HTML for content TOC items
+	 * @return string               Output HTML for content TOC items
 	 */
-	protected function get_toc_items_html( $items, $atts ) {
+	protected function get_toc_items_html( $items, $shortcode_atts ) {
 
 		$items_html = '';
 
@@ -345,12 +346,13 @@ class TOC {
 	/**
 	 * Inserts supplied array of anchors into the supplied HTML content string
 	 *
-	 * @param string $content HTML content of the current post
-	 * @param array  $items   Array of specified headers that were matched in the content
+	 * @param string $post_content HTML content of the current post
+	 * @param array  $items        Array of specified headers that were matched in the content
 	 *
-	 * @return mixed          Modified content HTML with inserted anchors before matched headers
+	 * @return mixed               Modified post content HTML with inserted anchors
+	 *                             before matched headers
 	 */
-	protected function insert_anchors( $content, $items ) {
+	protected function insert_anchors( $post_content, $items ) {
 
 		// Add anchors before the matched header elements in the content
 		foreach ( $items as $key => $match_set ) {
@@ -359,7 +361,7 @@ class TOC {
 			$key_current = $key + 1;
 
 			// Add anchor just before the matched header element
-			$content = preg_replace(
+			$post_content = preg_replace(
 				'/' . preg_quote( $match_set[0], '/' ) . '/',
 				sprintf(
 					'<a name="heading-%s"%s></a>%s',
@@ -367,11 +369,11 @@ class TOC {
 					$this->tag_class( $this->settings['anchor_class'] ),
 					$match_set[0]
 				),
-				$content
+				$post_content
 			);
 		}
 
-		return $content;
+		return $post_content;
 	}
 
 	/**
