@@ -181,7 +181,7 @@ class TOC {
 		$title_html = $this->get_toc_title_html( $shortcode_atts );
 
 		// TOC items HTML
-		$items_html = $this->get_toc_items_html( $items, $shortcode_atts );
+		$items_html = $this->get_toc_items_html( $items );
 
 		// TOC list HTML
 		$list_html = $items_html;
@@ -307,12 +307,11 @@ class TOC {
 	/**
 	 * Gets the HTML for the content TOC items
 	 *
-	 * @param array $items          Array of specified headers that were matched in the content
-	 * @param array $shortcode_atts Array of shortcode attributes
+	 * @param array $items Array of specified headers that were matched in the content
 	 *
-	 * @return string               Output HTML for content TOC items
+	 * @return string      Output HTML for content TOC items
 	 */
-	protected function get_toc_items_html( $items, $shortcode_atts ) {
+	protected function get_toc_items_html( $items ) {
 
 		$items_html = '';
 
