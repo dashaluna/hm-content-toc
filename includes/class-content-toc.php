@@ -189,20 +189,21 @@ class TOC {
 		// TODO - Theo, could you explain a little bit more why? Is it due to it being singleton class?
 		$this->id_counter = 0;
 
-		// Generate TOC from the content
-		$items    = $this->get_content_toc_headers( $shortcode_atts['headers'], $post_content );
-		$toc_html = '';
+		// Generate TOC from the post content
+		$toc_items_matches = $this->get_content_toc_headers( $shortcode_atts['headers'], $post_content );
+		$toc_html          = '';
 
-		// No matches for specified headers in the content
-		if ( ! $items ) {
-			return str_replace( $this->placeholder, $toc_html, $post_content );
+		// No matches for specified headers in the post content
+		// Remove the shortcode HTML placeholder from the post content
+		if ( ! $toc_items_matches ) {
+			return str_replace( $this->placeholder, '', $post_content );
 		}
 
-		// TOC Title HTML
+		// TOC title HTML
 		$title_html = $this->get_toc_title_html( $shortcode_atts );
 
 		// TOC items HTML
-		$items_html = $this->get_toc_items_html( $items );
+		$items_html = $this->get_toc_items_html( $toc_items_matches );
 
 		// TOC list HTML
 		$list_html = $items_html;
@@ -226,9 +227,11 @@ class TOC {
 			);
 		}
 
+		// Replace shortcode HTML placeholder with generated TOC HTML
 		$post_content = str_replace( $this->placeholder, $toc_html, $post_content );
 
-		$post_content = $this->insert_anchors( $post_content, $items );
+		// Insert anchors before the corresponding headers in the post content
+		$post_content = $this->insert_anchors( $post_content, $toc_items_matches );
 
 		return $post_content;
 	}
@@ -331,21 +334,21 @@ class TOC {
 	/**
 	 * Gets the HTML for the content TOC items
 	 *
-	 * @param array $items Array of specified headers that were matched in the content
+	 * @param array $toc_items_matches Array of specified headers that were matched in the content
 	 *
-	 * @return string      Output HTML for content TOC items
+	 * @return string                  Output HTML for content TOC items
 	 */
-	protected function get_toc_items_html( $items ) {
+	protected function get_toc_items_html( $toc_items_matches ) {
 
 		$items_html = '';
 
-		foreach ( $items as $key => $item_match_arr ) {
+		foreach ( $toc_items_matches as $key => $toc_item_match ) {
 
 			// Counter of items, starting at 1
 			$key_current = $key + 1;
 
 			// Stripped item text
-			$item_text = strip_tags( $item_match_arr[1] );
+			$item_text = strip_tags( $toc_item_match[1] );
 
 			// Add filter to allow custom TOC item markup
 			$items_html .= apply_filters(
@@ -353,13 +356,13 @@ class TOC {
 				sprintf(
 					'<%1$s%2$s><a href="#heading-%3$d">%4$s</a></%1$s>',
 					esc_attr( $this->settings['list_item_tag'] ),
-					$this->tag_class( $this->settings['list_item_class'], $item_match_arr[2] ),
+					$this->tag_class( $this->settings['list_item_class'], $toc_item_match[2] ),
 					esc_attr( $key_current ),
 					esc_html( $item_text )
 				),
 				$key_current,
 				$item_text,
-				$item_match_arr
+				$toc_item_match
 			);
 		}
 
