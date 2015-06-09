@@ -234,7 +234,7 @@ class TOC {
 	}
 
 	/**
-	 * Find and return an array of HTML headers for a given set of accepted header types
+	 * Find and return an array of HTML headers for a given set of accepted header elements
 	 * and a given string of HTML content
 	 *
 	 * @param array  $headers      Comma separated list of header elements
@@ -245,13 +245,16 @@ class TOC {
 	 */
 	public function get_content_toc_headers( $headers, $post_content ) {
 
+		// Stop - if content is empty
+		if ( empty( $post_content ) ) {
+			return array();
+		}
+
 		// Prepare headers for regex & get them in array
 		$headers = $this->prepare_headers( $headers );
 
-		// Get current post's content
-		$post_content = get_the_content();
-
-		if ( empty( $post_content ) || empty( $headers ) ) {
+		// Stop - if no header elements are specified to be matched
+		if ( empty( $headers ) ) {
 			return array();
 		}
 
@@ -259,7 +262,7 @@ class TOC {
 		$header_elements = implode( "|", $headers );
 		$regex = "/<(?:$header_elements).*?>(.*?)<\/($header_elements)>/i";
 
-		// Find/match header elements in the content
+		// Find/match header elements in the supplied post content
 		preg_match_all( $regex, $post_content, $matches, PREG_SET_ORDER );
 
 		// Stop if headers haven't been found/matched in content
