@@ -25,6 +25,7 @@ class TOC {
 	// Array of HTML settings for markup
 	protected $settings;
 
+	// Placeholder HTML that shortcode is substituted for
 	protected $placeholder = '<div class="hm_content_toc_placeholder" style="display:none"></div>';
 
 	/**
@@ -115,15 +116,35 @@ class TOC {
 			return '';
 		}
 
-		// TODO: Theo, could you explain a bit more what's going on here :)
+		/**
+		 * Add `the_content` filter at 12, because `do_shortcode` is run at 11
+		 * and it means that we don't have any access to the posts content within
+		 * the shortcode callback, i.e. this function
+		 *
+		 * So:
+		 * 1) Shortcode is replaced with placeholder HTML
+		 * 2) `the_content` filter is added at priority 12, so that we can access post content
+		 *    after the shortcode has been processed/replaced
+		 * 3) The added filter is self removed, so it only runs on content that contains the shortcode
+		 */
 		add_filter( 'the_content', $func = function( $post_content ) use ( $shortcode_atts, &$func ) {
 
+			// Self remove just added filter, so it only runs whenever there is specified shortcode
 			remove_filter( 'the_content', $func, 12 );
 
+			// Process post content - insert TOC and anchors before headers
 			return TOC::get_instance()->filter_content( $post_content, $shortcode_atts );
 
 		}, 12 );
 
+		/**
+		 * Shortcode is substituted for HTML placeholder.
+		 * This is done, so that we can call `the_content` filter within
+		 * this shortcode function and self remove that filter.
+		 *
+		 * Currently this approach is buggy in WP core ref: https://core.trac.wordpress.org/ticket/17817
+		 * hence it requires a workaround.
+		 */
 		return $this->placeholder;
 	}
 
