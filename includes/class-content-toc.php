@@ -372,16 +372,17 @@ class TOC {
 	/**
 	 * Inserts supplied array of anchors into the supplied HTML content string
 	 *
-	 * @param string $post_content HTML content of the current post
-	 * @param array  $items        Array of specified headers that were matched in the content
+	 * @param string $post_content      HTML content of the current post
+	 * @param array  $toc_items_matches Array of TOC matches, i.e. specified headers
+	 *                                  that were matched in the content
 	 *
-	 * @return mixed               Modified post content HTML with inserted anchors
-	 *                             before matched headers
+	 * @return mixed                    Modified post content HTML with inserted anchors
+	 *                                  before matched headers
 	 */
-	protected function insert_anchors( $post_content, $items ) {
+	protected function insert_anchors( $post_content, $toc_items_matches ) {
 
 		// Add anchors before the matched header elements in the content
-		foreach ( $items as $key => $match_set ) {
+		foreach ( $toc_items_matches as $key => $match_set ) {
 
 			// Counter of matched headers, starting at 1
 			$key_current = $key + 1;
