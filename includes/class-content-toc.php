@@ -394,19 +394,25 @@ class TOC {
 
 			// Store all anchors so we can ensure we don't insert multiple anchors for duplicate headers
 			$anchors[] = sprintf(
-				'<a name="heading-%s"%s></a>%s',
+				'<a name="heading-%s"%s></a>',
 				esc_attr( $key_current ),
 				$this->tag_class( $this->settings['anchor_class'] ),
 				$match_set[0]
 			);
 
+			// Regex escape stored anchors
+			$anchors_regex_ready = array();
+			foreach ( $anchors as $anchor ) {
+				$anchors_regex_ready[] = preg_quote( $anchor, '/' );
+			}
+
 			// Add anchor just before the matched header element
 			// Use negative lookbehind to ensure we don't insert multiple anchors to a single header
 			$post_content = preg_replace(
-				'/(?<!' . implode( '|', array_map( 'preg_quote', $anchors, array( '/' ) ) ) . ')' . preg_quote( $match_set[0], '/' ) . '/',
-				$anchors[ ( count( $anchors ) - 1 ) ], // Insert latest/currently considered anchor
+				'/(?<!' . implode( '|', $anchors_regex_ready ) . ')' . preg_quote( $match_set[0], '/' ) . '/',
+				$anchors[ ( count( $anchors ) - 1 ) ] . $match_set[0], // Insert latest/currently considered anchor before the matched header in the post content
 				$post_content,
-				1 // Maximum replacements
+				1 // Maximum replacements (replace the first match only)
 			);
 		}
 
