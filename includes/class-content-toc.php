@@ -410,7 +410,7 @@ class TOC {
 			// Use negative lookbehind to ensure we don't insert multiple anchors to a single header
 			$post_content = preg_replace(
 				'/(?<!' . implode( '|', $anchors_regex_ready ) . ')' . preg_quote( $match_set[0], '/' ) . '/',
-				$anchors[ ( count( $anchors ) - 1 ) ] . $match_set[0], // Insert latest/currently considered anchor before the matched header in the post content
+				end ( $anchors ) . $match_set[0], // Insert latest/currently considered anchor before the matched header in the post content
 				$post_content,
 				1 // Maximum replacements (replace the first match only)
 			);
