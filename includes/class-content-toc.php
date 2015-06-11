@@ -185,8 +185,11 @@ class TOC {
 	 */
 	public function filter_content( $post_content, $shortcode_atts ) {
 
-		// Reset the counter
-		// TODO - Theo, could you explain a little bit more why? Is it due to it being singleton class?
+		/**
+		 * Reset the counter to support archive pages (multiple posts display on the same page).
+		 * By this point all the shortcodes for the current post have already been parsed
+		 * by `the_content` filter on priority 11
+		 */
 		$this->id_counter = 0;
 
 		// Generate TOC from the post content
