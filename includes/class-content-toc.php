@@ -126,6 +126,10 @@ class TOC {
 		 * 2) `the_content` filter is added at priority 12, so that we can access post content
 		 *    after the shortcode has been processed/replaced
 		 * 3) The added filter is self removed, so it only runs on content that contains the shortcode
+		 *
+		 * NOTE: you can't add a filter within a function that was called by that filter because
+		 * the remaining hooked functions from the first iteration of the filter will be discarded
+		 * More info: https://core.trac.wordpress.org/ticket/17817
 		 */
 		add_filter( 'the_content', $func = function( $post_content ) use ( $shortcode_atts, &$func ) {
 
