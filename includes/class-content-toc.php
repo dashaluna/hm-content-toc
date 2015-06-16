@@ -377,7 +377,8 @@ class TOC {
 	}
 
 	/**
-	 * Inserts supplied array of anchors into the supplied HTML content string
+	 * Inserts anchors into the supplied post content, just before each of
+	 * header that was matched and supplied as array of TOC matches
 	 *
 	 * @param string $post_content      HTML content of the current post
 	 * @param array  $toc_items_matches Array of TOC matches, i.e. specified headers
@@ -388,22 +389,37 @@ class TOC {
 	 */
 	protected function insert_anchors( $post_content, $toc_items_matches ) {
 
-		// Add anchors before the matched header elements in the content
+		// Anchors to be inserted into the post content
+		$anchors = array();
+
+		// Insert anchors before the matched header elements in the post content
 		foreach ( $toc_items_matches as $key => $match_set ) {
 
 			// Counter of matched headers, starting at 1
+			// This will be the name of an anchor, so should be human readable
 			$key_current = $key + 1;
 
+			// Store all anchors so we can ensure we don't insert multiple anchors for duplicate headers
+			$anchors[] = sprintf(
+				'<a name="heading-%s"%s></a>',
+				esc_attr( $key_current ),
+				$this->tag_class( $this->settings['anchor_class'] ),
+				$match_set[0]
+			);
+
+			// Regex escape stored anchors
+			$anchors_regex_ready = array();
+			foreach ( $anchors as $anchor ) {
+				$anchors_regex_ready[] = preg_quote( $anchor, '/' );
+			}
+
 			// Add anchor just before the matched header element
+			// Use negative lookbehind to ensure we don't insert multiple anchors to a single header
 			$post_content = preg_replace(
-				'/' . preg_quote( $match_set[0], '/' ) . '/',
-				sprintf(
-					'<a name="heading-%s"%s></a>%s',
-					esc_attr( $key_current ),
-					$this->tag_class( $this->settings['anchor_class'] ),
-					$match_set[0]
-				),
-				$post_content
+				'/(?<!' . implode( '|', $anchors_regex_ready ) . ')' . preg_quote( $match_set[0], '/' ) . '/',
+				end ( $anchors ) . $match_set[0], // Insert latest/currently considered anchor before the matched header in the post content
+				$post_content,
+				1 // Maximum replacements (replace the first match only)
 			);
 		}
 
