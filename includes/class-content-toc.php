@@ -126,6 +126,10 @@ class TOC {
 		 * 2) `the_content` filter is added at priority 12, so that we can access post content
 		 *    after the shortcode has been processed/replaced
 		 * 3) The added filter is self removed, so it only runs on content that contains the shortcode
+		 *
+		 * NOTE: you can't add a filter within a function that was called by that filter because
+		 * the remaining hooked functions from the first iteration of the filter will be discarded
+		 * More info: https://core.trac.wordpress.org/ticket/17817
 		 */
 		add_filter( 'the_content', $func = function( $post_content ) use ( $shortcode_atts, &$func ) {
 
@@ -185,8 +189,11 @@ class TOC {
 	 */
 	public function filter_content( $post_content, $shortcode_atts ) {
 
-		// Reset the counter
-		// TODO - Theo, could you explain a little bit more why? Is it due to it being singleton class?
+		/**
+		 * Reset the counter to support archive pages (multiple posts display on the same page).
+		 * By this point all the shortcodes for the current post have already been parsed
+		 * by `the_content` filter on priority 11
+		 */
 		$this->id_counter = 0;
 
 		// Generate TOC from the post content
@@ -422,7 +429,7 @@ class TOC {
 	/**
 	 * Add shortcake UI integration for 'hm_content_toc' shortcode
 	 */
-	function register_shortcake_ui() {
+	public function register_shortcake_ui() {
 
 		shortcode_ui_register_for_shortcode(
 			'hm_content_toc',
