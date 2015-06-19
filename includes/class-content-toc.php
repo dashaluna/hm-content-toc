@@ -28,6 +28,12 @@ class TOC {
 	// Placeholder HTML that shortcode is substituted for
 	protected $placeholder = '<div class="hm_content_toc_placeholder" style="display:none"></div>';
 
+	// Available TOC structure types
+	protected $types;
+
+	// HTML structure type of the TOC list
+	protected $type;
+
 	/**
 	 * Create Content_TOC:
 	 * 1) Setup default header elements
@@ -56,6 +62,13 @@ class TOC {
 		);
 
 		$this->settings = apply_filters( 'hm_content_toc_settings', $this->settings );
+
+		// Set up available TOC structure types
+		$this->types = array( 'flat', 'nested' );
+
+		// Set up default TOC structure type
+		// TODO: do I need to check the value after the filter against the available types?
+		$this->type = apply_filters( 'hm_content_toc_default_type', 'flat', $this->types );
 
 		// Register shortcode
 		add_shortcode( 'hm_content_toc', array( $this, 'shortcode' ) );
@@ -108,7 +121,8 @@ class TOC {
 
 		$shortcode_atts = shortcode_atts( array(
 			'headers' => $this->headers,
-			'title'   => $this->settings['title']
+			'title'   => $this->settings['title'],
+			'type'    => $this->type
 		), $shortcode_atts, 'hm_content_toc' );
 
 		// Stop - if subsequent TOC is being processed (not 1st one). Only process the first TOC shortcode
@@ -210,7 +224,7 @@ class TOC {
 		$title_html = $this->get_toc_title_html( $shortcode_atts );
 
 		// TOC items HTML
-		$items_html = $this->get_toc_items_html( $toc_items_matches );
+		$items_html = $this->get_toc_items_html( $toc_items_matches, $shortcode_atts );
 
 		// TOC list HTML
 		$list_html = $items_html;
@@ -247,7 +261,7 @@ class TOC {
 	 * Find and return an array of HTML headers for a given set of accepted header elements
 	 * and a given string of HTML content
 	 *
-	 * @param array  $headers      Comma separated list of header elements
+	 * @param string $headers      Comma separated list of header elements
 	 * @param string $post_content A HTML content string
 	 *
 	 * @return array               Regex matches of specified header elements
@@ -261,7 +275,7 @@ class TOC {
 		}
 
 		// Prepare headers for regex & get them in array
-		$headers = $this->prepare_headers( $headers );
+		$headers = $this->prepare_headers( $headers, true );
 
 		// Stop - if no header elements are specified to be matched
 		if ( empty( $headers ) ) {
@@ -291,11 +305,12 @@ class TOC {
 	 * 4) Keep unique values only
 	 * 5) Escape regex special chars in headers with preg_quote
 	 *
-	 * @param $headers Comma separated list of header elements to match for TOC generation
+	 * @param string $headers      Comma separated list of header elements to match for TOC generation
+	 * @param bool   $regex_escape Flag to either regex escape headers or not
 	 *
-	 * @return array   Header elements to be matched in content to generate TOC
+	 * @return array               Header elements to be matched in content to generate TOC
 	 */
-	public function prepare_headers( $headers ) {
+	public function prepare_headers( $headers, $regex_escape = false ) {
 
 		// 1) Split string by commas
 		$headers_arr = explode( ',', $headers );
@@ -313,7 +328,9 @@ class TOC {
 		$headers_arr = array_unique( $headers_arr );
 
 		// 5) Escape regex special chars
-		$headers_arr = array_map( 'preg_quote', $headers_arr );
+		if ( $regex_escape ) {
+			$headers_arr = array_map( 'preg_quote', $headers_arr );
+		}
 
 		return $headers_arr;
 	}
@@ -341,11 +358,30 @@ class TOC {
 	/**
 	 * Gets the HTML for the content TOC items
 	 *
-	 * @param array $toc_items_matches Array of specified headers that were matched in the content
+	 * @param array $toc_items_matches Array of TOC matched headers
+	 *                                 (headers that have been matched in the content)
+	 * @param array $shortcode_atts    Array of shorcode attributes
 	 *
 	 * @return string                  Output HTML for content TOC items
 	 */
-	protected function get_toc_items_html( $toc_items_matches ) {
+	protected function get_toc_items_html( $toc_items_matches, $shortcode_atts ) {
+
+		// Decide what TOC structure to display, default to flat
+		// TODO: Do I need to store a default type rather than have it specified here?
+		$type = in_array( $shortcode_atts['type'], $this->types ) ? $shortcode_atts['type'] : 'flat';
+
+		// Return TOC items HTML markup depending on its type
+		return call_user_func( array( $this, "toc_markup_type_{$type}" ), $toc_items_matches, $shortcode_atts['headers'] );
+	}
+
+	/**
+	 * Return flat HTML structure for the TOC items
+	 *
+	 * @param array $toc_items_matches Matched TOC items
+	 *
+	 * @return string                  Flat list HTML markup for the TOC items
+	 */
+	protected function toc_markup_type_flat( $toc_items_matches ) {
 
 		$items_html = '';
 
@@ -374,6 +410,81 @@ class TOC {
 		}
 
 		return $items_html;
+	}
+
+	/**
+	 * Return nested HTML structure for the TOC items, where
+	 * each header in the shortcode denotes a new level.
+	 *
+	 * @param array $toc_items_matches Array of TOC items matches, each match is of the
+	 *                                 following structure, example:
+	 *                                 Array (
+	 *                                   [0] => <h2>Header 2</h2> i.e. full match of the header from content
+	 *                                   [1] => Header 2          i.e. header text only
+	 *                                   [2] => h2                i.e. header element only
+	 *                                 )
+	 * @param string $headers          Headers list dictates the nesting levels, so that
+	 *                                 1st header is the top level, 2nd is second level and so on
+	 *
+	 * @return string                  Nested list HTML markup for the TOC items
+	 */
+	protected function toc_markup_type_nested( $toc_items_matches, $headers ) {
+
+		// Convert headers string into array, clean them up
+		$headers = $this->prepare_headers( $headers );
+
+		// Stores TOC items in nested array
+		$nested = array();
+
+		// TODO: Theo, a bit confused here :( is this the array of keys
+		// where a currently considered match should be inserted?
+		$current_keys = array();
+
+		foreach ( $toc_items_matches as $key => $toc_item_match ) {
+
+			// Get header element of the TOC item match
+			$toc_item_header = $toc_item_match[2];
+
+			// Get the required depth of the current match
+			$depth = array_search( $toc_item_header, $headers );
+
+			// Get the current keys to be used to drill down the nested array
+			$current_keys = array_slice( $current_keys, 0, ( $depth > 0 ) ? ( $depth + 1 ) : 0 );
+
+			// An internal reference of the nested array to be used
+			// when drilling through to the required entry point
+			$internal_ref = &$nested;
+
+			// Drill through the nested array to the current point where we would like to insert an entry
+			foreach ( $current_keys as $key ) {
+
+				if ( empty( $internal_ref[ $key ] ) ) {
+					$internal_ref[ $key ] = array();
+				}
+
+				$internal_ref = &$internal_ref[ $key ];
+			}
+
+			// If there is a missing entry in the array, i.e. h1 -> h3 with no h2 in between,
+			// ensure that nesting stays correct
+			if ( $depth > count( $current_keys ) ) {
+				for ( $i = ( count( $current_keys ) ); $i < $depth; $i++ ) {
+					$internal_ref[] = array();
+					$current_keys[] = ( count( $internal_ref ) - 1 );
+					$internal_ref   = &$internal_ref[ ( count( $internal_ref ) - 1 ) ];
+				}
+			}
+
+			// Add the new match to the nested array and store a reference to the current keys array
+			// if we are nesting down a level
+			if ( $depth >= count( $current_keys ) ) {
+				$internal_ref[] = array( $toc_item_match );
+				$current_keys[] = ( count( $internal_ref ) - 1 );
+			} else {
+				$internal_ref[] = $toc_item_match;
+				$current_keys[ ( count( $current_keys ) - 1 ) ] = ( count( $internal_ref ) - 1 );
+			}
+		}
 	}
 
 	/**
