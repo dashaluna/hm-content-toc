@@ -440,6 +440,11 @@ class TOC {
 		return $html;
 	}
 
+	/**
+	 * @param $nested_array
+	 *
+	 * @return string
+	 */
 	protected function toc_walk_nested_array( $nested_array ) {
 
 		ob_start(); ?>
@@ -452,12 +457,9 @@ class TOC {
 						<?php echo esc_html( $item->title ); ?>
 					</<?php echo $item->type; ?>>
 
-					<?php if ( $item->children ) : ?>
-
-						<?php echo $this->toc_walk_nested_array( $item->children ); ?>
-
-					<?php endif; ?>
-
+					<?php if ( $item->children ) {
+						echo $this->toc_walk_nested_array( $item->children );
+					} ?>
 				</li>
 
 			<?php endforeach; ?>
@@ -467,32 +469,33 @@ class TOC {
 		return ob_get_clean();
 	}
 
+	/**
+	 * @param $toc_items_matches
+	 * @param $headers
+	 *
+	 * @return array
+	 */
 	protected function get_toc_nested_array( $toc_items_matches, $headers ) {
-
-		// Convert headers string into array, clean them up
-		if (is_string($headers)) {
-			$headers = $this->prepare_headers($headers);
-		}
 
 		// Stores TOC items in nested array
 		$nested = array();
 
-		// where a currently considered match should be inserted?
+		// Keys for $nested array where a currently considered match should be inserted
 		$current_keys = array();
 
-		$items_sanitized = $this->parse_toc_items_for_level($toc_items_matches, $headers);
+		$items_sanitized = $this->parse_toc_items_for_level( $toc_items_matches, $headers );
 
 		foreach ( $items_sanitized as $key => $toc_item_match ) {
 
-			// Get the required depth of the current match 
+			// Get the required depth of the current match
 			$depth      = $toc_item_match['level'];
-			$last_depth = isset( $items_sanitized[ ( $key -1 ) ]['level'] ) ? $items_sanitized[ ( $key -1 ) ]['level'] : null;
+			$last_depth = isset( $items_sanitized[ $key - 1 ]['level'] ) ? $items_sanitized[ $key - 1 ]['level'] : null;
 
-			// Get the current keys to be used to drill down the nested array , we shorten the array depending on depth of the item
+			// Get the current keys to be used to drill down the nested array, we shorten the array depending on depth of the item
 			$current_keys = array_slice( $current_keys, 0, ( ( $depth > 0 ) ? ( $depth + 1 ) : 0 ) );
 
 			// Fill current_keys with 0 values if we are missing any depth pointers
-			while ( ( count( $current_keys ) -1 ) < $depth && $depth > 0 ) {
+			while ( ( count( $current_keys ) - 1 ) < $depth && $depth > 0 ) {
 				$current_keys[] = 0;
 			}
 
@@ -504,11 +507,11 @@ class TOC {
 
 				// If we have found an array
 				if ( is_array( $internal_ref ) ) {
-					$internal_ref = &$internal_ref[$current_key];
+					$internal_ref = &$internal_ref[ $current_key ];
 
 				// If we have found an object but we need to dig into that object's children
-				} else if ( is_object( $internal_ref ) && ( count( $current_keys ) -1 ) > $index ) {
-					$internal_ref = &$internal_ref->children[$current_key];
+				} else if ( is_object( $internal_ref ) && ( count( $current_keys ) - 1 ) > $index ) {
+					$internal_ref = &$internal_ref->children[ $current_key ];
 
 				// If we have found an object but we don't need to drill into that object's children
 				} else if ( is_object( $internal_ref ) ) {
@@ -526,7 +529,7 @@ class TOC {
 
 			// Only increment our counter if we are at equal or lower depth than the last item
 			if ( $depth <= $last_depth && $last_depth !== null ) {
-				$current_keys[(count($current_keys) - 1)]++;
+				$current_keys[ count( $current_keys ) - 1 ]++;
 			}
 
 		}
@@ -534,24 +537,29 @@ class TOC {
 		return $nested;
 	}
 
+	/**
+	 * @param $toc_items_matches
+	 * @param $headers
+	 *
+	 * @return mixed
+	 */
 	protected function parse_toc_items_for_level( $toc_items_matches, $headers ) {
 
 		foreach ( $toc_items_matches as $key => &$toc_item_match ) {
 
-			$key_copy = $key;
-
+			$key_copy      = $key;
 			$current_level = null;
 
-			while ( isset( $toc_items_matches[ ( $key_copy -1 ) ] ) && $current_level === null ) {
+			while ( isset( $toc_items_matches[ $key_copy - 1 ] ) && $current_level === null ) {
 
 				$key_copy--;
 
-				if ( array_search( $toc_item_match[2], $headers ) === array_search( $toc_items_matches[$key_copy][2], $headers ) ) {
-					$current_level = $toc_items_matches[$key_copy]['level'];
+				if ( array_search( $toc_item_match[2], $headers ) === array_search( $toc_items_matches[ $key_copy ][2], $headers ) ) {
+					$current_level = $toc_items_matches[ $key_copy ]['level'];
 				}
 
-				if ( array_search( $toc_item_match[2], $headers ) > array_search( $toc_items_matches[$key_copy][2], $headers ) ) {
-					$current_level = $toc_items_matches[$key_copy]['level'] + 1;
+				if ( array_search( $toc_item_match[2], $headers ) > array_search( $toc_items_matches[ $key_copy ][2], $headers ) ) {
+					$current_level = $toc_items_matches[ $key_copy ]['level'] + 1;
 				}
 
 			}
