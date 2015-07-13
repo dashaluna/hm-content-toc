@@ -538,32 +538,59 @@ class TOC {
 	}
 
 	/**
-	 * @param $toc_items_matches
-	 * @param $headers
+	 * Adds 'level' key/value pair to each TOC match.
+	 * Flattens any missed levels in TOC matches. So for headers h1, h2, h3
+	 * the TOC matches h1, h3 will have the following levels h1 -> 0, h3 -> 1
 	 *
-	 * @return mixed
+	 * @param array $toc_items_matches Array of TOC items matches, each match is of the
+	 *                                 following structure, example:
+	 *                                 Array (
+	 *                                   [0] => <h2>Header 2</h2> i.e. full match of the header from content
+	 *                                   [1] => Header 2          i.e. header text only
+	 *                                   [2] => h2                i.e. header element only
+	 *                                 )
+	 * @param array $headers           Headers array dictates the nesting levels, so that
+	 *                                 1st header is the top level, 2nd is second level and so on
+	 *
+	 * @return array                   Original $toc_items_matches array with added 'level' key/value pair
 	 */
 	protected function parse_toc_items_for_level( $toc_items_matches, $headers ) {
 
 		foreach ( $toc_items_matches as $key => &$toc_item_match ) {
 
-			$key_copy      = $key;
 			$current_level = null;
+			$key_prev      = $key - 1;
 
-			while ( isset( $toc_items_matches[ $key_copy - 1 ] ) && $current_level === null ) {
+			// Go through all previous TOC matches to determine current TOC match level
+			// Stop when current TOC match is on the same or lower level than previous one
+			while ( isset( $toc_items_matches[ $key_prev ] ) && $current_level === null ) {
 
-				$key_copy--;
+				// Level of current item (look up current TOC item header element in array of header elements)
+				$current_item_level = array_search( $toc_item_match[2], $headers );
 
-				if ( array_search( $toc_item_match[2], $headers ) === array_search( $toc_items_matches[ $key_copy ][2], $headers ) ) {
-					$current_level = $toc_items_matches[ $key_copy ]['level'];
+				// Level of previous item (look up previous TOC item header element in array of header elements)
+				$prev_item_level = array_search( $toc_items_matches[ $key_prev ][2], $headers );
+
+				// Items on the same level
+				// Use previous item's level as it's been correctly determined before
+				if ( $current_item_level === $prev_item_level ) {
+					$current_level = $toc_items_matches[ $key_prev ]['level'];
 				}
 
-				if ( array_search( $toc_item_match[2], $headers ) > array_search( $toc_items_matches[ $key_copy ][2], $headers ) ) {
-					$current_level = $toc_items_matches[ $key_copy ]['level'] + 1;
+				// Current item is at a lower level than previous item
+				// Use previous item's level and put current item only 1 level below,
+				// This is done to avoid empty missed levels
+				if ( $current_item_level > $prev_item_level ) {
+					$current_level = $toc_items_matches[ $key_prev ]['level'] + 1;
 				}
 
+				// Next previous item key
+				$key_prev -= 1;
 			}
 
+			// If current TOC match's level has not been determined by looking at previous matches
+			// It means we have a first top level match
+			// TODO: is there a case where $current_level < 0 ??
 			if ( $current_level === null || $current_level < 0 ) {
 				$current_level = 0;
 			}
