@@ -284,9 +284,9 @@ class TOC {
 	}
 
 	/**
-	 * Prepare specified header elements string to be used in regex:
+	 * Prepare/sanitise specified header elements string to be used in regex:
 	 * 1) Split on commas
-	 * 2) Trim each element to first space, so everything after first space is disregarded
+	 * 2) Trim each header to valid to valid name, i.e. starts with letter and might follow by max 1 digit
 	 * 3) Remove empty elements
 	 * 4) Keep unique values only
 	 * 5) Escape regex special chars in headers with preg_quote
@@ -300,10 +300,21 @@ class TOC {
 		// 1) Split string by commas
 		$headers_arr = explode( ',', $headers );
 
-		// 2) Trim each element to first space, so everything after first space is disregarded
+		// 2) Trim each element to valid HTML element name,
+		// so everything after valid name is disregarded
+		// i.e. starts with 1 or more letters, followed by 1 optional digit
 		$headers_arr = array_map( function ( $header ) {
-			$arr_by_space = explode( ' ', trim( $header ) );
-			return array_shift( $arr_by_space );
+			// Trim from white spaces
+			$header = trim( $header );
+			// Match the valid element name as far as possible
+			if ( 1 === preg_match( '#^[a-zA-Z]+\d{0,1}#', $header, $matches ) ) {
+				$header = $matches[0];
+			} // Match not found - element name is invalid
+			else {
+				$header = '';
+			}
+
+			return $header;
 		}, $headers_arr );
 
 		// 3) Remove empty elements
@@ -312,10 +323,10 @@ class TOC {
 		// 4) Unique values
 		$headers_arr = array_unique( $headers_arr );
 
-		// 5) Escape regex special chars
+		// 5) Escape regex special chars - just in case
 		$headers_arr = array_map( 'preg_quote', $headers_arr );
 
-		return $headers_arr;
+		return array_values( $headers_arr );
 	}
 
 	/**
