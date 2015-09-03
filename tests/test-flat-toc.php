@@ -42,6 +42,26 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test if shortcodes specified headers are sanitised correctly,
+	 * only valid HTML element names are kept.
+	 */
+	public function test_toc_shortcode_headers_sanitized() {
+
+		// Post content with TOC shortcode
+		$headers ='h2,  h222   , h3  , h3,   h4 class="class-1 class", , h5*&^%$, £@!, div, 67p, *%span';
+
+		// Sanitise header elements, only unique
+		// valid HTML element names are kept
+		$toc = \HM\Content_TOC\TOC::get_instance();
+		$headers = $toc->prepare_headers( $headers );
+
+		$this->assertEquals(
+			array( 'h2', 'h3', 'h4', 'h5', 'div' ),
+			$headers
+		);
+	}
+
+	/**
 	 * Setup a test post with specified content.
 	 * Return that posts's content after all processing and filters
 	 * as if it was displayed on a browser page.
