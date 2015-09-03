@@ -247,7 +247,7 @@ class TOC {
 	 * Find and return an array of HTML headers for a given set of accepted header elements
 	 * and a given string of HTML content
 	 *
-	 * @param array  $headers      Comma separated list of header elements
+	 * @param string $headers      Comma separated list of header elements
 	 * @param string $post_content A HTML content string
 	 *
 	 * @return array               Regex matches of specified header elements
@@ -291,9 +291,9 @@ class TOC {
 	 * 4) Keep unique values only
 	 * 5) Escape regex special chars in headers with preg_quote
 	 *
-	 * @param $headers Comma separated list of header elements to match for TOC generation
+	 * @param string $headers Comma separated list of header elements to match for TOC generation
 	 *
-	 * @return array   Header elements to be matched in content to generate TOC
+	 * @return array          Header elements to be matched in content to generate TOC
 	 */
 	public function prepare_headers( $headers ) {
 
