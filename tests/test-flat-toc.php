@@ -61,7 +61,7 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 		);
 	}
 
-		/**
+	/**
 	 * Setup a test post with specified content.
 	 * Return that posts's content after all processing and filters
 	 * as if it was displayed on a browser page.
