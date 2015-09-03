@@ -286,7 +286,8 @@ class TOC {
 	/**
 	 * Prepare/sanitise specified header elements string to be used in regex:
 	 * 1) Split on commas
-	 * 2) Trim each header to valid to valid name, i.e. starts with letter and might follow by max 1 digit
+	 * 2) Trim each header to valid HTML element name,
+	 *    i.e. starts with letter, followed by letter(s) and ends with optional digit
 	 * 3) Remove empty elements
 	 * 4) Keep unique values only
 	 * 5) Escape regex special chars in headers with preg_quote
@@ -304,6 +305,7 @@ class TOC {
 		// so everything after valid name is disregarded
 		// i.e. starts with 1 or more letters, followed by 1 optional digit
 		$headers_arr = array_map( function ( $header ) {
+
 			// Trim from white spaces
 			$header = trim( $header );
 			// Match the valid element name as far as possible
