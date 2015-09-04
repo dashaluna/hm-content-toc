@@ -103,6 +103,7 @@ class TOC {
 	 * @return string Default header list
 	 */
 	public function get_default_headers() {
+
 		return $this->headers;
 	}
 
