@@ -84,6 +84,20 @@ class TOC {
 	}
 
 	/**
+	 * Returns the placeholder HTML.
+	 * The placeholder is used in an intermediate step - replacing shortcode,
+	 * but before the TOC HTML is generated.
+	 *
+	 * So shortcode -> placeholder -> TOC HTML
+	 *
+	 * @return string Placeholder HTML
+	 */
+	public function get_placeholder() {
+
+		return $this->placeholder;
+	}
+
+	/**
 	 * Return a default header list - a comma separated string of header elements
 	 *
 	 * @return string Default header list

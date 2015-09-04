@@ -99,6 +99,7 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 
 		// Check if generated TOC is not present for content without shortcode
 		$this->assertSame( 0, substr_count( $p_no_toc, 'hm-content-toc-wrapper' ) );
+		$this->assertSame( 0, substr_count( $p_no_toc, $this->toc_instance->get_placeholder() ) );
 	}
 
 	/**
