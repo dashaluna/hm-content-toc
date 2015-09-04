@@ -103,6 +103,47 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests if generated TOC HTML is correct when 'div' is specified as a header
+	 * in the shortcode.
+	 *
+	 * TOC HTML generation should exclude placeholder HTML from considerations when
+	 * generating TOC HTML for specified headers.
+	 */
+	public function test_toc_generates_correctly_for_div_headers_and_excludes_placeholder() {
+
+		// Setup up post with 'div' header - in the list of headers to match in content
+		$p_with_div_header = $this->get_processed_post_content(
+			'[hm_content_toc title="The TOC 1" headers="h2, h3, h4, div"]' .
+			$this->post_content_no_toc_shortcode
+		);
+
+		// Setup up post without 'div' header
+		$p_no_div_header = $this->get_processed_post_content(
+			'[hm_content_toc title="The TOC 2" headers="h2, h3, h4"]' .
+			$this->post_content_no_toc_shortcode
+		);
+
+		// Setup post with 'div' header and 'div' element in the content
+		$p_with_div_header_and_in_content = $this->get_processed_post_content(
+			'[hm_content_toc title="The TOC 3" headers="h2, h3, h4, div"]' .
+			$this->post_content_no_toc_shortcode .
+			'<div>Div 1</div>' .
+			'<div>Div 2</div>'
+		);
+
+		/**
+		 * Check if generated TOC HTML doesn't contain entry for 'div' header - as both posts
+		 * don't have 'div' in their content, so it won't be matched and hence appear in the
+		 * TOC HTML
+		 */
+		$this->assertSame( 0, substr_count( $p_with_div_header, 'class="hm-content-toc-item-div"' ) );
+		$this->assertSame( 0, substr_count( $p_no_div_header,   'class="hm-content-toc-item-div"' ) );
+
+		// Check if 'div' header was matched 2 times in the content, so 2 items should be in the TOC HTML
+		$this->assertSame( 2, substr_count( $p_with_div_header_and_in_content, 'class="hm-content-toc-item-div"' ) );
+	}
+
+	/**
 	 * Setup a test post with specified content.
 	 * Return that posts's content after all processing and filters
 	 * as if it was displayed on a browser page.

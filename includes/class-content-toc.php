@@ -269,6 +269,9 @@ class TOC {
 	 */
 	public function get_content_toc_headers( $headers, $post_content ) {
 
+		// Remove placeholder from $post_content, so it's not considered for matching
+		$post_content = str_replace( $this->placeholder, '', $post_content );
+
 		// Stop - if content is empty
 		if ( empty( $post_content ) ) {
 			return array();
