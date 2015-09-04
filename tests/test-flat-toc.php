@@ -64,6 +64,29 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests if post with TOC shortcode is outputting a generated TOC HTML.
+	 * A post without TOC shortcode doesn't have generated TOC HTML.
+	 */
+	public function test_toc_shortcode_processed_and_output() {
+
+		// Create posts with TOC shortcode and without
+		$p_with_toc = $this->get_processed_post_content(
+			'[hm_content_toc title="The TOC 1" headers="h2, h3, h4"]' .
+			$this->post_content_no_toc_shortcode
+		);
+
+		$p_no_toc   = $this->get_processed_post_content(
+			$this->post_content_no_toc_shortcode
+		);
+
+		// Check if generated TOC is present for content with shortcode
+		$this->assertSame( 1, substr_count( $p_with_toc, 'hm-content-toc-wrapper' ) );
+
+		// Check if generated TOC is not present for content without shortcode
+		$this->assertSame( 0, substr_count( $p_no_toc, 'hm-content-toc-wrapper' ) );
+	}
+
+	/**
 	 * Setup a test post with specified content.
 	 * Return that posts's content after all processing and filters
 	 * as if it was displayed on a browser page.
