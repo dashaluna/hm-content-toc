@@ -7,7 +7,7 @@
 
 class Test_Flat_TOC extends WP_UnitTestCase {
 
-	public $post_content_without_toc = "
+	public $post_content_no_toc_shortcode = "
 		<h2>Header 2</h2>
 		Some text here. Some text here. Some text here.
 		<h3>Header 3</h3>
@@ -27,7 +27,7 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 
 		// Post content with 2 TOC shortcodes
 		$post_content = '[hm_content_toc title="The TOC 1" headers="h2, h3, h4"]' .
-		                $this->post_content_without_toc .
+		                $this->post_content_no_toc_shortcode .
 		                '[hm_content_toc title="The TOC 2" headers="h3"]';
 
 		// Get processed post content as if being displayed on a page
