@@ -16,6 +16,22 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 		Some text here. Some text here. Some text here.";
 
 	/**
+	 * TOC instance to use in this test class
+	 * @var \HM\Content_TOC\TOC
+	 */
+	public $toc_instance;
+
+	/**
+	 * Sets up environment before each test functions is run
+	 */
+	public function setUp() {
+
+		parent::setUp();
+
+		$this->toc_instance = \HM\Content_TOC\TOC::get_instance();
+	}
+
+	/**
 	 * Test that only one shortcode is implemented,
 	 * i.e. if there are multiple [hm_content_toc] shortcodes
 	 * only the first one is implemented.
@@ -54,8 +70,7 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 
 		// Sanitise header elements, only unique
 		// valid HTML element names are kept
-		$toc = \HM\Content_TOC\TOC::get_instance();
-		$headers = $toc->prepare_headers( $headers );
+		$headers = $this->toc_instance->prepare_headers( $headers );
 
 		$this->assertEquals(
 			array( 'h2', 'h3', 'h4', 'h5', 'div' ),
