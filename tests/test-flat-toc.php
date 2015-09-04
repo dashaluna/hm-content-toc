@@ -7,6 +7,14 @@
 
 class Test_Flat_TOC extends WP_UnitTestCase {
 
+	public $post_content_without_toc = "
+		<h2>Header 2</h2>
+		Some text here. Some text here. Some text here.
+		<h3>Header 3</h3>
+		Some text here. Some text here. Some text here.
+		<h4>Header 4</h4>
+		Some text here. Some text here. Some text here.";
+
 	/**
 	 * Test that only one shortcode is implemented,
 	 * i.e. if there are multiple [hm_content_toc] shortcodes
@@ -18,15 +26,9 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	public function test_toc_shortcode_first_one_only() {
 
 		// Post content with 2 TOC shortcodes
-		$post_content = "
-		[hm_content_toc title='The TOC 1' headers='h2, h3']
-		<h2>Header's 2</h2>
-		Some text here. Some text here. Some text here.
-		<h3>Header= 3</h3>
-		Some text here. Some text here. Some text here.
-		<h3>Header/\'& 3</h3>
-		Some text here. Some text here. Some text here.
-		[hm_content_toc title='The TOC 2' headers='h3']";
+		$post_content = '[hm_content_toc title="The TOC 1" headers="h2, h3, h4"]' .
+		                $this->post_content_without_toc .
+		                '[hm_content_toc title="The TOC 2" headers="h3"]';
 
 		// Get processed post content as if being displayed on a page
 		$p_show = $this->get_processed_post_content( $post_content );
