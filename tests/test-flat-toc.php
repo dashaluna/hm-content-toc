@@ -66,7 +66,7 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	public function test_toc_shortcode_headers_sanitized() {
 
 		// Post content with TOC shortcode
-		$headers ='h2,  h222   , h3  , h3,   h4 class="class-1 class", , h5*&^%$, £@!, div, 67p, *%span';
+		$headers = 'h2,  h222   , h3  , h3,   h4 class="class-1 class", , h5*&^%$, £@!, div, 67p, *%span';
 
 		// Sanitise header elements, only unique
 		// valid HTML element names are kept
@@ -90,7 +90,7 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 			$this->post_content_no_toc_shortcode
 		);
 
-		$p_no_toc   = $this->get_processed_post_content(
+		$p_no_toc = $this->get_processed_post_content(
 			$this->post_content_no_toc_shortcode
 		);
 
