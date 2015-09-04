@@ -68,10 +68,10 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	 * Return that posts's content after all processing and filters
 	 * as if it was displayed on a browser page.
 	 *
-	 * @param $post_content Post content to add to the post
+	 * @param string $post_content Post content to add to the post
 	 *
-	 * @return string       Processed post content (after all the filters)
-	 *                      as if being displayed on a browser page
+	 * @return string              Processed post content (after all the filters)
+	 *                             as if being displayed on a browser page
 	 */
 	protected function get_processed_post_content( $post_content ) {
 
