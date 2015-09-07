@@ -103,6 +103,54 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test the TOC links/items are generated correctly:
+	 * 1) for each specified header in the shortcode
+	 * 2) only contains simple text, no HTML tags
+	 */
+	public function test_generated_toc_links_are_simple_text_no_tags_for_specified_headers() {
+
+		$post_content = '
+			[hm_content_toc title="The TOC 1" headers="h2, h3, h4"]
+			<h2>Header 2</h2>
+			Some text here. Some text here. Some text here.
+			<h3>Header 3</h3>
+			Some text here. Some text here. Some text here.
+			<h4>Header 4</h4>
+			Some text here. Some text here. Some text here.
+			<h4>Header 4</h4>
+			Some text here. Some text here. Some text here.
+			<h5>Header 5</h5>
+			Some text here. Some text here. Some text here.
+			<h2>Header 2</h2>
+			Some text here. Some text here. Some text here.
+			<h2>Header 2 <b>with bold text</b></h2>
+			Some text here. Some text here. Some text here.
+			<h3>Header 3</h3>
+			Some text here. Some text here. Some text here.
+			<h6>Header 6</h6>
+			Some text here. Some text here. Some text here.';
+
+		$p = $this->get_processed_post_content( $post_content );
+
+		// Check if generated TOC HTML contains correct number of links/items
+		$this->assertSame( 3, substr_count( $p, 'hm-content-toc-item-h2' ) );
+		$this->assertSame( 2, substr_count( $p, 'hm-content-toc-item-h3' ) );
+		$this->assertSame( 2, substr_count( $p, 'hm-content-toc-item-h4' ) );
+
+		// Count the overall number of TOC links/items
+		$this->assertSame( 7, substr_count( $p, 'hm-content-toc-item-' ) );
+
+		// Check each TOC link/item is generated correctly, any HTML tags are stripped
+		$this->assertSame( 1, substr_count( $p, '<a href="#heading-1">Header 2</a>' ) );
+		$this->assertSame( 1, substr_count( $p, '<a href="#heading-2">Header 3</a>' ) );
+		$this->assertSame( 1, substr_count( $p, '<a href="#heading-3">Header 4</a>' ) );
+		$this->assertSame( 1, substr_count( $p, '<a href="#heading-4">Header 4</a>' ) );
+		$this->assertSame( 1, substr_count( $p, '<a href="#heading-5">Header 2</a>' ) );
+		$this->assertSame( 1, substr_count( $p, '<a href="#heading-6">Header 2 with bold text</a>' ) );
+		$this->assertSame( 1, substr_count( $p, '<a href="#heading-7">Header 3</a>' ) );
+	}
+
+	/**
 	 * Setup a test post with specified content.
 	 * Return that posts's content after all processing and filters
 	 * as if it was displayed on a browser page.
