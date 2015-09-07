@@ -230,7 +230,8 @@ class TOC {
 		$list_html = $items_html;
 		if ( $this->settings['list_tag'] ) {
 
-			$list_html = sprintf( '<%1$s%2$s>%3$s</%1$s>',
+			$list_html = sprintf(
+				'<%1$s%2$s>%3$s</%1$s>',
 				esc_attr( $this->settings['list_tag'] ),
 				$this->tag_class( $this->settings['list_class'] ),
 				$items_html
@@ -241,7 +242,8 @@ class TOC {
 		$toc_html = $title_html . $list_html;
 		if ( $this->settings['wrapper_tag'] ) {
 
-			$toc_html = sprintf( '<%1$s%2$s>%3$s</%1$s>',
+			$toc_html = sprintf(
+				'<%1$s%2$s>%3$s</%1$s>',
 				esc_attr( $this->settings['wrapper_tag'] ),
 				$this->tag_class( $this->settings['wrapper_class'] ),
 				$title_html . $list_html
@@ -358,7 +360,8 @@ class TOC {
 			return '';
 		}
 
-		return sprintf( '<%1$s%2$s>%3$s</%1$s>',
+		return sprintf(
+			'<%1$s%2$s>%3$s</%1$s>',
 			esc_attr( $this->settings['title_tag'] ),
 			$this->tag_class( $this->settings['title_class'] ),
 			esc_html( $shortcode_atts['title'] )
