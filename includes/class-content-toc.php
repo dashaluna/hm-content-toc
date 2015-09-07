@@ -433,8 +433,7 @@ class TOC {
 			$anchors[] = sprintf(
 				'<a name="heading-%s"%s></a>',
 				esc_attr( $key_current ),
-				esc_attr( $this->tag_class( $this->settings['anchor_class'] ) ),
-				$match_set[0]
+				esc_attr( $this->tag_class( $this->settings['anchor_class'] ) )
 			);
 
 			// Regex escape stored anchors
