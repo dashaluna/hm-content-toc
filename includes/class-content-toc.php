@@ -382,7 +382,7 @@ class TOC {
 			// Counter of items, starting at 1
 			$key_current = $key + 1;
 
-			// Stripped item text
+			// Strip tags from the TOC item text
 			$item_text = strip_tags( $toc_item_match[1] );
 
 			// Add filter to allow custom TOC item markup
