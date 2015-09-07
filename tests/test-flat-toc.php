@@ -103,7 +103,9 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	}
 
 	/**
-	 *
+	 * Test to check that anchors are inserted into the content correctly
+	 * before corresponding headers, that contain special chars (ampersand,
+	 * quotes, prime, another HTML elements and so on"
 	 */
 	public function test_toc_special_chars_in_content_headers() {
 		$post_content = '
@@ -123,19 +125,16 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 
 		$p = $this->get_processed_post_content( $post_content );
 
-		var_dump( $p );
-		ob_flush();
-
 		// Check if generated TOC HTML contains correct number of elements
 		$this->assertSame( 2, substr_count( $p, 'hm-content-toc-item-h2' ) );
 		$this->assertSame( 2, substr_count( $p, 'hm-content-toc-item-h3' ) );
 		$this->assertSame( 2, substr_count( $p, 'hm-content-toc-item-h4' ) );
 
 		// Check the number of anchors inserted into content
-		// 1 before each header, so 5 in total
+		// 1 before each header, so 6 in total
 		$this->assertSame( 6, substr_count( $p, 'hm-content-toc-anchor' ) );
 
-		// Check if anchors have been inserted before each header correctly in the post content
+		// Check if anchors have been inserted before each headers correctly in the post content
 		$this->assertSame( 1, substr_count(
 			$p,
 			'<a name="heading-1" class="hm-content-toc-anchor"></a><h2>Header&#8217;s 2 &#8230;</h2>'
