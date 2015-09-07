@@ -233,8 +233,8 @@ class TOC {
 			$list_html = sprintf(
 				'<%1$s%2$s>%3$s</%1$s>',
 				esc_attr( $this->settings['list_tag'] ),
-				$this->tag_class( $this->settings['list_class'] ),
-				$items_html
+				esc_attr( $this->tag_class( $this->settings['list_class'] ) ),
+				wp_kses_post( $items_html )
 			);
 		}
 
@@ -245,8 +245,8 @@ class TOC {
 			$toc_html = sprintf(
 				'<%1$s%2$s>%3$s</%1$s>',
 				esc_attr( $this->settings['wrapper_tag'] ),
-				$this->tag_class( $this->settings['wrapper_class'] ),
-				$title_html . $list_html
+				esc_attr( $this->tag_class( $this->settings['wrapper_class'] ) ),
+				wp_kses_post( $title_html . $list_html )
 			);
 		}
 
@@ -363,7 +363,7 @@ class TOC {
 		return sprintf(
 			'<%1$s%2$s>%3$s</%1$s>',
 			esc_attr( $this->settings['title_tag'] ),
-			$this->tag_class( $this->settings['title_class'] ),
+			esc_attr( $this->tag_class( $this->settings['title_class'] ) ),
 			esc_html( $shortcode_atts['title'] )
 		);
 	}
@@ -393,7 +393,7 @@ class TOC {
 				sprintf(
 					'<%1$s%2$s><a href="#heading-%3$d">%4$s</a></%1$s>',
 					esc_attr( $this->settings['list_item_tag'] ),
-					$this->tag_class( $this->settings['list_item_class'], $toc_item_match[2] ),
+					esc_attr( $this->tag_class( $this->settings['list_item_class'], $toc_item_match[2] ) ),
 					esc_attr( $key_current ),
 					esc_html( $item_text )
 				),
@@ -433,7 +433,7 @@ class TOC {
 			$anchors[] = sprintf(
 				'<a name="heading-%s"%s></a>',
 				esc_attr( $key_current ),
-				$this->tag_class( $this->settings['anchor_class'] ),
+				esc_attr( $this->tag_class( $this->settings['anchor_class'] ) ),
 				$match_set[0]
 			);
 
