@@ -168,27 +168,6 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	}
 
 	/**
-	 * This is a helper test for `test_toc_special_chars_in_content_headers`
-	 * function. This tests that ampersand is converted to `&amp;` in `esc_html` function.
-	 *
-	 * Originally the post content is run through all the_content filters and ampersand is
-	 * converted to `&#038;`. Then the TOC items array is prepared with matched headers
-	 * from the content. The TOC item text is stripped from tags and `esc_html` on output.
-	 *
-	 * Now, the `esc_html` converts the ampersand representation `&#038;` to `&amp;`.
-	 *
-	 * This test checks that, so in the future if WP changes that behaviour this test will
-	 * fail.
-	 */
-	public function test_esc_html_for_ampersand() {
-
-		$in  = 'hello &#038; world';
-		$out = esc_html( esc_html( $in ) );
-
-		$this->assertSame( 'hello &amp; world', $out );
-	}
-
-	/**
 	 * Setup a test post with specified content.
 	 * Return that posts's content after all processing and filters
 	 * as if it was displayed on a browser page.
