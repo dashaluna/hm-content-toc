@@ -23,6 +23,14 @@ The plugin provides:
  be used in case a shortcode is specified without attributes, i.e. `[hm_content_toc]`
  Plugin's defaults are: empty title and headers `h2, h3, h4, h5, h6`
 
+== Installation ==
+
+== Frequently Asked Questions ==
+
+== Screenshots ==
+
+== Changelog ==
+
 == License: GPLv2 or later ==
 
 This program is free software; you can redistribute it and/or modify
