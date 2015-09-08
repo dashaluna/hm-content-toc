@@ -79,11 +79,6 @@ class Admin {
 	 */
 	public function setup_plugin_option_settings() {
 
-		// If plugin option doesn't exist - create it
-		if ( false === get_option( $this->option_slug ) ) {
-			add_option( $this->option_slug );
-		}
-
 		// Register settings for plugin option
 		register_setting(
 			$this->option_slug,
@@ -173,7 +168,7 @@ class Admin {
 		}
 
 		// Get plugin option and value per setting field
-		$option      = get_option( $this->option_slug );
+		$option      = TOC::get_instance()->get_toc_option();
 		$field_value = isset( $option[ $args['field'] ] ) ? $option[ $args['field'] ] : '';
 
 		// Display input field
