@@ -48,15 +48,15 @@ for the following WordPress versions:
 * latest stable version [refer to Release Archive on wordpress.org site](https://wordpress.org/download/release-archive/)
 * 4.2
 
+== Bugs or feature requests ==
+
+To report bugs or feature requests, [please use Github issues](https://github.com/dashaluna/hm-content-toc/issues).
+
 == Screenshots ==
 
 == Changelog ==
 
 == Upgrade Notice ==
-
-== Bugs or feature requests ==
-
-To report bugs or feature requests, [please use Github issues](https://github.com/dashaluna/hm-content-toc/issues).
 
 == License: GPLv2 or later ==
 
