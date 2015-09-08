@@ -38,26 +38,7 @@ class TOC {
 		// TOC shortcode counter
 		$this->id_counter = 0;
 
-		// Set up default header elements
-		$this->headers = apply_filters( 'hm_content_toc_default_headers', 'h2, h3, h4, h5, h6' );
-
-		// Set up default HTML settings
-		$this->settings = array(
-			'wrapper_tag'     => 'div',
-			'wrapper_class'   => 'hm-content-toc-wrapper',
-			'list_tag'        => 'ul',
-			'list_class'      => 'hm-content-toc-list',
-			'list_item_tag'   => 'li',
-			'list_item_class' => 'hm-content-toc-item',
-			'title_tag'       => 'h3',
-			'title_class'     => 'hm-content-toc-title',
-			'title'           => '',
-			'anchor_class'    => 'hm-content-toc-anchor'
-		);
-
-		$this->settings = apply_filters( 'hm_content_toc_settings', $this->settings );
-
-		// Register shortcode
+		// Register TOC shortcode
 		add_shortcode( 'hm_content_toc', array( $this, 'shortcode' ) );
 
 		// Shortcake UI plugin integration (Source: https://github.com/fusioneng/Shortcake)
@@ -135,6 +116,10 @@ class TOC {
 	 */
 	public function shortcode( $shortcode_atts, $shortcode_content = null ) {
 
+		// Setup plugin defaults - headers, TOC HTML settings
+		$this->setup_defaults();
+
+		// Get shortcode supplied attributes or use defaults if not supplied
 		$shortcode_atts = shortcode_atts( array(
 			'headers' => $this->headers,
 			'title'   => $this->settings['title']
@@ -179,6 +164,39 @@ class TOC {
 		 * hence it requires a workaround.
 		 */
 		return $this->placeholder;
+	}
+
+	/**
+	 * Setup defaults: headers, TOC HTML markup settings
+	 *
+	 * Note: this is not run in __construct, as filters are unreachable from there
+	 * in case some other plugin uses them, as we can't control the order of plugin
+	 * loading
+	 */
+	protected function setup_defaults() {
+
+		// Get plugin option
+		$option = $this->get_toc_option();
+
+		// Set up default header elements
+		$this->headers = apply_filters( 'hm_content_toc_default_headers', $option['headers'] );
+
+		// Set up default TOC HTML settings
+		$this->settings = array(
+			'wrapper_tag'     => 'div',
+			'wrapper_class'   => 'hm-content-toc-wrapper',
+			'list_tag'        => 'ul',
+			'list_class'      => 'hm-content-toc-list',
+			'list_item_tag'   => 'li',
+			'list_item_class' => 'hm-content-toc-item',
+			'title_tag'       => 'h3',
+			'title_class'     => 'hm-content-toc-title',
+			'title'           => $option['title'],
+			'anchor_class'    => 'hm-content-toc-anchor'
+		);
+
+		// Allow TOC HTML settings to be changed
+		$this->settings = apply_filters( 'hm_content_toc_settings', $this->settings );
 	}
 
 	/**
