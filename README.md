@@ -2,7 +2,7 @@
 
 === HM Content TOC ===
 Contributors: dashaluna, tcrsavage, johnbillion, sanchothefat
-Tags: TOC, content TOC, post TOC, page TOC, TOC for content, table of content, HM, Human Made
+Tags: TOC, TOC shortcode, shortcode, content TOC, post TOC, page TOC, TOC for content, table of content, HM, Human Made
 Requires at least: 4.2
 Tested up to: 4.3
 Stable tag: 1.0.0
