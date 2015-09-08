@@ -74,7 +74,6 @@ class TOC {
 	 * @return string Placeholder HTML
 	 */
 	public function get_placeholder() {
-
 		return $this->placeholder;
 	}
 
