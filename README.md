@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/dashaluna/hm-content-toc.svg?branch=master)](https://travis-ci.org/dashaluna/hm-content-toc)
 
-=== Plugin Name ===
+=== HM Content TOC ===
 Contributors: dashaluna, tcrsavage, johnbillion, sanchothefat
 Donate link:
 Tags: content TOC, TOC, table of content
