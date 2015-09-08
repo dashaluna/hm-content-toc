@@ -52,6 +52,10 @@ for the following WordPress versions:
 
 == Changelog ==
 
+== Bugs or feature requests ==
+
+To report bugs or feature requests, [please use Github issues](https://github.com/dashaluna/hm-content-toc/issues).
+
 == License: GPLv2 or later ==
 
 This program is free software; you can redistribute it and/or modify
