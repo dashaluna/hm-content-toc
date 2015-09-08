@@ -103,6 +103,75 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests if plugin option settings are used as defaults in case where shortcode is
+	 * specified without attributes.
+	 *
+	 * Tests that shortcode attributes take precedence over option values when the attributes
+	 * are specified.
+	 */
+	public function test_toc_shortcode_with_and_without_attributes_so_plugin_options_are_used_as_defaults() {
+
+		// Create TOC plugin option
+		update_option( 'hm_content_toc', array(
+			'title'   => 'TOC title via plugin settings',
+			'headers' => 'h2, h3, h4',
+		) );
+
+		// Generic post content without shortcode
+		$post_content_no_toc_shortcode = '
+			<h2>Header 2</h2>
+			Some text here. Some text here. Some text here.
+			<h3>Header 3</h3>
+			Some text here. Some text here. Some text here.
+			<h4>Header 4</h4>
+			Some text here. Some text here. Some text here.
+			<h4>Header 4</h4>
+			Some text here. Some text here. Some text here.
+			<h5>Header 5</h5>
+			Some text here. Some text here. Some text here.';
+
+		$p_shortcode_no_attrs = $this->get_processed_post_content(
+			'[hm_content_toc]' . $post_content_no_toc_shortcode
+		);
+
+		$p_shortcode_with_attrs = $this->get_processed_post_content(
+			'[hm_content_toc title="" headers="h2"]' . $post_content_no_toc_shortcode
+		);
+
+		/* Shortcode without attributes tests */
+		// Check if generated TOC is present
+		$this->assertSame( 1, substr_count( $p_shortcode_no_attrs, 'hm-content-toc-wrapper' ) );
+
+		// Check the TOC has got title specified in option
+		$this->assertSame( 1, substr_count( $p_shortcode_no_attrs, 'TOC title via plugin settings' ) );
+
+		// Check the TOC links are generated for specified headers in option - overall
+		$this->assertSame( 4, substr_count( $p_shortcode_no_attrs, 'hm-content-toc-item-' ) );
+
+		// Check a link appears in TOC for each matched header
+		$this->assertSame( 1, substr_count( $p_shortcode_no_attrs, 'hm-content-toc-item-h2' ) );
+		$this->assertSame( 1, substr_count( $p_shortcode_no_attrs, 'hm-content-toc-item-h3' ) );
+		$this->assertSame( 2, substr_count( $p_shortcode_no_attrs, 'hm-content-toc-item-h4' ) );
+		$this->assertSame( 0, substr_count( $p_shortcode_no_attrs, 'hm-content-toc-item-h5' ) );
+
+		/* Shortcode with attributes tests */
+		// Check if generated TOC is present
+		$this->assertSame( 1, substr_count( $p_shortcode_with_attrs, 'hm-content-toc-wrapper' ) );
+
+		// Check the TOC title is not present (used from shortcode)
+		$this->assertSame( 0, substr_count( $p_shortcode_with_attrs, 'hm-content-toc-title' ) );
+
+		// Check the TOC links are generated for specified headers in shortcode attribute - overall
+		$this->assertSame( 1, substr_count( $p_shortcode_with_attrs, 'hm-content-toc-item-' ) );
+
+		// Check a link appears in TOC for each matched header
+		$this->assertSame( 1, substr_count( $p_shortcode_with_attrs, 'hm-content-toc-item-h2' ) );
+		$this->assertSame( 0, substr_count( $p_shortcode_with_attrs, 'hm-content-toc-item-h3' ) );
+		$this->assertSame( 0, substr_count( $p_shortcode_with_attrs, 'hm-content-toc-item-h4' ) );
+		$this->assertSame( 0, substr_count( $p_shortcode_with_attrs, 'hm-content-toc-item-h5' ) );
+	}
+
+	/**
 	 * Setup a test post with specified content.
 	 * Return that posts's content after all processing and filters
 	 * as if it was displayed on a browser page.
