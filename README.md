@@ -52,6 +52,8 @@ for the following WordPress versions:
 
 == Changelog ==
 
+== Upgrade Notice ==
+
 == Bugs or feature requests ==
 
 To report bugs or feature requests, [please use Github issues](https://github.com/dashaluna/hm-content-toc/issues).
