@@ -2,7 +2,6 @@
 
 === HM Content TOC ===
 Contributors: dashaluna, tcrsavage, johnbillion, sanchothefat
-Donate link:
 Tags: TOC, content TOC, post TOC, page TOC, TOC for content, table of content, HM, Human Made
 Requires at least:
 Tested up to:
