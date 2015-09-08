@@ -25,6 +25,8 @@ The plugin provides:
 
 == Installation ==
 
+HM Content TOC can be installed like any other WordPress plugin.
+
 1. Upload the entire folder `hm-content-toc` to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Plugin settings will be added to WordPress Settings admin menu,
