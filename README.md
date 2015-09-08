@@ -24,6 +24,17 @@ The plugin provides:
 
 == Installation ==
 
+1. Upload the entire folder `hm-content-toc` to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the 'Plugins' menu in WordPress.
+3. Plugin settings will be added to WordPress Settings admin menu,
+   i.e. `Settings -> HM Content TOC Settings`, to specify the default settings for the
+   plugin.
+
+   The settings page is visible only for users who can manage options, by default
+   it is super administrators and administrators.
+4. Now you can use `[hm_content_toc]` shortcode in your post/page content to generate
+   TOC for specified headers from that post/page content.
+
 == Frequently Asked Questions ==
 
 == Screenshots ==
