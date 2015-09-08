@@ -21,6 +21,7 @@ The plugin provides:
 * Plugin settings to specify default TOC settings for title and header, which will
  be used in case a shortcode is specified without attributes, i.e. `[hm_content_toc]`
  Plugin's defaults are: empty title and headers `h2, h3, h4, h5, h6`
+* Integration with [Shortcake (Shortcode UI) plugin](https://wordpress.org/plugins/shortcode-ui/)
 
 == Installation ==
 
