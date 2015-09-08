@@ -103,7 +103,22 @@ class TOC {
 	 * @return string Default header list
 	 */
 	public function get_default_headers() {
-		return $this->headers;
+		return 'h2, h3, h4, h5, h6';
+	}
+
+	/**
+	 * Returns plugin option as array
+	 * If option does not exist, return default values
+	 *
+	 * @return array TOC plugin option as array of values
+	 */
+	public function get_toc_option() {
+
+		// Get plugin option, specify defaults
+		return get_option( 'hm_content_toc', array(
+			'title'   => '',
+			'headers' => $this->get_default_headers(),
+		) );
 	}
 
 	/**
