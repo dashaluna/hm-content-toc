@@ -37,6 +37,14 @@ The plugin provides:
 
 == Frequently Asked Questions ==
 
+= Supported WordPress versions =
+
+The plugin has been extensively tested on both standard and multisite installations
+for the following WordPress versions:
+
+* latest stable version [refer to Release Archive on wordpress.org site](https://wordpress.org/download/release-archive/)
+* 4.2
+
 == Screenshots ==
 
 == Changelog ==
