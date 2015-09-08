@@ -58,6 +58,15 @@ To report bugs or feature requests, [please use Github issues](https://github.co
 
 == Upgrade Notice ==
 
+== Translations ==
+
+* English - default, always included
+
+*Note:* All my plugins are localized/translateable by default. This is very important for
+all users worldwide. So please contribute your language to the plugin to make it even more useful.
+For translating I recommend ["Codestyling Localization" plugin](http://wordpress.org/extend/plugins/codestyling-localization/)
+and for validating the ["Poedit Editor"](http://www.poedit.net/).
+
 == License: GPLv2 or later ==
 
 This program is free software; you can redistribute it and/or modify
