@@ -103,6 +103,70 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test to check that anchors are inserted into the content correctly
+	 * before corresponding headers, that contain special chars (ampersand,
+	 * quotes, prime, another HTML elements and so on"
+	 */
+	public function test_toc_special_chars_in_content_headers() {
+		$post_content = '
+			[hm_content_toc title="The TOC 1" headers="h2, h3, h4"]
+			<h2>Header\'s 2 ...</h2>
+			Some text here. Some text here. Some text here.
+			<h3>Header & other text 3</h3>
+			Some text here. Some text here. Some text here.
+			<h4>Header -- en dash 4</h4>
+			Some text here. Some text here. Some text here.
+			<h4>Header with prime 9\'</h4>
+			Some text here. Some text here. Some text here.
+			<h2>Header in quotes "hey there"</h2>
+			Some text here. Some text here. Some text here.
+			<h3>Header with <b>bold tag</b></h3>
+			Some text here. Some text here. Some text here.';
+
+		$p = $this->get_processed_post_content( $post_content );
+
+		// Check if generated TOC HTML contains correct number of elements
+		$this->assertSame( 2, substr_count( $p, 'hm-content-toc-item-h2' ) );
+		$this->assertSame( 2, substr_count( $p, 'hm-content-toc-item-h3' ) );
+		$this->assertSame( 2, substr_count( $p, 'hm-content-toc-item-h4' ) );
+
+		// Check the number of anchors inserted into content
+		// 1 before each header, so 6 in total
+		$this->assertSame( 6, substr_count( $p, 'hm-content-toc-anchor' ) );
+
+		// Check if anchors have been inserted before each headers correctly in the post content
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-1" class="hm-content-toc-anchor"></a><h2>Header&#8217;s 2 &#8230;</h2>'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-2" class="hm-content-toc-anchor"></a><h3>Header &amp; other text 3</h3>'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-3" class="hm-content-toc-anchor"></a><h4>Header &#8212; en dash 4</h4>'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-4" class="hm-content-toc-anchor"></a><h4>Header with prime 9&#8242;</h4>'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-5" class="hm-content-toc-anchor"></a><h2>Header in quotes &#8220;hey there&#8221;</h2>'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-6" class="hm-content-toc-anchor"></a><h3>Header with <b>bold tag</b></h3>'
+		) );
+	}
+
+	/**
 	 * Test an anchor is inserted only once before a header
 	 * in case of multiple identical headers
 	 */
