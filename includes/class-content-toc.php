@@ -168,31 +168,6 @@ class TOC {
 	}
 
 	/**
-	 * Create string ' class=""' with specified class and suffix,
-	 * escaped and ready to use in HTML
-	 *
-	 * @param string $class  The class string
-	 * @param string $suffix Suffix, additional class string
-	 *
-	 * @return string        String ' class="{$class}-{$suffix}"' escaped and ready to use in HTML
-	 *                       If $class is empty/not specified, return original value
-	 */
-	protected function tag_class( $class, $suffix = '' ) {
-
-		if ( $class ) {
-
-			// Append suffix
-			if ( $suffix ) {
-				$class .= '-' . $suffix;
-			}
-
-			$class = sprintf( ' class="%s"', esc_attr( $class ) );
-		}
-
-		return $class;
-	}
-
-	/**
 	 * Callback for applying filter to post content
 	 *
 	 * Replaces content TOC placeholder with content TOC HTML and inserts anchor tags at headings
@@ -232,9 +207,9 @@ class TOC {
 		if ( $this->settings['list_tag'] ) {
 
 			$list_html = sprintf(
-				'<%1$s%2$s>%3$s</%1$s>',
+				'<%1$s class="%2$s">%3$s</%1$s>',
 				esc_attr( $this->settings['list_tag'] ),
-				esc_attr( $this->tag_class( $this->settings['list_class'] ) ),
+				esc_attr( $this->settings['list_class'] ),
 				wp_kses_post( $items_html )
 			);
 		}
@@ -244,9 +219,9 @@ class TOC {
 		if ( $this->settings['wrapper_tag'] ) {
 
 			$toc_html = sprintf(
-				'<%1$s%2$s>%3$s</%1$s>',
+				'<%1$s class="%2$s">%3$s</%1$s>',
 				esc_attr( $this->settings['wrapper_tag'] ),
-				esc_attr( $this->tag_class( $this->settings['wrapper_class'] ) ),
+				esc_attr( $this->settings['wrapper_class'] ),
 				wp_kses_post( $title_html . $list_html )
 			);
 		}
@@ -362,9 +337,9 @@ class TOC {
 		}
 
 		return sprintf(
-			'<%1$s%2$s>%3$s</%1$s>',
+			'<%1$s class="%2$s">%3$s</%1$s>',
 			esc_attr( $this->settings['title_tag'] ),
-			esc_attr( $this->tag_class( $this->settings['title_class'] ) ),
+			esc_attr( $this->settings['title_class'] ),
 			esc_html( $shortcode_atts['title'] )
 		);
 	}
@@ -392,9 +367,9 @@ class TOC {
 			$items_html .= apply_filters(
 				'hm_content_toc_single_item',
 				sprintf(
-					'<%1$s%2$s><a href="#heading-%3$d">%4$s</a></%1$s>',
+					'<%1$s class="%2$s"><a href="#heading-%3$d">%4$s</a></%1$s>',
 					esc_attr( $this->settings['list_item_tag'] ),
-					esc_attr( $this->tag_class( $this->settings['list_item_class'], $toc_item_match[2] ) ),
+					esc_attr( $this->settings['list_item_class'] . '-' . $toc_item_match[2] ),
 					esc_attr( $key_current ),
 					esc_html( $item_text )
 				),
@@ -432,9 +407,9 @@ class TOC {
 
 			// Store all anchors so we can ensure we don't insert multiple anchors for duplicate headers
 			$anchors[] = sprintf(
-				'<a name="heading-%s"%s></a>',
+				'<a name="heading-%s" class="%s"></a>',
 				esc_attr( $key_current ),
-				esc_attr( $this->tag_class( $this->settings['anchor_class'] ) )
+				esc_attr( $this->settings['anchor_class'] )
 			);
 
 			// Regex escape stored anchors
