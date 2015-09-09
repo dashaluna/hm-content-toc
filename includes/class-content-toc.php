@@ -52,7 +52,7 @@ class TOC {
 			'title_tag'       => 'h3',
 			'title_class'     => 'hm-content-toc-title',
 			'title'           => '',
-			'anchor_class'    => 'hm-content-toc-anchor'
+			'anchor_class'    => 'hm-content-toc-anchor',
 		);
 
 		$this->settings = apply_filters( 'hm_content_toc_settings', $this->settings );
@@ -123,7 +123,7 @@ class TOC {
 
 		$shortcode_atts = shortcode_atts( array(
 			'headers' => $this->headers,
-			'title'   => $this->settings['title']
+			'title'   => $this->settings['title'],
 		), $shortcode_atts, 'hm_content_toc' );
 
 		// Stop - if subsequent TOC is being processed (not 1st one). Only process the first TOC shortcode
@@ -300,10 +300,12 @@ class TOC {
 
 			// Trim from white spaces
 			$header = trim( $header );
+
 			// Match the valid element name as far as possible
 			if ( 1 === preg_match( '#^[a-zA-Z]+\d{0,1}#', $header, $matches ) ) {
 				$header = $matches[0];
-			} // Match not found - element name is invalid
+			}
+			// Match not found - element name is invalid
 			else {
 				$header = '';
 			}
@@ -422,7 +424,7 @@ class TOC {
 			// Use negative lookbehind to ensure we don't insert multiple anchors to a single header
 			$post_content = preg_replace(
 				'/(?<!' . implode( '|', $anchors_regex_ready ) . ')' . preg_quote( $match_set[0], '/' ) . '/',
-				end ( $anchors ) . $match_set[0], // Insert latest/currently considered anchor before the matched header in the post content
+				end( $anchors ) . $match_set[0], // Insert latest/currently considered anchor before the matched header in the post content
 				$post_content,
 				1 // Maximum replacements (replace the first match only)
 			);
@@ -449,7 +451,7 @@ class TOC {
 						'label'       => __( 'Title', 'hm-content-toc' ),
 						'attr'        => 'title',
 						'type'        => 'text',
-						'description' => __( 'Title that appears before the Content TOC. Optional.', 'hm-content-toc' )
+						'description' => __( 'Title that appears before the Content TOC. Optional.', 'hm-content-toc' ),
 					),
 
 					// Headers field
@@ -464,9 +466,9 @@ class TOC {
 							'<>',
 							'h2',
 							'<h2>'
-						)
+						),
 					),
-				)
+				),
 			)
 		);
 	}
