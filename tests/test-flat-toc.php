@@ -215,6 +215,83 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test an anchor is inserted only once before a header
+	 * in case of multiple identical headers
+	 */
+	public function test_anchors_inserted_once_in_content_before_header_for_multiple_identical_headers() {
+
+		$post_content = '
+			[hm_content_toc title="The TOC 1" headers="h2, h3, h4"]
+			<h2>Header 2</h2>
+			Some text here. Some text here. Some text here.
+			<h3>Header 3</h3>
+			Some text here. Some text here. Some text here.
+			<h4>Header 4</h4>
+			Some text here. Some text here. Some text here.
+			<h4>Header 4</h4>
+			Some text here. Some text here. Some text here.
+			<h5>Header 5</h5>
+			Some text here. Some text here. Some text here.
+			<h2>Header 2</h2>
+			Some text here. Some text here. Some text here.
+			<h6>Header 6</h6>
+			Some text here. Some text here. Some text here.';
+
+		$p = $this->get_processed_post_content( $post_content );
+
+		// Check correct number of anchors have been inserted into post content
+		$this->assertSame( 5, substr_count( $p, 'hm-content-toc-anchor' ) );
+
+
+		// Check if anchors have been inserted before each headers correctly in the post content
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-1" class="hm-content-toc-anchor"></a><h2>Header 2</h2>'
+		) );
+		// All together there should be 2 refs to the same anchor - in TOC and in content
+		$this->assertSame( 2, substr_count(
+			$p,
+			'heading-1'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-2" class="hm-content-toc-anchor"></a><h3>Header 3</h3>'
+		) );
+		$this->assertSame( 2, substr_count(
+			$p,
+			'heading-2'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-3" class="hm-content-toc-anchor"></a><h4>Header 4</h4>'
+		) );
+		$this->assertSame( 2, substr_count(
+			$p,
+			'heading-3'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-4" class="hm-content-toc-anchor"></a><h4>Header 4</h4>'
+		) );
+		$this->assertSame( 2, substr_count(
+			$p,
+			'heading-4'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-5" class="hm-content-toc-anchor"></a><h2>Header 2</h2>'
+		) );
+		$this->assertSame( 2, substr_count(
+			$p,
+			'heading-5'
+		) );
+	}
+
+	/**
 	 * Setup a test post with specified content.
 	 * Return that posts's content after all processing and filters
 	 * as if it was displayed on a browser page.
