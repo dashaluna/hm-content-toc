@@ -103,6 +103,7 @@ class TOC {
 	 * @return string Default header list
 	 */
 	public function get_default_headers() {
+
 		return $this->headers;
 	}
 
@@ -230,7 +231,8 @@ class TOC {
 		$list_html = $items_html;
 		if ( $this->settings['list_tag'] ) {
 
-			$list_html = sprintf( '<%1$s%2$s>%3$s</%1$s>',
+			$list_html = sprintf(
+				'<%1$s%2$s>%3$s</%1$s>',
 				esc_attr( $this->settings['list_tag'] ),
 				$this->tag_class( $this->settings['list_class'] ),
 				$items_html
@@ -241,7 +243,8 @@ class TOC {
 		$toc_html = $title_html . $list_html;
 		if ( $this->settings['wrapper_tag'] ) {
 
-			$toc_html = sprintf( '<%1$s%2$s>%3$s</%1$s>',
+			$toc_html = sprintf(
+				'<%1$s%2$s>%3$s</%1$s>',
 				esc_attr( $this->settings['wrapper_tag'] ),
 				$this->tag_class( $this->settings['wrapper_class'] ),
 				$title_html . $list_html
@@ -358,7 +361,8 @@ class TOC {
 			return '';
 		}
 
-		return sprintf( '<%1$s%2$s>%3$s</%1$s>',
+		return sprintf(
+			'<%1$s%2$s>%3$s</%1$s>',
 			esc_attr( $this->settings['title_tag'] ),
 			$this->tag_class( $this->settings['title_class'] ),
 			esc_html( $shortcode_atts['title'] )
@@ -381,7 +385,7 @@ class TOC {
 			// Counter of items, starting at 1
 			$key_current = $key + 1;
 
-			// Stripped item text
+			// Strip tags from the TOC item text
 			$item_text = strip_tags( $toc_item_match[1] );
 
 			// Add filter to allow custom TOC item markup
