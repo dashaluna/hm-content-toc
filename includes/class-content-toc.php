@@ -52,7 +52,7 @@ class TOC {
 			'title_tag'       => 'h3',
 			'title_class'     => 'hm-content-toc-title',
 			'title'           => '',
-			'anchor_class'    => 'hm-content-toc-anchor'
+			'anchor_class'    => 'hm-content-toc-anchor',
 		);
 
 		$this->settings = apply_filters( 'hm_content_toc_settings', $this->settings );
@@ -123,7 +123,7 @@ class TOC {
 
 		$shortcode_atts = shortcode_atts( array(
 			'headers' => $this->headers,
-			'title'   => $this->settings['title']
+			'title'   => $this->settings['title'],
 		), $shortcode_atts, 'hm_content_toc' );
 
 		// Stop - if subsequent TOC is being processed (not 1st one). Only process the first TOC shortcode
@@ -168,31 +168,6 @@ class TOC {
 	}
 
 	/**
-	 * Create string ' class=""' with specified class and suffix,
-	 * escaped and ready to use in HTML
-	 *
-	 * @param string $class  The class string
-	 * @param string $suffix Suffix, additional class string
-	 *
-	 * @return string        String ' class="{$class}-{$suffix}"' escaped and ready to use in HTML
-	 *                       If $class is empty/not specified, return original value
-	 */
-	protected function tag_class( $class, $suffix = '' ) {
-
-		if ( $class ) {
-
-			// Append suffix
-			if ( $suffix ) {
-				$class .= '-' . $suffix;
-			}
-
-			$class = sprintf( ' class="%s"', esc_attr( $class ) );
-		}
-
-		return $class;
-	}
-
-	/**
 	 * Callback for applying filter to post content
 	 *
 	 * Replaces content TOC placeholder with content TOC HTML and inserts anchor tags at headings
@@ -232,10 +207,10 @@ class TOC {
 		if ( $this->settings['list_tag'] ) {
 
 			$list_html = sprintf(
-				'<%1$s%2$s>%3$s</%1$s>',
+				'<%1$s class="%2$s">%3$s</%1$s>',
 				esc_attr( $this->settings['list_tag'] ),
-				$this->tag_class( $this->settings['list_class'] ),
-				$items_html
+				esc_attr( $this->settings['list_class'] ),
+				wp_kses_post( $items_html )
 			);
 		}
 
@@ -244,10 +219,10 @@ class TOC {
 		if ( $this->settings['wrapper_tag'] ) {
 
 			$toc_html = sprintf(
-				'<%1$s%2$s>%3$s</%1$s>',
+				'<%1$s class="%2$s">%3$s</%1$s>',
 				esc_attr( $this->settings['wrapper_tag'] ),
-				$this->tag_class( $this->settings['wrapper_class'] ),
-				$title_html . $list_html
+				esc_attr( $this->settings['wrapper_class'] ),
+				wp_kses_post( $title_html . $list_html )
 			);
 		}
 
@@ -325,10 +300,12 @@ class TOC {
 
 			// Trim from white spaces
 			$header = trim( $header );
+
 			// Match the valid element name as far as possible
 			if ( 1 === preg_match( '#^[a-zA-Z]+\d{0,1}#', $header, $matches ) ) {
 				$header = $matches[0];
-			} // Match not found - element name is invalid
+			}
+			// Match not found - element name is invalid
 			else {
 				$header = '';
 			}
@@ -362,9 +339,9 @@ class TOC {
 		}
 
 		return sprintf(
-			'<%1$s%2$s>%3$s</%1$s>',
+			'<%1$s class="%2$s">%3$s</%1$s>',
 			esc_attr( $this->settings['title_tag'] ),
-			$this->tag_class( $this->settings['title_class'] ),
+			esc_attr( $this->settings['title_class'] ),
 			esc_html( $shortcode_atts['title'] )
 		);
 	}
@@ -392,9 +369,9 @@ class TOC {
 			$items_html .= apply_filters(
 				'hm_content_toc_single_item',
 				sprintf(
-					'<%1$s%2$s><a href="#heading-%3$d">%4$s</a></%1$s>',
+					'<%1$s class="%2$s"><a href="#heading-%3$d">%4$s</a></%1$s>',
 					esc_attr( $this->settings['list_item_tag'] ),
-					$this->tag_class( $this->settings['list_item_class'], $toc_item_match[2] ),
+					esc_attr( $this->settings['list_item_class'] . '-' . $toc_item_match[2] ),
 					esc_attr( $key_current ),
 					esc_html( $item_text )
 				),
@@ -432,10 +409,9 @@ class TOC {
 
 			// Store all anchors so we can ensure we don't insert multiple anchors for duplicate headers
 			$anchors[] = sprintf(
-				'<a name="heading-%s"%s></a>',
+				'<a name="heading-%s" class="%s"></a>',
 				esc_attr( $key_current ),
-				$this->tag_class( $this->settings['anchor_class'] ),
-				$match_set[0]
+				esc_attr( $this->settings['anchor_class'] )
 			);
 
 			// Regex escape stored anchors
@@ -448,7 +424,7 @@ class TOC {
 			// Use negative lookbehind to ensure we don't insert multiple anchors to a single header
 			$post_content = preg_replace(
 				'/(?<!' . implode( '|', $anchors_regex_ready ) . ')' . preg_quote( $match_set[0], '/' ) . '/',
-				end ( $anchors ) . $match_set[0], // Insert latest/currently considered anchor before the matched header in the post content
+				end( $anchors ) . $match_set[0], // Insert latest/currently considered anchor before the matched header in the post content
 				$post_content,
 				1 // Maximum replacements (replace the first match only)
 			);
@@ -475,7 +451,7 @@ class TOC {
 						'label'       => __( 'Title', 'hm-content-toc' ),
 						'attr'        => 'title',
 						'type'        => 'text',
-						'description' => __( 'Title that appears before the Content TOC. Optional.', 'hm-content-toc' )
+						'description' => __( 'Title that appears before the Content TOC. Optional.', 'hm-content-toc' ),
 					),
 
 					// Headers field
@@ -490,9 +466,9 @@ class TOC {
 							'<>',
 							'h2',
 							'<h2>'
-						)
+						),
 					),
-				)
+				),
 			)
 		);
 	}
