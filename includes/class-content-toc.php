@@ -16,14 +16,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class TOC {
 
-	// TOC shortcode counter (in case of multiple TOCs on the same page)
-	protected $id_counter;
-
 	// Comma separated list of header elements to generate TOC for
 	protected $headers;
 
 	// Array of HTML settings for markup
 	protected $settings;
+
+	// TOC shortcode counter (in case of multiple TOCs on the same page)
+	protected $id_counter = 0;
 
 	// Placeholder HTML that shortcode is substituted for
 	protected $placeholder = '<div class="hm_content_toc_placeholder" style="display:none"></div>';
@@ -34,9 +34,6 @@ class TOC {
 	 * 2) Register shortcode
 	 */
 	protected function __construct() {
-
-		// TOC shortcode counter
-		$this->id_counter = 0;
 
 		// Register TOC shortcode
 		add_shortcode( 'hm_content_toc', array( $this, 'shortcode' ) );
