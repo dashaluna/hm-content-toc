@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/dashaluna/hm-content-toc.svg?branch=master)](https://travis-ci.org/dashaluna/hm-content-toc)
 
-### HM Content TOC ###
+# HM Content TOC #
 Contributors: dashaluna, tcrsavage, johnbillion, sanchothefat
 Tags: TOC, TOC shortcode, shortcode, content TOC, post TOC, page TOC, TOC for content, table of content, HM, Human Made
 Requires at least: 4.2
@@ -40,7 +40,7 @@ HM Content TOC can be installed like any other WordPress plugin.
 
 ## Frequently Asked Questions ##
 
-# Supported WordPress versions #
+### Supported WordPress versions ###
 
 The plugin has been extensively tested on both standard and multisite installations
 for the following WordPress versions:
