@@ -16,42 +16,61 @@ class Admin {
 	protected $page_slug;
 
 	// Option slug for TOC plugin settings
-	protected  $option_slug;
+	protected $option_slug;
 
 	// Admin page title
 	protected $page_title;
+
+	// Plugin basename
+	protected $plugin_basename;
 
 	/**
 	 * Creates admin object and implements registered actions:
 	 * 1) adds option submenu page to WP Settings page
 	 * 2) sets up plugin settings and displays admin page content
+	 *
+	 * @param string $plugin_base_file The absolute full path and filename
+	 *                                 of the main plugin file
 	 */
-	protected function __construct() {
+	protected function __construct( $plugin_base_file ) {
 
 		// Setup properties used throughout this class
-		$this->page_slug   = 'hm-toc-settings';
-		$this->option_slug = 'hm_content_toc';
-		$this->page_title  = __( 'HM Content TOC Settings', 'hm-content-toc' );
+		$this->page_slug       = 'hm-toc-settings';
+		$this->option_slug     = 'hm_content_toc';
+		$this->page_title      = __( 'HM Content TOC Settings', 'hm-content-toc' );
+		$this->plugin_basename = plugin_basename( $plugin_base_file );
 
 		// Add admin submenu page to Settings
 		add_action( 'admin_menu', array( $this, 'add_plugin_option_menu_page' ) );
 
 		// Setup plugin settings and display admin page content
 		add_action( 'admin_init', array( $this, 'setup_plugin_option_settings' ) );
+
+		// Add Settings link to plugin links on main Plugin page
+		add_filter( 'plugin_action_links_' . $this->plugin_basename, array( $this, 'add_action_links' ) );
 	}
 
 	/**
 	 * Make class a singleton, as we don't need more than
-	 * one instance of it
+	 * one instance of it.
+	 *
+	 * NB: Parameter is optional here, but not in the __construct(),
+	 * because the first call to the Admin::get_instance() must have
+	 * a param to setup the static instance. Any other subsequent calls to
+	 * Admin::get_instance() won't need a param and will return the
+	 * previously setup static $instance.
+	 *
+	 * @param string $plugin_base_file Optional. The absolute full path and filename
+	 *                                 of the main plugin file
 	 *
 	 * @return Admin True single instance of the class
 	 */
-	public static function get_instance() {
+	public static function get_instance( $plugin_base_file = '' ) {
 
 		static $instance = null;
 
 		if ( is_null( $instance ) ) {
-			$instance = new static;
+			$instance = new static( $plugin_base_file );
 		}
 
 		return $instance;
@@ -213,6 +232,27 @@ class Admin {
 		}
 
 		return $option_arr;
+	}
+
+	/**
+	 * Adds Settings link to the plugin action links,
+	 * this appears under the plugin summary on the main
+	 * WP Plugins page
+	 *
+	 * @param array $links Plugin action links
+	 *
+	 * @return array       Array of plugin action links with added
+	 *                     Settings link
+	 */
+	public function add_action_links( $links ) {
+
+		$settings_link = sprintf(
+			'<a href="%s">%s</a>',
+			esc_url( admin_url( 'options-general.php?page=' . $this->page_slug ) ),
+			esc_html__( 'Settings', 'hm-content-toc' )
+		);
+
+		return array_merge( $links, array( $settings_link ) );
 	}
 
 }

@@ -36,7 +36,7 @@ function get_toc() {
  * @return Admin True single instance of the class
  */
 function get_admin() {
-	return Admin::get_instance();
+	return Admin::get_instance( __FILE__ );
 }
 
 // Activate the plugin
