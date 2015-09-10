@@ -37,8 +37,13 @@ class Admin {
 		// Setup properties used throughout this class
 		$this->page_slug       = 'hm-toc-settings';
 		$this->option_slug     = 'hm_content_toc';
-		$this->page_title      = __( 'HM Content TOC Settings', 'hm-content-toc' );
 		$this->plugin_basename = plugin_basename( $plugin_base_file );
+
+		// Load plugin's textdomain (i.e. translations)
+		load_plugin_textdomain( 'hm-content-toc', false, $this->plugin_basename . '/languages' );
+
+		// Setup strings used extensively throughout the class
+		$this->page_title = __( 'HM Content TOC Settings', 'hm-content-toc' );
 
 		// Add admin submenu page to Settings
 		add_action( 'admin_menu', array( $this, 'add_plugin_option_menu_page' ) );
