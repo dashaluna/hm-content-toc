@@ -172,6 +172,195 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test the TOC links/items are generated correctly:
+	 * 1) for each specified header in the shortcode
+	 * 2) only contains simple text, no HTML tags
+	 */
+	public function test_generated_toc_links_are_simple_text_no_tags_for_specified_headers() {
+
+		$post_content = '
+			[hm_content_toc title="The TOC 1" headers="h2, h3, h4"]
+			<h2>Header 2</h2>
+			Some text here. Some text here. Some text here.
+			<h3>Header 3</h3>
+			Some text here. Some text here. Some text here.
+			<h4>Header 4</h4>
+			Some text here. Some text here. Some text here.
+			<h4>Header 4</h4>
+			Some text here. Some text here. Some text here.
+			<h5>Header 5</h5>
+			Some text here. Some text here. Some text here.
+			<h2>Header 2</h2>
+			Some text here. Some text here. Some text here.
+			<h2>Header 2 <b>with bold text</b></h2>
+			Some text here. Some text here. Some text here.
+			<h3>Header 3</h3>
+			Some text here. Some text here. Some text here.
+			<h6>Header 6</h6>
+			Some text here. Some text here. Some text here.';
+
+		$p = $this->get_processed_post_content( $post_content );
+
+		// Check if generated TOC HTML contains correct number of links/items
+		$this->assertSame( 3, substr_count( $p, 'hm-content-toc-item-h2' ) );
+		$this->assertSame( 2, substr_count( $p, 'hm-content-toc-item-h3' ) );
+		$this->assertSame( 2, substr_count( $p, 'hm-content-toc-item-h4' ) );
+
+		// Count the overall number of TOC links/items
+		$this->assertSame( 7, substr_count( $p, 'hm-content-toc-item-' ) );
+
+		// Check each TOC link/item is generated correctly, any HTML tags are stripped
+		$this->assertSame( 1, substr_count( $p, '<a href="#heading-1">Header 2</a>' ) );
+		$this->assertSame( 1, substr_count( $p, '<a href="#heading-2">Header 3</a>' ) );
+		$this->assertSame( 1, substr_count( $p, '<a href="#heading-3">Header 4</a>' ) );
+		$this->assertSame( 1, substr_count( $p, '<a href="#heading-4">Header 4</a>' ) );
+		$this->assertSame( 1, substr_count( $p, '<a href="#heading-5">Header 2</a>' ) );
+		$this->assertSame( 1, substr_count( $p, '<a href="#heading-6">Header 2 with bold text</a>' ) );
+		$this->assertSame( 1, substr_count( $p, '<a href="#heading-7">Header 3</a>' ) );
+	}
+
+	/**
+	 * Test to check that anchors are inserted into the content correctly
+	 * before corresponding headers, that contain special chars (ampersand,
+	 * quotes, prime, another HTML elements and so on"
+	 */
+	public function test_toc_special_chars_in_content_headers() {
+		$post_content = '
+			[hm_content_toc title="The TOC 1" headers="h2, h3, h4"]
+			<h2>Header\'s 2 ...</h2>
+			Some text here. Some text here. Some text here.
+			<h3>Header & other text 3</h3>
+			Some text here. Some text here. Some text here.
+			<h4>Header -- en dash 4</h4>
+			Some text here. Some text here. Some text here.
+			<h4>Header with prime 9\'</h4>
+			Some text here. Some text here. Some text here.
+			<h2>Header in quotes "hey there"</h2>
+			Some text here. Some text here. Some text here.
+			<h3>Header with <b>bold tag</b></h3>
+			Some text here. Some text here. Some text here.';
+
+		$p = $this->get_processed_post_content( $post_content );
+
+		// Check if generated TOC HTML contains correct number of elements
+		$this->assertSame( 2, substr_count( $p, 'hm-content-toc-item-h2' ) );
+		$this->assertSame( 2, substr_count( $p, 'hm-content-toc-item-h3' ) );
+		$this->assertSame( 2, substr_count( $p, 'hm-content-toc-item-h4' ) );
+
+		// Check the number of anchors inserted into content
+		// 1 before each header, so 6 in total
+		$this->assertSame( 6, substr_count( $p, 'hm-content-toc-anchor' ) );
+
+		// Check if anchors have been inserted before each headers correctly in the post content
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-1" class="hm-content-toc-anchor"></a><h2>Header&#8217;s 2 &#8230;</h2>'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-2" class="hm-content-toc-anchor"></a><h3>Header &amp; other text 3</h3>'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-3" class="hm-content-toc-anchor"></a><h4>Header &#8212; en dash 4</h4>'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-4" class="hm-content-toc-anchor"></a><h4>Header with prime 9&#8242;</h4>'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-5" class="hm-content-toc-anchor"></a><h2>Header in quotes &#8220;hey there&#8221;</h2>'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-6" class="hm-content-toc-anchor"></a><h3>Header with <b>bold tag</b></h3>'
+		) );
+	}
+
+	/**
+	 * Test an anchor is inserted only once before a header
+	 * in case of multiple identical headers
+	 */
+	public function test_anchors_inserted_once_in_content_before_header_for_multiple_identical_headers() {
+
+		$post_content = '
+			[hm_content_toc title="The TOC 1" headers="h2, h3, h4"]
+			<h2>Header 2</h2>
+			Some text here. Some text here. Some text here.
+			<h3>Header 3</h3>
+			Some text here. Some text here. Some text here.
+			<h4>Header 4</h4>
+			Some text here. Some text here. Some text here.
+			<h4>Header 4</h4>
+			Some text here. Some text here. Some text here.
+			<h5>Header 5</h5>
+			Some text here. Some text here. Some text here.
+			<h2>Header 2</h2>
+			Some text here. Some text here. Some text here.
+			<h6>Header 6</h6>
+			Some text here. Some text here. Some text here.';
+
+		$p = $this->get_processed_post_content( $post_content );
+
+		// Check correct number of anchors have been inserted into post content
+		$this->assertSame( 5, substr_count( $p, 'hm-content-toc-anchor' ) );
+
+
+		// Check if anchors have been inserted before each headers correctly in the post content
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-1" class="hm-content-toc-anchor"></a><h2>Header 2</h2>'
+		) );
+		// All together there should be 2 refs to the same anchor - in TOC and in content
+		$this->assertSame( 2, substr_count(
+			$p,
+			'heading-1'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-2" class="hm-content-toc-anchor"></a><h3>Header 3</h3>'
+		) );
+		$this->assertSame( 2, substr_count(
+			$p,
+			'heading-2'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-3" class="hm-content-toc-anchor"></a><h4>Header 4</h4>'
+		) );
+		$this->assertSame( 2, substr_count(
+			$p,
+			'heading-3'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-4" class="hm-content-toc-anchor"></a><h4>Header 4</h4>'
+		) );
+		$this->assertSame( 2, substr_count(
+			$p,
+			'heading-4'
+		) );
+
+		$this->assertSame( 1, substr_count(
+			$p,
+			'<a name="heading-5" class="hm-content-toc-anchor"></a><h2>Header 2</h2>'
+		) );
+		$this->assertSame( 2, substr_count(
+			$p,
+			'heading-5'
+		) );
+	}
+
+	/**
 	 * Setup a test post with specified content.
 	 * Return that posts's content after all processing and filters
 	 * as if it was displayed on a browser page.
