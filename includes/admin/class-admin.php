@@ -153,14 +153,10 @@ class Admin {
 	?>
 		<div class="wrap">
 
-			<?php
-			// Display settings page title
-			printf(
-				'<h2>%s</h2><p>%s</p>',
-				esc_html( $this->page_title ),
-				wp_kses_post( __( 'Specify default settings for HM Content TOC plugin', 'hm-content-toc' ) )
-			);
-			?>
+			<h2><?php esc_html( $this->page_title ); ?></h2>
+			<p>
+				<?php esc_html( __( 'Specify default settings for HM Content TOC plugin', 'hm-content-toc' ) ); ?>
+			</p>
 
 			<form method="post" action="options.php">
 
