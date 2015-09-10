@@ -52,14 +52,20 @@ class Admin {
 
 	/**
 	 * Make class a singleton, as we don't need more than
-	 * one instance of it
+	 * one instance of it.
 	 *
-	 * @param string $plugin_base_file The absolute full path and filename
+	 * NB: Parameter is optional here, but not in the __construct(),
+	 * because the first call to the Admin::get_instance() must have
+	 * a param to setup the static instance. Any other subsequent calls to
+	 * Admin::get_instance() won't need a param and will return the
+	 * previously setup static $instance.
+	 *
+	 * @param string $plugin_base_file Optional. The absolute full path and filename
 	 *                                 of the main plugin file
 	 *
 	 * @return Admin True single instance of the class
 	 */
-	public static function get_instance( $plugin_base_file ) {
+	public static function get_instance( $plugin_base_file = '' ) {
 
 		static $instance = null;
 
