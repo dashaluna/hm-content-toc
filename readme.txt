@@ -1,17 +1,15 @@
-[![Build Status](https://travis-ci.org/dashaluna/hm-content-toc.svg?branch=master)](https://travis-ci.org/dashaluna/hm-content-toc)
-
-# HM Content TOC #
-**Contributors:** dashaluna, tcrsavage, johnbillion, sanchothefat  
-**Tags:** TOC, TOC shortcode, shortcode, content TOC, post TOC, page TOC, TOC for content, table of content, HM, Human Made  
-**Requires at least:** 4.2  
-**Tested up to:** 4.3  
-**Stable tag:** 1.0.0  
-**License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
+=== HM Content TOC ===
+Contributors: dashaluna, tcrsavage, johnbillion, sanchothefat
+Tags: TOC, TOC shortcode, shortcode, content TOC, post TOC, page TOC, TOC for content, table of content, HM, Human Made
+Requires at least: 4.2
+Tested up to: 4.3
+Stable tag: 1.0.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Creates TOC (table of content) for specified HTML elements from post/page content; to allow jumping to corresponding header by clicking a link in TOC.
 
-## Description ##
+== Description ==
 
 The plugin provides:
 
@@ -23,7 +21,7 @@ The plugin provides:
  Plugin's defaults are: empty title and headers `h2, h3, h4, h5, h6`
 * Integration with ["Shortcake (Shortcode UI)" plugin](https://wordpress.org/plugins/shortcode-ui/)
 
-## Installation ##
+== Installation ==
 
 HM Content TOC can be installed like any other WordPress plugin.
 
@@ -38,9 +36,9 @@ HM Content TOC can be installed like any other WordPress plugin.
 4. Now you can use `[hm_content_toc]` shortcode in your post/page content to generate
    TOC for specified headers from that post/page content.
 
-## Frequently Asked Questions ##
+== Frequently Asked Questions ==
 
-### Supported WordPress versions ###
+= Supported WordPress versions =
 
 The plugin has been extensively tested on both standard and multisite installations
 for the following WordPress versions:
@@ -48,24 +46,24 @@ for the following WordPress versions:
 * latest stable version [refer to Release Archive on wordpress.org site](https://wordpress.org/download/release-archive/)
 * 4.2
 
-## Bugs or feature requests ##
+== Bugs or feature requests ==
 
 To report bugs or feature requests, [please use Github issues](https://github.com/dashaluna/hm-content-toc/issues).
 
-## Screenshots ##
+== Screenshots ==
 
-## Changelog ##
+== Changelog ==
 
-## Upgrade Notice ##
+== Upgrade Notice ==
 
-## Translations ##
+== Translations ==
 
 * English - default, always included
 
 *Note:* All my plugins are localized/translatable by default. This is very important for
 all users worldwide. So please contribute your language to the plugin to make it even more useful.
 
-## License: GPLv2 or later ##
+== License: GPLv2 or later ==
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
