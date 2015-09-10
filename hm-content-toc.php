@@ -19,6 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Include plugin classes
 require_once( __DIR__ . '/includes/class-content-toc.php' );
+require_once( __DIR__ . '/includes/admin/class-admin.php' );
 
 /**
  * Instantiate TOC class, i.e. TOC logic is hooked into WP
@@ -29,5 +30,17 @@ function get_toc() {
 	return TOC::get_instance();
 }
 
+/**
+ * Instantiate Admin class, i.e. Admin logic is hooked into WP
+ *
+ * @return Admin True single instance of the class
+ */
+function get_admin() {
+	return Admin::get_instance( __FILE__ );
+}
+
 // Activate the plugin
 add_action( 'plugins_loaded', __NAMESPACE__ . '\\get_toc' );
+
+// Add plugin admin page
+add_action( 'plugins_loaded', __NAMESPACE__ . '\\get_admin' );
