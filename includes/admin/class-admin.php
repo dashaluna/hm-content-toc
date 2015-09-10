@@ -158,9 +158,9 @@ class Admin {
 	?>
 		<div class="wrap">
 
-			<h2><?php esc_html( $this->page_title ); ?></h2>
+			<h2><?php echo esc_html( $this->page_title ); ?></h2>
 			<p>
-				<?php esc_html( __( 'Specify default settings for HM Content TOC plugin', 'hm-content-toc' ) ); ?>
+				<?php esc_html_e( 'Specify default settings for HM Content TOC plugin', 'hm-content-toc' ); ?>
 			</p>
 
 			<form method="post" action="options.php">
