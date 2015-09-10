@@ -16,7 +16,7 @@ class Admin {
 	protected $page_slug;
 
 	// Option slug for TOC plugin settings
-	protected  $option_slug;
+	protected $option_slug;
 
 	// Admin page title
 	protected $page_title;
