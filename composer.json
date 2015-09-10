@@ -1,0 +1,20 @@
+{
+	"name"       : "dashaluna/hm-content-toc",
+	"description": "Creates TOC (table of content) for specified HTML elements from post/page content; to allow jumping to corresponding header by clicking a link in TOC.",
+	"homepage"   : "https://github.com/dashaluna/hm-content-toc/",
+	"type"       : "wordpress-plugin",
+	"license"    : "GPL-2.0+",
+	"authors"    : [
+		{
+			"name"    : "Dasha Luna",
+			"homepage": "http://dashaluna.com/"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/dashaluna/hm-content-toc/issues",
+		"source": "https://github.com/dashaluna/hm-content-toc/"
+	},
+	"require-dev": {
+		"wpreadme2markdown/wpreadme2markdown": "*"
+	}
+}
