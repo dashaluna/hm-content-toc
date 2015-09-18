@@ -40,7 +40,7 @@ class Admin {
 		$this->plugin_basename = plugin_basename( $plugin_base_file );
 
 		// Load plugin's textdomain (i.e. translations)
-		load_plugin_textdomain( 'hm-content-toc', false, $this->plugin_basename . '/languages' );
+		load_plugin_textdomain( 'hm-content-toc', false, $this->plugin_basename . '/languages/' );
 
 		// Setup strings used extensively throughout the class
 		$this->page_title = __( 'HM Content TOC Settings', 'hm-content-toc' );

@@ -7,7 +7,7 @@
  * Author:      Dasha Luna at Human Made
  * Author URI:  https://github.com/dashaluna
  * Text Domain: hm-content-toc
- * Domain Path:
+ * Domain Path: /languages
  * License:     GPL2
  */
 namespace HM\Content_TOC;
