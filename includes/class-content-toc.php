@@ -188,7 +188,7 @@ class TOC {
 			'title_tag'       => 'h3',
 			'title_class'     => 'hm-content-toc-title',
 			'title'           => $option['title'],
-			'anchor_class'    => 'hm-content-toc-anchor'
+			'anchor_class'    => 'hm-content-toc-anchor',
 		);
 
 		// Allow TOC HTML settings to be changed
