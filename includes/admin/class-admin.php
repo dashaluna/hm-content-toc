@@ -13,10 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Admin {
 
 	// Admin page slug for TOC plugin settings
-	protected $page_slug;
+	protected $page_slug = 'hm-toc-settings';
 
 	// Option slug for TOC plugin settings
-	protected $option_slug;
+	protected $option_slug = 'hm_content_toc';
 
 	// Admin page title
 	protected $page_title;
@@ -35,8 +35,6 @@ class Admin {
 	protected function __construct( $plugin_base_file ) {
 
 		// Setup properties used throughout this class
-		$this->page_slug       = 'hm-toc-settings';
-		$this->option_slug     = 'hm_content_toc';
 		$this->plugin_basename = plugin_basename( $plugin_base_file );
 
 		// Load plugin's textdomain (i.e. translations)
