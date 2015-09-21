@@ -125,6 +125,7 @@ class Admin {
 			'headers' => array(
 				'name' => __( 'Header Elements', 'hm-content-toc' ),
 				'desc' => sprintf(
+					/* translators: 1: The list of default header elements, i.e. h2, h3, h4, h5, h6 2: example how to correctly specify header element as string without <> brackets, i.e. h2 3: example how NOT to specify header element as string with <> brackets, i.e. <h2> */
 					__( 'Comma separated list of HTML element names to generate TOC for. For example, default elements are: %1$s. NOTE: use %2$s, not %3$s.', 'hm-content-toc' ),
 					TOC::get_instance()->get_default_headers(),
 					'<code>h2</code>',
@@ -250,6 +251,7 @@ class Admin {
 		$settings_link = sprintf(
 			'<a href="%s">%s</a>',
 			esc_url( admin_url( 'options-general.php?page=' . $this->page_slug ) ),
+			/* translators: This is the quick link to plugin's settings that appears in the admin on the Plugin page that lists all the plugins */
 			esc_html__( 'Settings', 'hm-content-toc' )
 		);
 
