@@ -188,7 +188,7 @@ class TOC {
 			'title_tag'       => 'h3',
 			'title_class'     => 'hm-content-toc-title',
 			'title'           => $option['title'],
-			'anchor_class'    => 'hm-content-toc-anchor'
+			'anchor_class'    => 'hm-content-toc-anchor',
 		);
 
 		// Allow TOC HTML settings to be changed
@@ -479,7 +479,7 @@ class TOC {
 						'label'       => __( 'Title', 'hm-content-toc' ),
 						'attr'        => 'title',
 						'type'        => 'text',
-						'description' => __( 'Title that appears before the Content TOC. Optional.', 'hm-content-toc' ),
+						'description' => __( 'The title is added before generated TOC links. Optional.', 'hm-content-toc' ),
 					),
 
 					// Headers field
@@ -489,9 +489,8 @@ class TOC {
 						'type'        => 'text',
 						'placeholder' => $this->headers,
 						'description' => sprintf(
-							__( 'Comma separated list of HTML elements that are considered for building Content TOC. For example, default elements are: %1$s NOTE: DO NOT use %2$s to wrap an element, i.e. for example it should be simply %3$s and not %4$s. If no elements are specified, the default ones will be used instead: %1$s', 'hm-content-toc' ),
+							__( 'Comma separated list of HTML element names to generate TOC for. For example, default elements are: %1$s. NOTE: use %2$s, not %3$s.', 'hm-content-toc' ),
 							$this->headers,
-							'<>',
 							'h2',
 							'<h2>'
 						),
