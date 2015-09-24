@@ -469,6 +469,7 @@ class TOC {
 		shortcode_ui_register_for_shortcode(
 			'hm_content_toc',
 			array(
+				/* translators: TOC is table of contents */
 				'label'         => __( 'HM Content TOC', 'hm-content-toc' ),
 				'listItemImage' => 'dashicons-menu',
 				// Available shortcode attributes and default values

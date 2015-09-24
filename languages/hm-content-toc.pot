@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HM Content TOC \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hm-content-toc\n"
-"POT-Creation-Date: 2015-09-21 14:17:26+00:00\n"
+"POT-Creation-Date: 2015-09-24 17:10:37+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,43 +12,51 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: includes/admin/class-admin.php:44
+#. translators: TOC is table of contents
+
+#: includes/admin/class-admin.php:45
 msgid "HM Content TOC Settings"
 msgstr ""
 
-#: includes/admin/class-admin.php:122 includes/class-content-toc.php:479
+#: includes/admin/class-admin.php:123 includes/class-content-toc.php:480
 msgid "Title"
 msgstr ""
 
-#: includes/admin/class-admin.php:123 includes/class-content-toc.php:482
+#. translators: TOC is table of contents
+
+#: includes/admin/class-admin.php:125 includes/class-content-toc.php:483
 msgid "The title is added before generated TOC links. Optional."
 msgstr ""
 
-#: includes/admin/class-admin.php:126 includes/class-content-toc.php:487
+#: includes/admin/class-admin.php:128 includes/class-content-toc.php:488
 msgid "Header Elements"
 msgstr ""
 
-#. translators: 1: The list of default header elements, i.e. h2, h3, h4, h5, h6
-#. 2: example how to correctly specify header element as string without <>
-#. brackets, i.e. h2 3: example how NOT to specify header element as string
-#. with <> brackets, i.e. <h2>
+#. translators: TOC is table of contents. 1: The list of default header
+#. elements, i.e. h2, h3, h4, h5, h6 2: example how to correctly specify header
+#. element as string without <> brackets, i.e. h2 3: example how NOT to specify
+#. header element as string with <> brackets, i.e. <h2>
 
-#: includes/admin/class-admin.php:129 includes/class-content-toc.php:492
+#: includes/admin/class-admin.php:131 includes/class-content-toc.php:493
 msgid "Comma separated list of HTML element names to generate TOC for. For example, default elements are: %1$s. NOTE: use %2$s, not %3$s."
 msgstr ""
 
-#: includes/admin/class-admin.php:164
+#. translators: TOC is table of contents
+
+#: includes/admin/class-admin.php:168
 msgid "Specify default settings for HM Content TOC plugin"
 msgstr ""
 
 #. translators: This is the quick link to plugin's settings that appears in the
 #. admin on the Plugin page that lists all the plugins
 
-#: includes/admin/class-admin.php:255
+#: includes/admin/class-admin.php:260
 msgid "Settings"
 msgstr ""
 
-#: includes/class-content-toc.php:472
+#. translators: TOC is table of contents
+
+#: includes/class-content-toc.php:473
 msgid "HM Content TOC"
 msgstr ""
 #. Plugin Name of the plugin/theme
@@ -56,7 +64,7 @@ msgid "HM Content TOC"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Creates content TOC for specified header elements from the current post content. Adds anchor elements in the content just before the matched headers. Integrates with: <a href=\"https://wordpress.org/plugins/shortcode-ui/\" target=\"_blank\">Shortcake UI plugin</a>"
+msgid "Creates content TOC (table of contents) for specified header elements from the current post content. Adds anchor elements in the content just before the matched headers. Integrates with: <a href=\"https://wordpress.org/plugins/shortcode-ui/\" target=\"_blank\">Shortcake UI plugin</a>"
 msgstr ""
 
 #. Author of the plugin/theme
