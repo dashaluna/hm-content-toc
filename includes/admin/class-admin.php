@@ -21,7 +21,7 @@ class Admin {
 	// Admin page title
 	protected $page_title;
 
-	// Plugin basename
+	// Plugin basename, i.e. hm-content-toc/hm-content-toc.php
 	protected $plugin_basename;
 
 	/**
@@ -38,7 +38,7 @@ class Admin {
 		$this->plugin_basename = plugin_basename( $plugin_base_file );
 
 		// Load plugin's textdomain (i.e. translations)
-		load_plugin_textdomain( 'hm-content-toc', false, $this->plugin_basename . '/languages/' );
+		load_plugin_textdomain( 'hm-content-toc', false, dirname( $this->plugin_basename ) . '/languages/' );
 
 		// Setup strings used extensively throughout the class
 		/* translators: TOC is table of contents */
