@@ -41,6 +41,7 @@ class Admin {
 		load_plugin_textdomain( 'hm-content-toc', false, $this->plugin_basename . '/languages/' );
 
 		// Setup strings used extensively throughout the class
+		/* translators: TOC is table of contents */
 		$this->page_title = __( 'HM Content TOC Settings', 'hm-content-toc' );
 
 		// Add admin submenu page to Settings
@@ -120,12 +121,13 @@ class Admin {
 		$input_fields = array(
 			'title'   => array(
 				'name' => __( 'Title', 'hm-content-toc' ),
+				/* translators: TOC is table of contents */
 				'desc' => __( 'The title is added before generated TOC links. Optional.', 'hm-content-toc' ),
 			),
 			'headers' => array(
 				'name' => __( 'Header Elements', 'hm-content-toc' ),
 				'desc' => sprintf(
-					/* translators: 1: The list of default header elements, i.e. h2, h3, h4, h5, h6 2: example how to correctly specify header element as string without <> brackets, i.e. h2 3: example how NOT to specify header element as string with <> brackets, i.e. <h2> */
+					/* translators: TOC is table of contents. 1: The list of default header elements, i.e. h2, h3, h4, h5, h6 2: example how to correctly specify header element as string without <> brackets, i.e. h2 3: example how NOT to specify header element as string with <> brackets, i.e. <h2> */
 					__( 'Comma separated list of HTML element names to generate TOC for. For example, default elements are: %1$s. NOTE: use %2$s, not %3$s.', 'hm-content-toc' ),
 					TOC::get_instance()->get_default_headers(),
 					'<code>h2</code>',
@@ -161,7 +163,10 @@ class Admin {
 
 			<h2><?php echo esc_html( $this->page_title ); ?></h2>
 			<p>
-				<?php esc_html_e( 'Specify default settings for HM Content TOC plugin', 'hm-content-toc' ); ?>
+				<?php
+				/* translators: TOC is table of contents */
+				esc_html_e( 'Specify default settings for HM Content TOC plugin', 'hm-content-toc' );
+				?>
 			</p>
 
 			<form method="post" action="options.php">
