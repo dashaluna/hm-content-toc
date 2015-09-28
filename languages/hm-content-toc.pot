@@ -54,11 +54,6 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#. translators: TOC is table of contents
-
-#: includes/class-content-toc.php:473
-msgid "HM Content TOC"
-msgstr ""
 #. Plugin Name of the plugin/theme
 msgid "HM Content TOC"
 msgstr ""
