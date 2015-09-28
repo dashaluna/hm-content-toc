@@ -128,7 +128,7 @@ class Admin {
 				'name' => __( 'Header Elements', 'hm-content-toc' ),
 				'desc' => sprintf(
 					/* translators: TOC is table of contents. 1: The list of default header elements, i.e. h2, h3, h4, h5, h6 2: example how to correctly specify header element as string without <> brackets, i.e. h2 3: example how NOT to specify header element as string with <> brackets, i.e. <h2> */
-					__( 'Comma separated list of HTML element names to generate TOC for. For example, default elements are: %1$s. NOTE: use %2$s, not %3$s.', 'hm-content-toc' ),
+					__( 'Comma separated list of HTML element names used to generate the TOC. For example, default elements are: %1$s. NOTE: use %2$s, not %3$s.', 'hm-content-toc' ),
 					TOC::get_instance()->get_default_headers(),
 					'<code>h2</code>',
 					'<code>&lt;h2&gt;</code>'

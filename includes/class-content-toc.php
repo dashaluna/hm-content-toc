@@ -490,7 +490,7 @@ class TOC {
 						'type'        => 'text',
 						'placeholder' => $this->headers,
 						'description' => sprintf(
-							__( 'Comma separated list of HTML element names to generate TOC for. For example, default elements are: %1$s. NOTE: use %2$s, not %3$s.', 'hm-content-toc' ),
+							__( 'Comma separated list of HTML element names used to generate the TOC. For example, default elements are: %1$s. NOTE: use %2$s, not %3$s.', 'hm-content-toc' ),
 							$this->headers,
 							'h2',
 							'<h2>'

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HM Content TOC \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hm-content-toc\n"
-"POT-Creation-Date: 2015-09-24 17:10:37+00:00\n"
+"POT-Creation-Date: 2015-09-28 09:32:54+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -38,7 +38,7 @@ msgstr ""
 #. header element as string with <> brackets, i.e. <h2>
 
 #: includes/admin/class-admin.php:131 includes/class-content-toc.php:493
-msgid "Comma separated list of HTML element names to generate TOC for. For example, default elements are: %1$s. NOTE: use %2$s, not %3$s."
+msgid "Comma separated list of HTML element names used to generate the TOC. For example, default elements are: %1$s. NOTE: use %2$s, not %3$s."
 msgstr ""
 
 #. translators: TOC is table of contents
