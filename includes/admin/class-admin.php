@@ -171,7 +171,7 @@ class Admin {
 				/* translators: TOC is table of contents. 1: The link to plugin's documentation on github website. */
 				echo wp_kses(
 					sprintf(
-						__( 'Specify default settings for HM Content TOC plugin. For more information and usage <a href="%1$s" target="_blank">see documentation on github website</a>.', 'hm-content-toc' ),
+						__( 'Specify default settings for HM Content TOC plugin. For more information and usage <a href="%1$s" target="_blank">see documentation on github website</a> (in English).', 'hm-content-toc' ),
 						esc_url( self::GITHUB_DOC_URL )
 					),
 					array(
