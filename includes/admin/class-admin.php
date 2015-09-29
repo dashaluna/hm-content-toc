@@ -167,11 +167,19 @@ class Admin {
 			<h2><?php echo esc_html( $this->page_title ); ?></h2>
 			<p>
 				<?php
-				/* translators: TOC is table of contents. 1: Opening documentation link tag 2: Closing documentation link tag */
-				printf(
-					esc_html__( 'Specify default settings for HM Content TOC plugin. For more information and usage %1$ssee documentation on github website%2$s.', 'hm-content-toc' ),
-					'<a href="' . esc_url( self::GITHUB_DOC_URL ) . '" target="_blank">',
-					'</a>'
+				// Register text for translation, allow only HTML element `a` with `href, target` attribute
+				/* translators: TOC is table of contents. 1: The link to plugin's documentation on github website. */
+				echo wp_kses(
+					sprintf(
+						__( 'Specify default settings for HM Content TOC plugin. For more information and usage <a href="%1$s" target="_blank">see documentation on github website</a>.', 'hm-content-toc' ),
+						esc_url( self::GITHUB_DOC_URL )
+					),
+					array(
+						'a' => array(
+							'href'   => array(),
+							'target' => array( '', '_blank' )
+						),
+					)
 				);
 				?>
 			</p>
