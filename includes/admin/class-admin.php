@@ -12,6 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Admin {
 
+	// Link to github docs
+	const GITHUB_DOC_URL = 'https://github.com/dashaluna/hm-content-toc#readme';
+
 	// Admin page slug for TOC plugin settings
 	protected $page_slug = 'hm-toc-settings';
 
@@ -242,25 +245,33 @@ class Admin {
 	}
 
 	/**
-	 * Adds Settings link to the plugin action links,
-	 * this appears under the plugin summary on the main
-	 * WP Plugins page
+	 * Adds extra plugin action links that appear
+	 * under the plugin summary on the main WP Plugins page
 	 *
 	 * @param array $links Plugin action links
 	 *
 	 * @return array       Array of plugin action links with added
-	 *                     Settings link
+	 *                     extra custom links
 	 */
 	public function add_action_links( $links ) {
 
+		// Settings link
 		$settings_link = sprintf(
 			'<a href="%s">%s</a>',
 			esc_url( admin_url( 'options-general.php?page=' . $this->page_slug ) ),
-			/* translators: This is the quick link to plugin's settings that appears in the admin on the Plugin page that lists all the plugins */
+			/* translators: This is the quick link to plugin's settings. The link appears in the admin on the Plugin page that lists all the plugins. */
 			esc_html__( 'Settings', 'hm-content-toc' )
 		);
 
-		return array_merge( $links, array( $settings_link ) );
+		// Documentation link
+		$docs_link = sprintf(
+			'<a href="%s" target="_blank">%s</a>',
+			esc_url( self::GITHUB_DOC_URL ),
+			/* translators: This is the quick link to plugin's documentation. The link appears in the admin on the Plugin page that lists all the plugins. The documentation is localed on github website. */
+			esc_html__( 'Documentation', 'hm-content-toc' )
+		);
+
+		return array_merge( $links, array( $settings_link, $docs_link ) );
 	}
 
 }
