@@ -38,7 +38,7 @@ HM Content TOC can be installed like any other WordPress plugin.
 
 == Frequently Asked Questions ==
 
-1. What versions of WordPress are supported?
+= 1. What versions of WordPress are supported? =
 
 The plugin has been extensively tested on both standard and multisite installations
 for the following WordPress versions:
