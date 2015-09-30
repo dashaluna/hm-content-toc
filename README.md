@@ -65,6 +65,7 @@ To report bugs or feature requests, [please use Github issues](https://github.co
 
 *Note:* All my plugins are localized/translatable by default. This is very important for
 all users worldwide. So please contribute your language to the plugin to make it even more useful.
+Please read the [instructions on how to contribute a translation](https://github.com/dashaluna/hm-content-toc/tree/master/languages).
 
 ## License: GPLv2 or later ##
 
