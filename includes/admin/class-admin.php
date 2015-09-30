@@ -177,7 +177,7 @@ class Admin {
 					array(
 						'a' => array(
 							'href'   => array(),
-							'target' => array()
+							'target' => array(),
 						),
 					)
 				);
