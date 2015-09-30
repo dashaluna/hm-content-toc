@@ -54,30 +54,6 @@ To report bugs or feature requests, [please use Github issues](https://github.co
 
 ## Screenshots ##
 
-###1. WordPress Admin: Plugins page - a summary of the plugin with quick action links to plugin's Settings and [Documentation on github webiste](https://github.com/dashaluna/hm-content-toc#readme).###
-[missing image]
-
-###2. WordPress Admin: Settings page - plugin's default settings. These settings will be used when a shortcode `[hm_content_toc]` is specified without attributes. Shortcode attribute takes precedence over default settings.###
-[missing image]
-
-###3. WordPress Admin: Pages - example of a page that uses `[hm_content_toc]` shortcode with its attributes, to specify title that appears before TOC and HTML element names used to generate the TOC.###
-[missing image]
-
-###4. Main website: Example of a page with generated TOC with specified parameters.###
-[missing image]
-
-###5. Main website: Example of a page when a link from the TOC is clicked. In this case, the `Heading #3 - third level` link from the TOC is clicked, a visitor is taken to that heading within the page content. The URL uses an anchor that has been inserted before the heading in the page content.###
-[missing image]
-
-###6. WordPress Admin: Integration with Shortcake UI - the view when `Add Media` button is clicked. The `Insert Post Element` tab lists all registered shortcodes with Shortcake. The `HM Content TOC` is present to be inserted into post/page content.###
-[missing image]
-
-###7. WordPress Admin: Integration with Shortcake UI - the view when `HM Content TOC` box was clicked, allowing for shortcode parameters to be specified.###
-[missing image]
-
-
-All screenshots are taken with WordPress version 4.3.1
-
 ## Changelog ##
 
 ## Upgrade Notice ##
