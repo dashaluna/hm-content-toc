@@ -24,6 +24,9 @@ class Admin {
 	// Plugin basename, i.e. hm-content-toc/hm-content-toc.php
 	protected $plugin_basename;
 
+	// Link to github docs
+	protected $github_doc_url = 'https://github.com/dashaluna/hm-content-toc#readme';
+
 	/**
 	 * Creates admin object and implements registered actions:
 	 * 1) adds option submenu page to WP Settings page
@@ -164,8 +167,20 @@ class Admin {
 			<h2><?php echo esc_html( $this->page_title ); ?></h2>
 			<p>
 				<?php
-				/* translators: TOC is table of contents */
-				esc_html_e( 'Specify default settings for HM Content TOC plugin', 'hm-content-toc' );
+				// Register text for translation, allow only HTML element `a` with `href, target` attribute
+				/* translators: TOC is table of contents. 1: The link to plugin's documentation on github website. */
+				echo wp_kses(
+					sprintf(
+						__( 'Specify default settings for HM Content TOC plugin. For more information and usage <a href="%1$s" target="_blank">see documentation on github website</a> (in English).', 'hm-content-toc' ),
+						esc_url( $this->github_doc_url )
+					),
+					array(
+						'a' => array(
+							'href'   => array(),
+							'target' => array(),
+						),
+					)
+				);
 				?>
 			</p>
 
@@ -242,25 +257,33 @@ class Admin {
 	}
 
 	/**
-	 * Adds Settings link to the plugin action links,
-	 * this appears under the plugin summary on the main
-	 * WP Plugins page
+	 * Adds extra plugin action links that appear
+	 * under the plugin summary on the main WP Plugins page
 	 *
 	 * @param array $links Plugin action links
 	 *
 	 * @return array       Array of plugin action links with added
-	 *                     Settings link
+	 *                     extra custom links
 	 */
 	public function add_action_links( $links ) {
 
+		// Settings link
 		$settings_link = sprintf(
 			'<a href="%s">%s</a>',
 			esc_url( admin_url( 'options-general.php?page=' . $this->page_slug ) ),
-			/* translators: This is the quick link to plugin's settings that appears in the admin on the Plugin page that lists all the plugins */
+			/* translators: This is the quick link to plugin's settings. The link appears in the admin on the Plugin page that lists all the plugins. */
 			esc_html__( 'Settings', 'hm-content-toc' )
 		);
 
-		return array_merge( $links, array( $settings_link ) );
+		// Documentation link
+		$docs_link = sprintf(
+			'<a href="%s" target="_blank">%s</a>',
+			esc_url( $this->github_doc_url ),
+			/* translators: This is the quick link to plugin's documentation. The link appears in the admin on the Plugin page that lists all the plugins. The documentation is localed on github website. */
+			esc_html__( 'Documentation', 'hm-content-toc' )
+		);
+
+		return array_merge( $links, array( $settings_link, $docs_link ) );
 	}
 
 }

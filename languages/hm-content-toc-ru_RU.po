@@ -4,34 +4,35 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HM Content TOC\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hm-content-toc\n"
-"POT-Creation-Date: 2015-09-28 14:19+0100\n"
+"POT-Creation-Date: 2015-09-29 16:59+0100\n"
+"PO-Revision-Date: 2015-09-29 17:00+0100\n"
+"Last-Translator: Dasha Luna <dashaluna@gmail.com>\n"
+"Language-Team: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-09-28 14:22+0100\n"
-"Language-Team: \n"
 "X-Generator: Poedit 1.8.5\n"
-"Last-Translator: Dasha Luna <dashaluna@gmail.com>\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"Language: ru\n"
 
 #. translators: TOC is table of contents
-#: includes/admin/class-admin.php:45
+#: includes/admin/class-admin.php:48
 msgid "HM Content TOC Settings"
 msgstr "Настройки HM Оглавления"
 
-#: includes/admin/class-admin.php:123 includes/class-content-toc.php:480
+#: includes/admin/class-admin.php:126 includes/class-content-toc.php:480
 msgid "Title"
 msgstr "Название Оглавления"
 
 #. translators: TOC is table of contents
-#: includes/admin/class-admin.php:125 includes/class-content-toc.php:483
+#: includes/admin/class-admin.php:128 includes/class-content-toc.php:483
 msgid "The title is added before generated TOC links. Optional."
-msgstr "Название оглавления будет добавлено перед самим перечнем заголовков. Можно "
-"не указывать."
+msgstr ""
+"Название оглавления будет добавлено перед самим перечнем заголовков. Можно не "
+"указывать."
 
-#: includes/admin/class-admin.php:128 includes/class-content-toc.php:488
+#: includes/admin/class-admin.php:131 includes/class-content-toc.php:488
 msgid "Header Elements"
 msgstr "HTML Теги Заголовков"
 
@@ -39,41 +40,58 @@ msgstr "HTML Теги Заголовков"
 #. elements, i.e. h2, h3, h4, h5, h6 2: example how to correctly specify header
 #. element as string without <> brackets, i.e. h2 3: example how NOT to specify
 #. header element as string with <> brackets, i.e. <h2>
-#: includes/admin/class-admin.php:131 includes/class-content-toc.php:493
+#: includes/admin/class-admin.php:134 includes/class-content-toc.php:493
 msgid ""
 "Comma separated list of HTML element names used to generate the TOC. For "
 "example, default elements are: %1$s. NOTE: use %2$s, not %3$s."
 msgstr ""
 "Список HTML тегов заголовков указанных через запятую, для которых будет "
-"создано оглавление. Например, теги заголовков по умолчанию: %1$s. "
-"Внимание: указывайте только название тега без скобок %2$s, а не %3$s."
+"создано оглавление. Например, теги заголовков по умолчанию: %1$s. Внимание: "
+"указывайте только название тега без скобок %2$s, а не %3$s."
 
-#. translators: TOC is table of contents
-#: includes/admin/class-admin.php:168
-msgid "Specify default settings for HM Content TOC plugin"
-msgstr "Укажите настройки по умолчанию для плагина HM Оглавление"
+#. translators: TOC is table of contents. 1: The link to plugin's documentation
+#. on github website.
+#: includes/admin/class-admin.php:174
+msgid ""
+"Specify default settings for HM Content TOC plugin. For more information and "
+"usage <a href=\"%1$s\" target=\"_blank\">see documentation on github website</"
+"a> (in English)."
+msgstr ""
+"Укажите настройки по умолчанию для плагина HM Оглавление. Дополнительную "
+"информацию и инструкции по использованию плагина можно найти в <a href=\"%1$s"
+"\" target=\"_blank\">его документации на сайте github</a> (на английском "
+"языке)."
 
-#. translators: This is the quick link to plugin's settings that appears in the
-#. admin on the Plugin page that lists all the plugins
-#: includes/admin/class-admin.php:260
+#. translators: This is the quick link to plugin's settings. The link appears
+#. in the admin on the Plugin page that lists all the plugins.
+#: includes/admin/class-admin.php:275
 msgid "Settings"
 msgstr "Настройки"
 
+#. translators: This is the quick link to plugin's documentation. The link
+#. appears in the admin on the Plugin page that lists all the plugins. The
+#. documentation is localed on github website.
+#: includes/admin/class-admin.php:283
+msgid "Documentation"
+msgstr "Документация"
+
+#. translators: TOC is table of contents
 #. Plugin Name of the plugin/theme
+#: includes/class-content-toc.php:473
 msgid "HM Content TOC"
 msgstr "HM Оглавление"
 
 #. Description of the plugin/theme
 msgid ""
 "Creates content TOC (table of contents) for specified header elements from "
-"the current post content. Adds anchor elements in the content just before "
-"the matched headers. Integrates with: <a href=\"https://wordpress.org/"
-"plugins/shortcode-ui/\" target=\"_blank\">Shortcake UI plugin</a>"
+"the current post content. Adds anchor elements in the content just before the "
+"matched headers. Integrates with: <a href=\"https://wordpress.org/plugins/"
+"shortcode-ui/\" target=\"_blank\">Shortcake UI plugin</a>"
 msgstr ""
-"Создает оглавление для указанных HTML тегов заголовков из текста. "
-"Добавляет ссылки перед указанными заголовками в тексте. Интегрируется с "
-"плагином: <a href=\"https://wordpress.org/plugins/shortcode-ui/\" target="
-"\"_blank\">Shortcake UI plugin - интерфейс для добавления шорткодов</a>"
+"Создает оглавление для указанных HTML тегов заголовков из текста. Добавляет "
+"ссылки перед указанными заголовками в тексте. Интегрируется с плагином: <a "
+"href=\"https://wordpress.org/plugins/shortcode-ui/\" target=\"_blank"
+"\">Shortcake UI plugin - интерфейс для добавления шорткодов</a>"
 
 #. Author of the plugin/theme
 msgid "Dasha Luna at Human Made"
@@ -82,3 +100,12 @@ msgstr "Dasha Luna из компании Human Made"
 #. Author URI of the plugin/theme
 msgid "https://github.com/dashaluna"
 msgstr "https://github.com/dashaluna"
+
+#~ msgid ""
+#~ "Specify default settings for HM Content TOC plugin. For more information "
+#~ "and usage <a href=\"%1$s\" target=\"_blank\">see documentation on github "
+#~ "website</a>."
+#~ msgstr "Укажите настройки по умолчанию для плагина HM Оглавление. "
+
+#~ msgid "Specify default settings for HM Content TOC plugin"
+#~ msgstr "Укажите настройки по умолчанию для плагина HM Оглавление"
