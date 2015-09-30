@@ -12,9 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Admin {
 
-	// Link to github docs
-	const GITHUB_DOC_URL = 'https://github.com/dashaluna/hm-content-toc#readme';
-
 	// Admin page slug for TOC plugin settings
 	protected $page_slug = 'hm-toc-settings';
 
@@ -26,6 +23,9 @@ class Admin {
 
 	// Plugin basename, i.e. hm-content-toc/hm-content-toc.php
 	protected $plugin_basename;
+
+	// Link to github docs
+	protected $github_doc_url = 'https://github.com/dashaluna/hm-content-toc#readme';
 
 	/**
 	 * Creates admin object and implements registered actions:
@@ -172,7 +172,7 @@ class Admin {
 				echo wp_kses(
 					sprintf(
 						__( 'Specify default settings for HM Content TOC plugin. For more information and usage <a href="%1$s" target="_blank">see documentation on github website</a> (in English).', 'hm-content-toc' ),
-						esc_url( self::GITHUB_DOC_URL )
+						esc_url( $this->github_doc_url )
 					),
 					array(
 						'a' => array(
@@ -278,7 +278,7 @@ class Admin {
 		// Documentation link
 		$docs_link = sprintf(
 			'<a href="%s" target="_blank">%s</a>',
-			esc_url( self::GITHUB_DOC_URL ),
+			esc_url( $this->github_doc_url ),
 			/* translators: This is the quick link to plugin's documentation. The link appears in the admin on the Plugin page that lists all the plugins. The documentation is localed on github website. */
 			esc_html__( 'Documentation', 'hm-content-toc' )
 		);
