@@ -1,0 +1,89 @@
+# Copyright (C) 2015 HM Content TOC
+# This file is distributed under the same license as the HM Content TOC package.
+msgid ""
+msgstr "Questo file è distribuito sotto i termini della stessa licenza di HM Content TOC"
+"Project-Id-Version: HM Content TOC \n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hm-content-toc\n"
+"POT-Creation-Date: 2015-09-29 15:58:48+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#. translators: TOC is table of contents
+#: includes/admin/class-admin.php:48
+msgid "HM Content TOC Settings"
+msgstr "HM Content TOC - Impostazioni"
+
+#: includes/admin/class-admin.php:126 includes/class-content-toc.php:480
+msgid "Title"
+msgstr "Titolo"
+
+#. translators: TOC is table of contents
+#: includes/admin/class-admin.php:128 includes/class-content-toc.php:483
+msgid "The title is added before generated TOC links. Optional."
+msgstr "Il titolo viene aggiunto prima che si generino i link dell'indice (facoltativo)"
+
+#: includes/admin/class-admin.php:131 includes/class-content-toc.php:488
+msgid "Header Elements"
+msgstr "Headings"
+
+#. translators: TOC is table of contents. 1: The list of default header
+#. elements, i.e. h2, h3, h4, h5, h6 2: example how to correctly specify header
+#. element as string without <> brackets, i.e. h2 3: example how NOT to specify
+#. header element as string with <> brackets, i.e. <h2>
+#: includes/admin/class-admin.php:134 includes/class-content-toc.php:493
+msgid ""
+"Comma separated list of HTML element names used to generate the TOC. For "
+"example, default elements are: %1$s. NOTE: use %2$s, not %3$s."
+msgstr "Lista degli elementi HTML usati per generare l'indice, separati da virgola. Per esempio, gli elementi di default sono %1$s. N.B.: usa %2$s, non %3$s."
+
+#. translators: TOC is table of contents. 1: The link to plugin's documentation
+#. on github website.
+#: includes/admin/class-admin.php:174
+msgid ""
+"Specify default settings for HM Content TOC plugin. For more information and "
+"usage <a href=\"%1$s\" target=\"_blank\">see documentation on github "
+"website</a> (in English)."
+msgstr "Specifica le impostazioni di default per il plugin HM Content TOC. Per maggiori informazioni <a href=\"%1$s\" target=\"_blank\">consulta la documentazione su GitHub "
+"website</a> (in inglese)."
+
+#. translators: This is the quick link to plugin's settings. The link appears
+#. in the admin on the Plugin page that lists all the plugins.
+#: includes/admin/class-admin.php:275
+msgid "Settings"
+msgstr "Impostazioni"
+
+#. translators: This is the quick link to plugin's documentation. The link
+#. appears in the admin on the Plugin page that lists all the plugins. The
+#. documentation is localed on github website.
+#: includes/admin/class-admin.php:283
+msgid "Documentation"
+msgstr "Documentazione"
+
+#. #-#-#-#-#  hm-content-toc.pot (HM Content TOC )  #-#-#-#-#
+#. translators: TOC is table of contents
+#. #-#-#-#-#  hm-content-toc.pot (HM Content TOC )  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: includes/class-content-toc.php:473
+msgid "HM Content TOC"
+msgstr "HM Content TOC"
+
+#. Description of the plugin/theme
+msgid ""
+"Creates content TOC (table of contents) for specified header elements from "
+"the current post content. Adds anchor elements in the content just before "
+"the matched headers. Integrates with: <a href=\"https://wordpress.org/"
+"plugins/shortcode-ui/\" target=\"_blank\">Shortcake UI plugin</a>"
+msgstr "Crea l'indice con gli heading del post. Aggiunge gli elementi anchor nel contenuto appena prima degli heading corrispondenti. Si integra con il  <a href=\"https://wordpress.org/"
+"plugins/shortcode-ui/\" target=\"_blank\">plugin Shortcake UI</a>."
+
+#. Author of the plugin/theme
+msgid "Dasha Luna at Human Made"
+msgstr "Dasha Luna da Human Made"
+
+#. Author URI of the plugin/theme
+msgid "https://github.com/dashaluna"
+msgstr "https://github.com/dashaluna"

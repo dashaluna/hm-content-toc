@@ -62,6 +62,7 @@ To report bugs or feature requests, [please use Github issues](https://github.co
 
 * English - default, always included
 * Русский (Russian) by <a href="https://profiles.wordpress.org/dashaluna">Dasha Luna</a>
+* Italiano (Italian) by <a href="https://profiles.wordpress.org/franz-vitulli">Franz Vitulli</a>
 
 *Note:* All my plugins are localized/translatable by default. This is very important for
 all users worldwide. So please contribute your language to the plugin to make it even more useful.
