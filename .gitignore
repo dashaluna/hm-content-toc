@@ -4,3 +4,8 @@ composer.lock
 
 # IDE
 .idea
+
+# Used for deploying to WP Plugin directory as mid step
+# Ref: https://github.com/stephenharris/grunt-wp-deploy
+build
+node_modules
