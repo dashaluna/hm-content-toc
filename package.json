@@ -1,0 +1,18 @@
+{
+  "name": "hm-content-toc",
+  "version": "1.0.0",
+  "main": "Gruntfile.js",
+  "author": "Dasha Luna at Human Made Limited",
+  "license": "GPL V2",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dashaluna/hm-content-toc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dashaluna/hm-content-toc/issues"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-wp-deploy": "^1.1.0"
+  }
+}
