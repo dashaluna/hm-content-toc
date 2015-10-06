@@ -70,6 +70,7 @@ All screenshots are taken with WordPress version 4.3.1
 
 * English - default, always included
 * Русский (Russian) by <a href="https://profiles.wordpress.org/dashaluna">Dasha Luna</a>
+* Italiano (Italian) by <a href="https://profiles.wordpress.org/franz-vitulli">Franz Vitulli</a>
 * Português (Portuguese - Portugal) by <a href="https://profiles.wordpress.org/anafransilva">Ana Silva</a>
 
 *Note:* All my plugins are localized/translatable by default. This is very important for
