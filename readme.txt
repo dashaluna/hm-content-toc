@@ -3,7 +3,7 @@ Contributors: dashaluna, tcrsavage, johnbillion, sanchothefat
 Tags: TOC, TOC shortcode, shortcode, content TOC, post TOC, page TOC, TOC for content, table of content, table of contents, HM, Human Made
 Requires at least: 4.2
 Tested up to: 4.3
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
