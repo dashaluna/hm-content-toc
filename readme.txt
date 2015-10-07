@@ -7,7 +7,7 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Creates TOC (table of contents) for specified HTML elements from post/page content; to allow jumping to corresponding header by clicking a link in TOC.
+Creates TOC (table of contents) for specified HTML elements from post/page content; to allow jumping to corresponding header by clicking a link in TOC
 
 == Description ==
 
