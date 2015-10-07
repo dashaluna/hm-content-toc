@@ -64,6 +64,9 @@ All screenshots are taken with WordPress version 4.3.1
 
 == Changelog ==
 
+= 1.0.1 =
+* Removed a full stop at the end of the plugin description as it was too long by WP standards - doh!
+
 == Upgrade Notice ==
 
 == Translations ==
