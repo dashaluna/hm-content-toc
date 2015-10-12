@@ -1,5 +1,5 @@
 === HM Content TOC ===
-Contributors: dashaluna, tcrsavage, johnbillion, sanchothefat
+Contributors: dashaluna, tcrsavage, johnbillion, sanchothefat, humanmade
 Tags: TOC, TOC shortcode, shortcode, content TOC, post TOC, page TOC, TOC for content, table of content, table of contents, HM, Human Made
 Requires at least: 4.2
 Tested up to: 4.3
