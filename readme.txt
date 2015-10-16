@@ -11,7 +11,7 @@ Creates TOC (table of contents) for specified HTML elements from post/page conte
 
 == Description ==
 
-The plugin provides:
+= Features =
 
 * Shortcode `[hm_content_toc]` with `title` and `headers` attributes.
  The shortcode should be inserted into post/page content with optional attributes
@@ -20,6 +20,13 @@ The plugin provides:
  be used in case a shortcode is specified without attributes, i.e. `[hm_content_toc]`
  Plugin's defaults are: empty title and headers `h2, h3, h4, h5, h6`
 * Integration with ["Shortcake (Shortcode UI)" plugin](https://wordpress.org/plugins/shortcode-ui/)
+
+= Translations Available =
+
+* English - default, always included
+* Русский (Russian) by <a href="https://profiles.wordpress.org/dashaluna">Dasha Luna</a>
+* Italiano (Italian) by <a href="https://profiles.wordpress.org/franz-vitulli">Franz Vitulli</a>
+* Português (Portuguese - Portugal) by <a href="https://profiles.wordpress.org/anafransilva">Ana Silva</a>
 
 == Installation ==
 
@@ -66,6 +73,7 @@ All screenshots are taken with WordPress version 4.3.1
 
 = 1.0.2 =
 * Added Human Made as contributor to the plugin.
+* Added `Translations Available` info to the main description.
 
 = 1.0.1 =
 * Removed a full stop at the end of the plugin description as it was too long by WP standards - doh!
