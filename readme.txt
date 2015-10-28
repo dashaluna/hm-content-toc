@@ -1,5 +1,5 @@
 === HM Content TOC ===
-Contributors: dashaluna, tcrsavage, johnbillion, sanchothefat
+Contributors: dashaluna, tcrsavage, johnbillion, sanchothefat, humanmade
 Tags: TOC, TOC shortcode, shortcode, content TOC, post TOC, page TOC, TOC for content, table of content, table of contents, HM, Human Made
 Requires at least: 4.2
 Tested up to: 4.3
@@ -63,6 +63,9 @@ To report bugs or feature requests, [please use Github issues](https://github.co
 All screenshots are taken with WordPress version 4.3.1
 
 == Changelog ==
+
+= 1.0.2 =
+* Added Human Made as contributor to the plugin.
 
 = 1.0.1 =
 * Removed a full stop at the end of the plugin description as it was too long by WP standards - doh!
