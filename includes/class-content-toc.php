@@ -1,10 +1,11 @@
 <?php
 /**
- * Main class of the plugin with logic to generate content TOC links
+ * Main class of the plugin with logic to generate TOC links
  * and anchors in the content just before the matched headers.
  *
  * Features:
- * 1) 'hm_content_toc' shortcode
+ * 1) 'toc' shortcode.
+ * 1) 'hm_content_toc' shortcode - deprecated, for backwards compatibility only.
  * 2) Integration with Shortcake UI plugin: https://github.com/fusioneng/Shortcake
  */
 namespace HM\Content_TOC;
@@ -29,13 +30,14 @@ class TOC {
 	protected $placeholder = '<div class="hm_content_toc_placeholder" style="display:none"></div>';
 
 	/**
-	 * Create Content_TOC:
-	 * 1) Setup default header elements
-	 * 2) Register shortcode
+	 * Create TOC:
+	 * 1) Register shortcode.
+	 * 2) Integrate with Shortcode UI plugin.
 	 */
 	protected function __construct() {
 
 		// Register TOC shortcode
+		add_shortcode( 'toc', array( $this, 'shortcode' ) );
 		add_shortcode( 'hm_content_toc', array( $this, 'shortcode' ) );
 
 		// Shortcake UI plugin integration (Source: https://github.com/fusioneng/Shortcake)
@@ -198,7 +200,7 @@ class TOC {
 	/**
 	 * Callback for applying filter to post content
 	 *
-	 * Replaces content TOC placeholder with content TOC HTML and inserts anchor tags at headings
+	 * Replaces TOC placeholder with TOC HTML and inserts anchor tags at headings
 	 *
 	 * @param string $post_content   The content HTML string, comming from `the_content` filter
 	 * @param array  $shortcode_atts The shortcode attributes, coming from `hm_content_toc` shortcode
@@ -354,7 +356,7 @@ class TOC {
 	}
 
 	/**
-	 * Gets the HTML for the content TOC title
+	 * Gets the HTML for the TOC title
 	 *
 	 * @param $shortcode_atts Array of shortcode attributes
 	 *
@@ -375,11 +377,11 @@ class TOC {
 	}
 
 	/**
-	 * Gets the HTML for the content TOC items
+	 * Gets the HTML for the TOC items
 	 *
 	 * @param array $toc_items_matches Array of specified headers that were matched in the content
 	 *
-	 * @return string                  Output HTML for content TOC items
+	 * @return string                  Output HTML for TOC items
 	 */
 	protected function get_toc_items_html( $toc_items_matches ) {
 
@@ -467,10 +469,9 @@ class TOC {
 	public function register_shortcake_ui() {
 
 		shortcode_ui_register_for_shortcode(
-			'hm_content_toc',
+			'toc',
 			array(
-				/* translators: TOC is table of contents */
-				'label'         => __( 'HM Content TOC', 'hm-content-toc' ),
+				'label'         => __( 'HM Table of Contents', 'hm-content-toc' ),
 				'listItemImage' => 'dashicons-menu',
 				// Available shortcode attributes and default values
 				'attrs'         => array(
@@ -480,7 +481,7 @@ class TOC {
 						'label'       => __( 'Title', 'hm-content-toc' ),
 						'attr'        => 'title',
 						'type'        => 'text',
-						'description' => __( 'The title is added before generated TOC links. Optional.', 'hm-content-toc' ),
+						'description' => __( 'The title is added before generated table of contents (TOC) links. Optional.', 'hm-content-toc' ),
 					),
 
 					// Headers field
@@ -490,7 +491,7 @@ class TOC {
 						'type'        => 'text',
 						'placeholder' => $this->headers,
 						'description' => sprintf(
-							__( 'Comma separated list of HTML element names used to generate the TOC. For example, default elements are: %1$s. NOTE: use %2$s, not %3$s.', 'hm-content-toc' ),
+							__( 'Comma separated list of HTML element names used to generate the table of contents (TOC). For example, default elements are: %1$s. NOTE: use %2$s, not %3$s.', 'hm-content-toc' ),
 							$this->get_default_headers(),
 							'h2',
 							'<h2>'

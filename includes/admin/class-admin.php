@@ -1,7 +1,8 @@
 <?php
 /**
- * Admin class for HM TOC plugin.
- * Adds admin settings for HM TOC plugin to specify default TOC title and header elements list.
+ * Admin class for HM Table of Contents plugin.
+ *
+ * Adds admin settings for HM Table of Contents plugin to specify default TOC title and header elements list.
  */
 namespace HM\Content_TOC;
 
@@ -44,8 +45,7 @@ class Admin {
 		load_plugin_textdomain( 'hm-content-toc', false, dirname( $this->plugin_basename ) . '/languages/' );
 
 		// Setup strings used extensively throughout the class
-		/* translators: TOC is table of contents */
-		$this->page_title = __( 'HM Content TOC Settings', 'hm-content-toc' );
+		$this->page_title = __( 'HM Table of Contents', 'hm-content-toc' );
 
 		// Add admin submenu page to Settings
 		add_action( 'admin_menu', array( $this, 'add_plugin_option_menu_page' ) );
@@ -124,14 +124,13 @@ class Admin {
 		$input_fields = array(
 			'title'   => array(
 				'name' => __( 'Title', 'hm-content-toc' ),
-				/* translators: TOC is table of contents */
-				'desc' => __( 'The title is added before generated TOC links. Optional.', 'hm-content-toc' ),
+				'desc' => __( 'The title is added before generated table of contents (TOC) links. Optional.', 'hm-content-toc' ),
 			),
 			'headers' => array(
 				'name' => __( 'Header Elements', 'hm-content-toc' ),
 				'desc' => sprintf(
-					/* translators: TOC is table of contents. 1: The list of default header elements, i.e. h2, h3, h4, h5, h6 2: example how to correctly specify header element as string without <> brackets, i.e. h2 3: example how NOT to specify header element as string with <> brackets, i.e. <h2> */
-					__( 'Comma separated list of HTML element names used to generate the TOC. For example, default elements are: %1$s. NOTE: use %2$s, not %3$s.', 'hm-content-toc' ),
+					/* translators: 1: The list of default header elements, i.e. h2, h3, h4, h5, h6 2: example how to correctly specify header element as string without <> brackets, i.e. h2 3: example how NOT to specify header element as string with <> brackets, i.e. <h2> */
+					__( 'Comma separated list of HTML element names used to generate the table of contents (TOC). For example, default elements are: %1$s. NOTE: use %2$s, not %3$s.', 'hm-content-toc' ),
 					TOC::get_instance()->get_default_headers(),
 					'<code>h2</code>',
 					'<code>&lt;h2&gt;</code>'
@@ -168,10 +167,10 @@ class Admin {
 			<p>
 				<?php
 				// Register text for translation, allow only HTML element `a` with `href, target` attribute
-				/* translators: TOC is table of contents. 1: The link to plugin's documentation on github website. */
+				/* translators: 1: The link to plugin's documentation on github website. */
 				echo wp_kses(
 					sprintf(
-						__( 'Specify default settings for HM Content TOC plugin. For more information and usage <a href="%1$s" target="_blank">see documentation on github website</a> (in English).', 'hm-content-toc' ),
+						__( 'Specify default settings for HM Table of Contents plugin. For more information and usage <a href="%1$s" target="_blank">see documentation on github website</a> (in English).', 'hm-content-toc' ),
 						esc_url( $this->github_doc_url )
 					),
 					array(

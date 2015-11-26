@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: HM Content TOC
+ * Plugin Name: HM Table of Contents
  * Plugin URI:
- * Description: Creates content TOC (table of contents) for specified header elements from the current post content. Adds anchor elements in the content just before the matched headers. Integrates with: <a href="https://wordpress.org/plugins/shortcode-ui/" target="_blank">Shortcake UI plugin</a>
+ * Description: Creates table of contents (TOC) for specified header elements from the current post content. Adds anchor elements in the content just before the matched headers. Integrates with: <a href="https://wordpress.org/plugins/shortcode-ui/" target="_blank">Shortcake UI plugin</a>
  * Version:     1.0.1
  * Author:      Dasha Luna at Human Made
  * Author URI:  https://github.com/dashaluna
