@@ -104,15 +104,19 @@ class TOC {
 	 * Register shortcode to generate TOC for specified header elements.
 	 *
 	 * Shortcode attributes:
-	 * 1) headers - comma separated list of header elements
-	 * 2) title   - title before the TOC list
+	 * 1) headers - comma separated list of header elements.
+	 * 2) title   - title before the TOC list.
 	 *
-	 * @param $shortcode_atts Shortcode attributes
-	 * @param $post_content   Shortcode content
+	 * NOTE: do NOT use `hm_content_toc` shortcode, it is deprecated,
+	 * and only left for backwards compatibility.
+	 *
+	 * @param array       $shortcode_atts    Shortcode attributes.
+	 * @param string|null $shortcode_content Shortcode content.
+	 * @param string      $tag               Shortcode tag used.
 	 *
 	 * @return string         HTML markup of the TOC
 	 */
-	public function shortcode( $shortcode_atts, $shortcode_content = null ) {
+	public function shortcode( $shortcode_atts, $shortcode_content = null, $tag ) {
 
 		// Setup plugin defaults - headers, TOC HTML settings
 		$this->setup_defaults();
@@ -121,7 +125,7 @@ class TOC {
 		$shortcode_atts = shortcode_atts( array(
 			'headers' => $this->headers,
 			'title'   => $this->settings['title'],
-		), $shortcode_atts, 'hm_content_toc' );
+		), $shortcode_atts, $tag );
 
 		// Stop - if subsequent TOC is being processed (not 1st one). Only process the first TOC shortcode
 		if (  ++$this->id_counter > 1 ) {
