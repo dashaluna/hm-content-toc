@@ -1,11 +1,11 @@
 [![Build Status](https://travis-ci.org/dashaluna/hm-content-toc.svg?branch=master)](https://travis-ci.org/dashaluna/hm-content-toc)
 
 # HM Content TOC #
-**Contributors:** dashaluna, tcrsavage, johnbillion, sanchothefat  
+**Contributors:** dashaluna, tcrsavage, johnbillion, sanchothefat, humanmade  
 **Tags:** TOC, TOC shortcode, shortcode, content TOC, post TOC, page TOC, TOC for content, table of content, table of contents, HM, Human Made  
 **Requires at least:** 4.2  
 **Tested up to:** 4.3  
-**Stable tag:** 1.0.1
+**Stable tag:** 1.0.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -13,7 +13,7 @@ Creates TOC (table of contents) for specified HTML elements from post/page conte
 
 ## Description ##
 
-The plugin provides:
+### Features ###
 
 * Shortcode `[hm_content_toc]` with `title` and `headers` attributes.
  The shortcode should be inserted into post/page content with optional attributes
@@ -22,6 +22,13 @@ The plugin provides:
  be used in case a shortcode is specified without attributes, i.e. `[hm_content_toc]`
  Plugin's defaults are: empty title and headers `h2, h3, h4, h5, h6`
 * Integration with ["Shortcake (Shortcode UI)" plugin](https://wordpress.org/plugins/shortcode-ui/)
+
+### Translations Available ###
+
+* English - default, always included
+* Русский (Russian) by <a href="https://profiles.wordpress.org/dashaluna">Dasha Luna</a>
+* Italiano (Italian) by <a href="https://profiles.wordpress.org/franz-vitulli">Franz Vitulli</a>
+* Português (Portuguese - Portugal) by <a href="https://profiles.wordpress.org/anafransilva">Ana Silva</a>
 
 ## Installation ##
 
@@ -52,14 +59,23 @@ for the following WordPress versions:
 
 To report bugs or feature requests, [please use Github issues](https://github.com/dashaluna/hm-content-toc/issues).
 
+## Contributing to plugin ##
+
+To contribute to the plugin, please open your Pull Request against [the **develop** branch on Github repository](https://github.com/dashaluna/hm-content-toc/tree/develop)
+
 ## Screenshots ##
 
 ## Changelog ##
 
+### 1.0.2 ###
+* Added Human Made as contributor to the plugin.
+* Added `Translations Available` info to the main description.
+* Added `Contributing to plugin` info under 'Other Notes' section.
+
 ### 1.0.1 ###
 * Removed a full stop at the end of the plugin description as it was too long by WP standards - doh!
 
-## Translations ##
+## Translations Available ##
 
 * English - default, always included
 * Русский (Russian) by <a href="https://profiles.wordpress.org/dashaluna">Dasha Luna</a>
