@@ -59,6 +59,10 @@ for the following WordPress versions:
 
 To report bugs or feature requests, [please use Github issues](https://github.com/dashaluna/hm-content-toc/issues).
 
+## Contributing to plugin ##
+
+To contribute to the plugin, please open your Pull Request against [the **develop** branch on Github repository](https://github.com/dashaluna/hm-content-toc/tree/develop)
+
 ## Screenshots ##
 
 ## Changelog ##
@@ -66,6 +70,7 @@ To report bugs or feature requests, [please use Github issues](https://github.co
 ### 1.0.2 ###
 * Added Human Made as contributor to the plugin.
 * Added `Translations Available` info to the main description.
+* Added `Contributing to plugin` info under 'Other Notes' section.
 
 ### 1.0.1 ###
 * Removed a full stop at the end of the plugin description as it was too long by WP standards - doh!
