@@ -112,7 +112,7 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	public function test_toc_shortcode_with_and_without_attributes_so_plugin_options_are_used_as_defaults() {
 
 		// Create TOC plugin option
-		update_option( 'toc', array(
+		update_option( 'hm_content_toc', array(
 			'title'   => 'TOC title via plugin settings',
 			'headers' => 'h2, h3, h4',
 		) );
