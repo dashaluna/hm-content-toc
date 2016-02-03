@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class Test_Flat_TOC php unit test suit for testing HM content TOC plugin functionality
+ * Class Test_Flat_TOC php unit test suit for testing HM Table of Contents plugin functionality
  * for flat (non-hierarchical) TOC generated for specified headers in the content.
  */
 
@@ -33,7 +33,7 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 
 	/**
 	 * Test that only one shortcode is implemented,
-	 * i.e. if there are multiple [hm_content_toc] shortcodes
+	 * i.e. if there are multiple [toc] shortcodes
 	 * only the first one is implemented.
 	 *
 	 * We're counting the TOC elements <div class="hm-content-toc-wrapper">
@@ -42,9 +42,9 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	public function test_toc_shortcode_first_one_only() {
 
 		// Post content with 2 TOC shortcodes
-		$post_content = '[hm_content_toc title="The TOC 1" headers="h2, h3, h4"]' .
+		$post_content = '[toc title="The TOC 1" headers="h2, h3, h4"]' .
 		                $this->post_content_no_toc_shortcode .
-		                '[hm_content_toc title="The TOC 2" headers="h3"]';
+		                '[toc title="The TOC 2" headers="h3"]';
 
 		// Get processed post content as if being displayed on a page
 		$p_show = $this->get_processed_post_content( $post_content );
@@ -86,7 +86,7 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 
 		// Create posts with TOC shortcode and without
 		$p_with_toc = $this->get_processed_post_content(
-			'[hm_content_toc title="The TOC 1" headers="h2, h3, h4"]' .
+			'[toc title="The TOC 1" headers="h2, h3, h4"]' .
 			$this->post_content_no_toc_shortcode
 		);
 
@@ -131,11 +131,11 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 			Some text here. Some text here. Some text here.';
 
 		$p_shortcode_no_attrs = $this->get_processed_post_content(
-			'[hm_content_toc]' . $post_content_no_toc_shortcode
+			'[toc]' . $post_content_no_toc_shortcode
 		);
 
 		$p_shortcode_with_attrs = $this->get_processed_post_content(
-			'[hm_content_toc title="" headers="h2"]' . $post_content_no_toc_shortcode
+			'[toc title="" headers="h2"]' . $post_content_no_toc_shortcode
 		);
 
 		/* Shortcode without attributes tests */
@@ -179,7 +179,7 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	public function test_generated_toc_links_are_simple_text_no_tags_for_specified_headers() {
 
 		$post_content = '
-			[hm_content_toc title="The TOC 1" headers="h2, h3, h4"]
+			[toc title="The TOC 1" headers="h2, h3, h4"]
 			<h2>Header 2</h2>
 			Some text here. Some text here. Some text here.
 			<h3>Header 3</h3>
@@ -226,7 +226,7 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	 */
 	public function test_toc_special_chars_in_content_headers() {
 		$post_content = '
-			[hm_content_toc title="The TOC 1" headers="h2, h3, h4"]
+			[toc title="The TOC 1" headers="h2, h3, h4"]
 			<h2>Header\'s 2 ...</h2>
 			Some text here. Some text here. Some text here.
 			<h3>Header & other text 3</h3>
@@ -290,7 +290,7 @@ class Test_Flat_TOC extends WP_UnitTestCase {
 	public function test_anchors_inserted_once_in_content_before_header_for_multiple_identical_headers() {
 
 		$post_content = '
-			[hm_content_toc title="The TOC 1" headers="h2, h3, h4"]
+			[toc title="The TOC 1" headers="h2, h3, h4"]
 			<h2>Header 2</h2>
 			Some text here. Some text here. Some text here.
 			<h3>Header 3</h3>
