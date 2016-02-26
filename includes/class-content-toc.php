@@ -497,8 +497,8 @@ class TOC {
 						'description' => sprintf(
 							__( 'Comma separated list of HTML element names used to generate the table of contents (TOC). For example, default elements are: %1$s. NOTE: use %2$s, not %3$s.', 'hm-content-toc' ),
 							$this->get_default_headers(),
-							'h2',
-							'<h2>'
+							'<code>h2</code>',
+							'<code>&lt;h2&gt;</code>'
 						),
 					),
 				),
