@@ -5,7 +5,7 @@
  *
  * Features:
  * 1) 'toc' shortcode.
- * 1) 'hm_content_toc' shortcode - deprecated, for backwards compatibility only.
+ * NB: 'hm_content_toc' shortcode - deprecated, for backwards compatibility only. Do not use it.
  * 2) Integration with Shortcake UI plugin: https://github.com/fusioneng/Shortcake
  */
 namespace HM\Content_TOC;
@@ -37,7 +37,7 @@ class TOC {
 	protected function __construct() {
 
 		// Register TOC shortcode
-		add_shortcode( 'toc', array( $this, 'shortcode' ) );
+		add_shortcode( 'toc',            array( $this, 'shortcode' ) );
 		add_shortcode( 'hm_content_toc', array( $this, 'shortcode' ) );
 
 		// Shortcake UI plugin integration (Source: https://github.com/fusioneng/Shortcake)
@@ -107,7 +107,7 @@ class TOC {
 	 * 1) headers - comma separated list of header elements.
 	 * 2) title   - title before the TOC list.
 	 *
-	 * NOTE: do NOT use `hm_content_toc` shortcode, it is deprecated,
+	 * NB: do NOT use `hm_content_toc` shortcode, it is deprecated,
 	 * and only left for backwards compatibility.
 	 *
 	 * @param array       $shortcode_atts    Shortcode attributes.
@@ -202,14 +202,14 @@ class TOC {
 	}
 
 	/**
-	 * Callback for applying filter to post content
+	 * Callback for applying filter to post content.
 	 *
-	 * Replaces TOC placeholder with TOC HTML and inserts anchor tags at headings
+	 * Replaces TOC placeholder with TOC HTML and inserts anchor tags at headings.
 	 *
-	 * @param string $post_content   The content HTML string, comming from `the_content` filter
-	 * @param array  $shortcode_atts The shortcode attributes, coming from `hm_content_toc` shortcode
+	 * @param string $post_content   The content HTML string, coming from `the_content` filter.
+	 * @param array  $shortcode_atts The shortcode attributes, coming from `toc` shortcode.
 	 *
-	 * @return string
+	 * @return string Post content with added TOC functionality.
 	 */
 	public function filter_content( $post_content, $shortcode_atts ) {
 
@@ -468,7 +468,7 @@ class TOC {
 	}
 
 	/**
-	 * Add shortcake UI integration for 'hm_content_toc' shortcode
+	 * Add shortcake UI integration for 'toc' shortcode.
 	 */
 	public function register_shortcake_ui() {
 
