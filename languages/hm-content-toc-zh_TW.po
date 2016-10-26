@@ -1,0 +1,95 @@
+# Copyright (C) 2015 HM Content TOC
+# This file is distributed under the same license as the HM Content TOC package.
+msgid ""
+msgstr ""
+"Project-Id-Version: HM Content TOC\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hm-content-toc\n"
+"POT-Creation-Date: 2016-10-26 21:44+0800\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2016-10-26 22:08+0800\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_TW\n"
+
+#. translators: TOC is table of contents
+#: includes/admin/class-admin.php:48
+msgid "HM Content TOC Settings"
+msgstr "HM Content TOC 設定"
+
+#: includes/admin/class-admin.php:126 includes/class-content-toc.php:480
+msgid "Title"
+msgstr "標題"
+
+#. translators: TOC is table of contents
+#: includes/admin/class-admin.php:128 includes/class-content-toc.php:483
+msgid "The title is added before generated TOC links. Optional."
+msgstr "標題在產生TOC連結前添加。可選擇的。"
+
+#: includes/admin/class-admin.php:131 includes/class-content-toc.php:488
+msgid "Header Elements"
+msgstr "標頭元素"
+
+#. translators: TOC is table of contents. 1: The list of default header
+#. elements, i.e. h2, h3, h4, h5, h6 2: example how to correctly specify header
+#. element as string without <> brackets, i.e. h2 3: example how NOT to specify
+#. header element as string with <> brackets, i.e. <h2>
+#: includes/admin/class-admin.php:134 includes/class-content-toc.php:493
+msgid ""
+"Comma separated list of HTML element names used to generate the TOC. For "
+"example, default elements are: %1$s. NOTE: use %2$s, not %3$s."
+msgstr ""
+"以逗號分隔的HTML元素名稱列表用於生成TOC。例如，預設元素是:%1$s。 注意:使用 "
+"%2$s，而不是 %3$s."
+
+#. translators: TOC is table of contents. 1: The link to plugin's documentation
+#. on github website.
+#: includes/admin/class-admin.php:174
+msgid ""
+"Specify default settings for HM Content TOC plugin. For more information and "
+"usage <a href=\"%1$s\" target=\"_blank\">see documentation on github "
+"website</a> (in English)."
+msgstr ""
+"指定HM Content TOC插件的預設值。更多詳細的資訊及用法請參考 <a href=\"%1$s\" "
+"target=\"_blank\">github 網頁上的文件</a> (英文)。"
+
+#. translators: This is the quick link to plugin's settings. The link appears
+#. in the admin on the Plugin page that lists all the plugins.
+#: includes/admin/class-admin.php:275
+msgid "Settings"
+msgstr "設定"
+
+#. translators: This is the quick link to plugin's documentation. The link
+#. appears in the admin on the Plugin page that lists all the plugins. The
+#. documentation is localed on github website.
+#: includes/admin/class-admin.php:283
+msgid "Documentation"
+msgstr "文件"
+
+#. translators: TOC is table of contents
+#. Plugin Name of the plugin/theme
+#: includes/class-content-toc.php:473
+msgid "HM Content TOC"
+msgstr "HM Content TOC"
+
+#. Description of the plugin/theme
+msgid ""
+"Creates content TOC (table of contents) for specified header elements from "
+"the current post content. Adds anchor elements in the content just before "
+"the matched headers. Integrates with: <a href=\"https://wordpress.org/"
+"plugins/shortcode-ui/\" target=\"_blank\">Shortcake UI plugin</a>"
+msgstr ""
+"從目前內容創建指定標題元素的Content TOC(目錄)。在符合的標頭前的內容中添加錨元"
+"素。集成:<a href=\"https://wordpress.org/plugins/shortcode-ui/\" target="
+"\"_blank\">Shortcake UI 插件</a>"
+
+#. Author of the plugin/theme
+msgid "Dasha Luna at Human Made"
+msgstr "Dasha Luna at Human Made"
+
+#. Author URI of the plugin/theme
+msgid "https://github.com/dashaluna"
+msgstr "https://github.com/dashaluna"
